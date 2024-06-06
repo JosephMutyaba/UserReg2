@@ -70,15 +70,54 @@ public class UserView {
     private void registerUser() {
         try {
             System.out.println("Enter your username: ");
-            String username = scanner.nextLine();
-            System.out.println("Enter your First name: ");
-            String firstName = scanner.nextLine();
-            System.out.println("Enter your Last name: ");
-            String lastName = scanner.nextLine();
-            System.out.println("Enter your Date of Birth((DD/MM/YYYY)): ");
-            String dateOfBirth = scanner.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date dob = sdf.parse(dateOfBirth);
+            String username;
+            String firstName;
+            String lastName;
+            Date dob;
+            do{
+                username = scanner.nextLine();
+
+                if(username.isEmpty()){
+                    System.out.println("username cannot be null. Please try again.");
+                }else if (userService.checkIfUserExists(username)) {
+                    System.out.println("That username is already in use.Try a different username:");
+                }else{
+                    break;
+                }
+
+            }while (true);
+
+            do{
+                System.out.println("Enter your First name: ");
+                firstName = scanner.nextLine();
+                if(firstName.isEmpty()){
+                    System.out.println("first name cannot be null. Please try again.");
+                }else {
+                    break;
+                }
+            }while (true);
+
+            do{
+                System.out.println("Enter your Last name: ");
+                lastName = scanner.nextLine();
+                if(lastName.isEmpty()){
+                    System.out.println("Last name cannot be null. Please try again.");
+                }else {
+                    break;
+                }
+            }while (true);
+
+            do{
+                System.out.println("Enter your Date of Birth((DD/MM/YYYY)): ");
+                String dateOfBirth = scanner.nextLine();
+                if(dateOfBirth.isEmpty()){
+                    System.out.println("Date of Birth cannot be null. Please try again.");
+                }else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    dob = sdf.parse(dateOfBirth);
+                    break;
+                }
+            }while (true);
 
             // setting the credentials of new user
             User user = new User();
