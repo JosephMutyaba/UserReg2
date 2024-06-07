@@ -150,7 +150,7 @@ public class UserView {
     }
 
     private void getUserOfUsername() {
-        System.out.println("Enter your username: ");
+        System.out.println("Enter username: ");
         String username = scanner.nextLine();
         try {
             User user = userService.getUserOfUsername(username);
@@ -160,26 +160,57 @@ public class UserView {
             System.out.println("Date of Birth: "+user.getDateOfBirth());
             System.out.println();
         } catch (Exception e) {
-            System.out.println(e.getMessage()+"\n");
+            System.out.println("User does not exist\n");
         }
     }
 
     private void updateUserOfUsername() {
-        System.out.println("Enter your username: ");
-        String username = scanner.nextLine();
+        String username;
+        String firstName;
+        String lastName;
+        Date dateOfBirth;
+        do{
+            System.out.println("Enter your username: ");
+            username = scanner.nextLine();
+            if(username.isEmpty()){
+                System.out.println("username cannot be null. Please try again.");
+            }else {
+                break;
+            }
+        }while(true);
 
         try {
             if (userService.checkIfUserExists(username)) {
-                System.out.println("Enter your First name: ");
-                String firstName=scanner.nextLine();
-                System.out.println("Enter your Last name: ");
-                String lastName=scanner.nextLine();
-                System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
-                String dateOfBirth2=scanner.nextLine();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date dob = sdf.parse(dateOfBirth2);
+                User user = userService.getUserOfUsername(username);
 
-                boolean userUpdated=userService.updateUserOfUsername(username, firstName,lastName,dob);
+                System.out.println("Enter your First name: ");
+                firstName=scanner.nextLine();
+                // maintain previous first name if user types nothing
+                if(firstName.isEmpty()){
+                    System.out.println("First name not changed");
+                   firstName=user.getFirstname();
+                }
+
+                System.out.println("Enter your Last name: ");
+                lastName=scanner.nextLine();
+                // maintain previous last name if user types nothing
+                if(lastName.isEmpty()){
+                    System.out.println("Last name not changed");
+                    lastName= user.getLastname();
+                }
+
+                System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
+                String dob=scanner.nextLine();
+                // maintain previous DoB if user types nothing
+                if (dob.isEmpty()) {
+                    System.out.println("Date of Birth not changed");
+                    dateOfBirth=user.getDateOfBirth();
+                }else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    dateOfBirth = sdf.parse(dob);
+                }
+
+                boolean userUpdated=userService.updateUserOfUsername(username, firstName,lastName,dateOfBirth);
                 if (userUpdated) {
                     System.out.println("User updated successfully\n");
                 }else {
