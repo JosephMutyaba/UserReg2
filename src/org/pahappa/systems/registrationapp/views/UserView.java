@@ -70,15 +70,15 @@ public class UserView {
     private void registerUser() {
         try {
             System.out.println("Enter your username: ");
-            String username;
-            String firstName;
-            String lastName;
-            Date dob;
+            String username="";
+            String firstName="";
+            String lastName="";
+            Date dob=null;
             do{
                 username = scanner.nextLine();
 
-                if(username.isEmpty()){
-                    System.out.println("username cannot be null. Please try again.");
+                if(username.trim().isEmpty() || username.length()<4){
+                    System.out.println("username cannot be null and should be at least 4 characters. Please try again.");
                 }else if (userService.checkIfUserExists(username)) {
                     System.out.println("That username is already in use.Try a different username:");
                 }else{
@@ -90,8 +90,8 @@ public class UserView {
             do{
                 System.out.println("Enter your First name: ");
                 firstName = scanner.nextLine();
-                if(firstName.isEmpty()){
-                    System.out.println("first name cannot be null. Please try again.");
+                if(firstName.trim().isEmpty() || firstName.length()<2){
+                    System.out.println("first name cannot be null and should be at least 2 characters. Please try again.");
                 }else {
                     break;
                 }
@@ -100,8 +100,8 @@ public class UserView {
             do{
                 System.out.println("Enter your Last name: ");
                 lastName = scanner.nextLine();
-                if(lastName.isEmpty()){
-                    System.out.println("Last name cannot be null. Please try again.");
+                if(lastName.trim().isEmpty() || lastName.length()<2){
+                    System.out.println("Last name cannot be null and should be at least 2 characters. Please try again.");
                 }else {
                     break;
                 }
@@ -110,8 +110,8 @@ public class UserView {
             do{
                 System.out.println("Enter your Date of Birth((DD/MM/YYYY)): ");
                 String dateOfBirth = scanner.nextLine();
-                if(dateOfBirth.isEmpty()){
-                    System.out.println("Date of Birth cannot be null. Please try again.");
+                if(dateOfBirth.trim().isEmpty() || dateOfBirth.length()<8 || dateOfBirth.length()>10){
+                    System.out.println("Date of Birth cannot be null and \nshould be between 8 and 10 characters. Please try again.");
                 }else {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     dob = sdf.parse(dateOfBirth);
@@ -165,14 +165,14 @@ public class UserView {
     }
 
     private void updateUserOfUsername() {
-        String username;
-        String firstName;
-        String lastName;
-        Date dateOfBirth;
+        String username="";
+        String firstName="";
+        String lastName="";
+        Date dateOfBirth= null;
         do{
             System.out.println("Enter your username: ");
             username = scanner.nextLine();
-            if(username.isEmpty()){
+            if(username.trim().isEmpty()){
                 System.out.println("username cannot be null. Please try again.");
             }else {
                 break;
@@ -186,7 +186,7 @@ public class UserView {
                 System.out.println("Enter your First name: ");
                 firstName=scanner.nextLine();
                 // maintain previous first name if user types nothing
-                if(firstName.isEmpty()){
+                if(firstName.trim().isEmpty()){
                     System.out.println("First name not changed");
                    firstName=user.getFirstname();
                 }
@@ -194,7 +194,7 @@ public class UserView {
                 System.out.println("Enter your Last name: ");
                 lastName=scanner.nextLine();
                 // maintain previous last name if user types nothing
-                if(lastName.isEmpty()){
+                if(lastName.trim().isEmpty()){
                     System.out.println("Last name not changed");
                     lastName= user.getLastname();
                 }
@@ -202,7 +202,7 @@ public class UserView {
                 System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
                 String dob=scanner.nextLine();
                 // maintain previous DoB if user types nothing
-                if (dob.isEmpty()) {
+                if (dob.trim().isEmpty()) {
                     System.out.println("Date of Birth not changed");
                     dateOfBirth=user.getDateOfBirth();
                 }else {
