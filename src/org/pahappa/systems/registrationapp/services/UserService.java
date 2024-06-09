@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UserService {
-    List<User> users = new ArrayList<User>();
+    private final List<User> users = new ArrayList<>();
 
     public boolean registerUser(User user) {
         try {
