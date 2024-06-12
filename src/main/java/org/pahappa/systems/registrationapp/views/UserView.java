@@ -220,11 +220,7 @@ public class UserView {
                 System.out.println("There is no such username! \n");
             }
         } catch (Exception e) {
-            System.out.println("""
-                    Could not update user.
-                    Make sure you enter
-                    the correct format of the information
-                    """);
+            System.out.println("Could not update user. Make sure you enter the correct format of the information");
         }
     }
 

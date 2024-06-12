@@ -1,10 +1,14 @@
 package org.pahappa.systems.registrationapp.models;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
-
+@Entity
+@Table(name = "user_table")
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
     private String firstname;
     private String lastname;
@@ -14,11 +18,20 @@ public class User {
 
     }
 
-    private User(String username, String firstname, String lastname, Date dateOfBirth){
+    private User(Long id, String username, String firstname, String lastname, Date dateOfBirth){
+        this.id = id;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
