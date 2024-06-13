@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 @Entity
-@Table(name = "user_table")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String firstname;
     private String lastname;
