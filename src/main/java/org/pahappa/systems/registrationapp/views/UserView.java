@@ -79,8 +79,11 @@ public class UserView {
             Date dob = null;
 
             do {
-                System.out.println("Enter your username: ");
+                System.out.println("Enter your username: ->Type \"exit\" to exit");
                 username = scanner.nextLine();
+                if (username.equals("exit")) {
+                    return;
+                }
                 try {
                     userService.validateUsername(username);
                     break;
@@ -90,8 +93,11 @@ public class UserView {
             } while (true);
 
             do {
-                System.out.println("Enter your First name: ");
+                System.out.println("Enter your First name: ->Type \"exit\" to exit");
                 firstName = scanner.nextLine();
+                if (firstName.equals("exit")) {
+                    return;
+                }
                 try {
                     userService.validateName(firstName, "First name");
                     break;
@@ -101,8 +107,11 @@ public class UserView {
             } while (true);
 
             do {
-                System.out.println("Enter your Last name: ");
+                System.out.println("Enter your Last name: ->Type \"exit\" to exit");
                 lastName = scanner.nextLine();
+                if (lastName.equals("exit")) {
+                    return;
+                }
                 try {
                     userService.validateName(lastName, "Last name");
                     break;
@@ -112,8 +121,11 @@ public class UserView {
             } while (true);
 
             do {
-                System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
+                System.out.println("Enter your Date of Birth (DD/MM/YYYY): ->Type \"exit\" to exit");
                 String dateOfBirth = scanner.nextLine();
+                if (dateOfBirth.equals("exit")) {
+                    return;
+                }
                 try {
                     userService.dateSyntax(dateOfBirth);
                     dob = userService.parseDateOfBirth(dateOfBirth);
@@ -176,61 +188,95 @@ public class UserView {
             String lastName = "";
             Date dob = null;
 
-            System.out.println("Enter the username: ");
-            username = scanner.nextLine();
-
-            if(!userService.checkIfUserExists(username)){
-                System.out.println("User not found");
-            }else {
-                do {
-                    System.out.println("Enter your First name: ");
-                    firstName = scanner.nextLine();
-                    try {
-                        userService.validateName(firstName, "First name");
-                        break;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                } while (true);
-
-                do {
-                    System.out.println("Enter your Last name: ");
-                    lastName = scanner.nextLine();
-                    try {
-                        userService.validateName(lastName, "Last name");
-                        break;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                } while (true);
-
-                do {
-                    System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
-                    String dateOfBirth = scanner.nextLine();
-                    try {
-                        dob = userService.parseDateOfBirth(dateOfBirth);
-                        userService.validateDateOfBirth(dob);
-                        break;
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Please follow the date format shown above.");
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                } while (true);
-
-                // Setting the credentials of existing user
-                User user = userService.getUserOfUsername(username);
-                user.setFirstname(firstName);
-                user.setLastname(lastName);
-                user.setDateOfBirth(dob);
-
-                boolean isUpdated = userService.updateUserOfUsername(user);
-                if (isUpdated) {
-                    System.out.println("User details have been successfully updated!\n");
-                } else {
-                    System.out.println("Something went wrong, please try again!\n");
+            do {
+                System.out.println("Enter the username: ->Type \"exit\" to exit");
+                username = scanner.nextLine();
+                if (username.equals("exit")) {
+                    return;
                 }
-            }
+
+                if(!userService.checkIfUserExists(username)){
+                    System.out.println("User not found");
+                }else {
+                    User user = userService.getUserOfUsername(username);
+                    do {
+                        boolean enterNewField= enterNewFieldOrKeepOldOne();
+                        if (!enterNewField) {
+                            break;
+                        }
+
+                        System.out.println("Enter your First name: ->Type \"exit\" to exit");
+                        firstName = scanner.nextLine();
+                        if (firstName.trim().equals("exit")) {
+                            return;
+                        }
+
+                        // validate and proceed
+                        try {
+                            userService.validateName(firstName, "First name");
+                            user.setFirstname(firstName);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
+
+                    do {
+                        boolean enterNewField= enterNewFieldOrKeepOldOne();
+                        if (!enterNewField) {
+                            break;
+                        }
+                        System.out.println("Enter your Last name: ->Type \"exit\" to exit");
+                        lastName = scanner.nextLine();
+                        if (lastName.trim().equals("exit")) {
+                            return;
+                        }
+                        try {
+                            userService.validateName(lastName, "Last name");
+                            user.setLastname(lastName);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
+
+                    do {
+                        boolean enterNewField= enterNewFieldOrKeepOldOne();
+                        if (!enterNewField) {
+                            break;
+                        }
+
+                        System.out.println("Enter your Date of Birth (DD/MM/YYYY): ->Type \"exit\" to exit");
+                        String dateOfBirth = scanner.nextLine();
+                        if (firstName.trim().equals("exit")) {
+                            return;
+                        }
+                        try {
+                            dob = userService.parseDateOfBirth(dateOfBirth);
+                            userService.validateDateOfBirth(dob);
+                            user.setDateOfBirth(dob);
+                            break;
+                        } catch (ParseException e) {
+                            System.out.println("Invalid date format. Please follow the date format shown above.");
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
+
+                    //Update the values in the DB
+                    boolean isUpdated = userService.updateUserOfUsername(user);
+                    if (isUpdated) {
+                        System.out.println("User details have been successfully updated!\n");
+                    } else {
+                        System.out.println("Something went wrong, please try again!\n");
+                    }
+                }
+
+
+            }while (true);
+
+
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -238,11 +284,10 @@ public class UserView {
     }
 
     private void deleteUserOfUsername() {
-
+        System.out.print("Enter username of user to be deleted: ");
+        String username = scanner.nextLine();
         boolean wantToDelete = wantToDelete();
         if (wantToDelete) {
-            System.out.print("Enter person username: ");
-            String username = scanner.nextLine();
             boolean userDeleted=userService.deleteUserOfUsername(username);
             if (userDeleted) {
                 System.out.println("Person deleted successfully");
@@ -285,5 +330,16 @@ public class UserView {
         String dob = sdf.format(user.getDateOfBirth());
         System.out.println("Date of birth: " + dob);
         System.out.println("*******************************************************\n");
+    }
+
+    private boolean enterNewFieldOrKeepOldOne(){
+        System.out.println("Keep old value of this field or enter a new one?\n1. Enter new value\n2. Keep old value");
+        try {
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            return choice==1;
+        }catch (Exception e) {
+            return false;
+        }
     }
 }
