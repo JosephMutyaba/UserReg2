@@ -3,7 +3,6 @@ package org.pahappa.systems.registrationapp.services;
 import org.pahappa.systems.registrationapp.dao.UserDAO;
 import org.pahappa.systems.registrationapp.exception.InvalidDateFormatException;
 import org.pahappa.systems.registrationapp.exception.InvalidNameException;
-import org.pahappa.systems.registrationapp.exception.MissingAttributeException;
 import org.pahappa.systems.registrationapp.exception.UsernameAlreadyExistsException;
 import org.pahappa.systems.registrationapp.models.User;
 
@@ -16,34 +15,34 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserService {
-    private final UserDAO personDAO = new UserDAO();
+    private final UserDAO usrDAO = new UserDAO();
 
-    public boolean registerUser(User person) throws MissingAttributeException, InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
+    public boolean registerUser(User person) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(person, "register");
-        return personDAO.registerUser(person);
+        return usrDAO.registerUser(person);
     }
 
     public List<User> displayAllUsers() {
-        return personDAO.displayAllUsers();
+        return usrDAO.displayAllUsers();
     }
 
     public User getUserOfUsername(String username) {
-        return personDAO.getUserOfUsername(username);
+        return usrDAO.getUserOfUsername(username);
     }
 
-    public boolean updateUserOfUsername(User person) throws MissingAttributeException, InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
-        validateUser(person,"update");
-        return personDAO.updateUserOfUsername(person);
+    public boolean updateUserOfUsername(User user) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
+        validateUser(user,"update");
+        return usrDAO.updateUserOfUsername(user);
     }
 
     public boolean deleteUserOfUsername(String username) {
 
-        return personDAO.deleteUserOfUsername(username);
+        return usrDAO.deleteUserOfUsername(username);
     }
 
     public boolean deleteAllUsers() {
         try {
-            personDAO.deleteAllUsers();
+            usrDAO.deleteAllUsers();
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -62,7 +61,7 @@ public class UserService {
     // EXTRA METHODS FOR VALIDATION OF INPUT AT REGISTRATION AND UPDATE
     public boolean checkIfUserExists(String username) {
         // Implement method to check if user exists in the database
-        return personDAO.getUserOfUsername(username) != null;
+        return usrDAO.getUserOfUsername(username) != null;
     }
 
     private void validateUser(User user, String field) throws InvalidNameException, UsernameAlreadyExistsException, InvalidDateFormatException {
@@ -76,7 +75,7 @@ public class UserService {
 
     public void validateUsername(String username) throws InvalidNameException, UsernameAlreadyExistsException {
         if (username == null || username.trim().length() < 4 || !Pattern.matches("[@'a-z]['a-z0-9]+", username.trim())) {
-            throw new InvalidNameException("Username cannot be null and should be at least 4 characters.");
+            throw new InvalidNameException("Username cannot be null and should contain [@'a-z]['a-z0-9] and at least 4 characters.");
         }
         if (checkIfUserExists(username.trim())) {
             throw new UsernameAlreadyExistsException("That username is already in use. Try a different username.");
@@ -85,7 +84,7 @@ public class UserService {
 
     public void validateName(String name, String fieldName) throws InvalidNameException {
         if (name == null || !Pattern.matches("[A-Z][a-z]+", name.trim())) {
-            throw new InvalidNameException(fieldName + " cannot be null and should be at least 2 characters.");
+            throw new InvalidNameException(fieldName + "cannot be null and should be at least 2 characters, should be capitalised.");
         }
     }
 

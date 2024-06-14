@@ -89,7 +89,7 @@ public class UserView {
                 }
             } while (true);
 
-            do{
+            do {
                 System.out.println("Enter your First name: ");
                 firstName = scanner.nextLine();
                 try {
@@ -115,7 +115,6 @@ public class UserView {
                 System.out.println("Enter your Date of Birth (DD/MM/YYYY): ");
                 String dateOfBirth = scanner.nextLine();
                 try {
-                    userService.dateSyntax(dateOfBirth);
                     userService.dateSyntax(dateOfBirth);
                     dob = userService.parseDateOfBirth(dateOfBirth);
                     userService.validateDateOfBirth(dob);
@@ -270,7 +269,7 @@ public class UserView {
     }
 
     private boolean wantToDelete(){
-        System.out.println("Are you sure you want to delete?\n1. Delete\n2.Cancel");
+        System.out.println("Are you sure you want to delete?\n1. Delete\n2. Cancel");
         try {
             int choice = scanner.nextInt();
             scanner.nextLine();
