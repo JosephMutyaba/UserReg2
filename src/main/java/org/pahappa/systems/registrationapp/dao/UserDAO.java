@@ -102,7 +102,7 @@ public class UserDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -118,7 +118,7 @@ public class UserDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

@@ -53,7 +53,6 @@ public class UserService {
     private boolean checkIfDateOfBirthIsFuture(Date dateOfBirth) {
         LocalDate birthDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate currentDate = LocalDate.now();
-
         return birthDate.isAfter(currentDate);
     }
 
