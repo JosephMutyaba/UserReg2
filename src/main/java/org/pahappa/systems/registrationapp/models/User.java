@@ -3,13 +3,16 @@ package org.pahappa.systems.registrationapp.models;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String username;
+
     private String firstname;
     private String lastname;
     private Date dateOfBirth;

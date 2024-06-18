@@ -7,14 +7,39 @@
     <groupId>org.pahappa.systems.registrationapp</groupId>
     <artifactId>registrationapp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging> <!-- Change packaging type to WAR -->
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Define JSF and other version properties -->
+        <jsf.version>2.3.9</jsf.version>
     </properties>
 
     <dependencies>
+
+
+<!--        <dependency>-->
+<!--            <groupId>javax.faces</groupId>-->
+<!--            <artifactId>javax.faces-api</artifactId>-->
+<!--            <version>2.3.9</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.3.9</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>14.0.1</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -61,9 +86,22 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.1</version>
         </dependency>
-
-
-
     </dependencies>
+
+
+    <build>
+            <finalName>registrationapp</finalName>
+            <plugins>
+                <plugin>
+
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
 
 </project>
