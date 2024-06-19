@@ -8,22 +8,22 @@
     <h1>Register a New User</h1>
     <h:form>
         <h:outputLabel for="username" value="Username:" />
-        <h:inputText id="username" value="#{userView.user.username}" required="true" />
+        <h:inputText id="username" value="#{registerUserView.username}" required="true" />
         <br />
 
         <h:outputLabel for="firstname" value="First Name:" />
-        <h:inputText id="firstname" value="#{userView.user.firstname}" required="true" />
+        <h:inputText id="firstname" value="#{registerUserView.firstname}" required="true" />
         <br />
 
         <h:outputLabel for="lastname" value="Last Name:" />
-        <h:inputText id="lastname" value="#{userView.user.lastname}" required="true" />
+        <h:inputText id="lastname" value="#{registerUserView.lastname}" required="true" />
         <br />
 
-        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" />
-        <h:inputText id="dob" value="#{userView.user.dateOfBirth}" required="true" />
+        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd----------):" />
+        <h:inputText id="dob" value="#{registerUserView.dateOfBirth}" required="true" />
         <br />
 
-        <h:commandButton value="Register" action="#{userView.registerUser}" />
+        <h:commandButton value="Register" action="#{registerUserView.registerUser}" />
         <br />
         <h:messages globalOnly="true" />
     </h:form>

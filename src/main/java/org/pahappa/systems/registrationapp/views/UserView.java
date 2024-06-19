@@ -4,6 +4,7 @@ import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.UserService;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class UserView implements Serializable {
 
     private UserService userService = new UserService();
@@ -42,28 +43,6 @@ public class UserView implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String registerUser() {
-        try {
-            userService.validateUsername(user.getUsername());
-            userService.validateName(user.getFirstname(), "First name");
-            userService.validateName(user.getLastname(), "Last name");
-            userService.validateDateOfBirth(user.getDateOfBirth());
-
-            boolean isRegistered = userService.registerUser(user);
-            if (isRegistered) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User successfully registered!"));
-                user = new User(); // Reset form
-                return "index"; // Navigate to the index page
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
-                return null;
-            }
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
-            return null;
-        }
     }
 
     public void getUserOfUsername() {
@@ -115,13 +94,6 @@ public class UserView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Deletion unsuccessful, please try again!"));
             return null;
         }
-    }
-
-    private void printUser(User user) {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Username: " + user.getUsername() +
-                        "\nName: " + user.getFirstname() + " " + user.getLastname() +
-                        "\nDate of birth: " + sdf.format(user.getDateOfBirth())));
     }
 }
 

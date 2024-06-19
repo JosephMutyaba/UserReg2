@@ -1,9 +1,12 @@
 org\pahappa\systems\registrationapp\exception\InvalidNameException.class
-org\pahappa\systems\registrationapp\exception\MissingAttributeException.class
-org\pahappa\systems\registrationapp\dao\UserDAO.class
+contextlistener\AppContextListener.class
 org\pahappa\systems\registrationapp\models\User.class
-org\pahappa\systems\registrationapp\exception\UsernameAlreadyExistsException.class
-org\pahappa\systems\registrationapp\views\UserView.class
 org\pahappa\systems\registrationapp\config\SessionConfiguration.class
 org\pahappa\systems\registrationapp\exception\InvalidDateFormatException.class
+org\pahappa\systems\registrationapp\exception\MissingAttributeException.class
+org\pahappa\systems\registrationapp\views\RegisterUserView.class
+org\pahappa\systems\registrationapp\dao\UserDAO.class
+org\pahappa\systems\registrationapp\views\UpdateUser.class
+org\pahappa\systems\registrationapp\exception\UsernameAlreadyExistsException.class
+org\pahappa\systems\registrationapp\views\UserView.class
 org\pahappa\systems\registrationapp\services\UserService.class

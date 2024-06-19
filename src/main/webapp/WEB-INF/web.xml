@@ -14,9 +14,12 @@
     </servlet>
 
 
-
     <listener>
         <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>contextlistener.AppContextListener</listener-class>
     </listener>
 
     <servlet-mapping>
