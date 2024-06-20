@@ -1,7 +1,9 @@
 package org.pahappa.systems.registrationapp.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,16 +19,28 @@ public class User {
     private String lastname;
     private Date dateOfBirth;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Dependant> dependants = new ArrayList<>();
+
     public User(){
 
     }
 
-    private User(Long id, String username, String firstname, String lastname, Date dateOfBirth){
+    public User(Long id, String username, String firstname, String lastname, Date dateOfBirth, List<Dependant> dependants) {
         this.id = id;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dateOfBirth = dateOfBirth;
+        this.dependants = dependants;
+    }
+
+    public List<Dependant> getDependants() {
+        return dependants;
+    }
+
+    public void setDependants(List<Dependant> dependants) {
+        this.dependants = dependants;
     }
 
     public Long getId() {

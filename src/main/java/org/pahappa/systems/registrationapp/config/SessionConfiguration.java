@@ -2,6 +2,7 @@ package org.pahappa.systems.registrationapp.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
 
 public class SessionConfiguration {
@@ -15,6 +16,8 @@ public class SessionConfiguration {
 
             // Add annotated classes here
             configuration.addAnnotatedClass(User.class);
+            configuration.addAnnotatedClass(Dependant.class); // Add Dependant class
+
             return configuration.buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create SessionFactory: " + ex);
