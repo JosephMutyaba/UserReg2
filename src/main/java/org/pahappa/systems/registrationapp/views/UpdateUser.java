@@ -104,7 +104,7 @@ public class UpdateUser implements Serializable {
             if (isUpdated) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User details have been successfully updated!", null));
                 clearForm();
-                return "index"; // Navigate to the index page
+                return "/index"; // Navigate to the index page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
                 return null;

@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.header {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.input {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.messages {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.panelGrid {
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 80%;
+}
+
+.dataTable {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dataTable th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.link {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.dialog {
+    width: 400px;
+}
+
+.selectMenu {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}

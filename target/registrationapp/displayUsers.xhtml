@@ -8,14 +8,24 @@
 
 <h:head>
     <title>Display All Users</title>
+    <h:outputStylesheet name="css/displayUsers.css"/>
 </h:head>
 <h:body>
+    <h:form>
+        <h:commandLink value="Back home" action="index.xhtml" styleClass="link"/>
+    </h:form>
+
     <h1>All Registered Users</h1>
-    <h:dataTable value="#{userView.users}" var="user">
+    <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
         <h:column>
-            <f:facet name="header">Username</f:facet>
-            #{user.username}
+            <h:form>
+                <f:facet name="header">Username</f:facet>
+                <h:commandLink action="#{userView.selectUser(user)}" value="#{user.username}" styleClass="link">
+                    <f:param name="username" value="#{user.username}" />
+                </h:commandLink>
+            </h:form>
         </h:column>
+
         <h:column>
             <f:facet name="header">First Name</f:facet>
             #{user.firstname}

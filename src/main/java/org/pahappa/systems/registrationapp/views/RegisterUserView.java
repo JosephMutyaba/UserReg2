@@ -95,7 +95,7 @@ public class RegisterUserView implements Serializable {
             if (isRegistered) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User successfully registered!"));
                 user = new User(); // Reset form
-                return "index"; // Navigate to the index page
+                return "/index"; // Navigate to the index page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
                 return null;

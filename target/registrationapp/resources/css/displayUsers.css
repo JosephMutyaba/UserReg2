@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 50px;
+}
+
+form {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.link {
+    display: inline-block;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    color: #fff;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link:hover {
+    background-color: #0056b3;
+}
+
+.dataTable {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dataTable th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
