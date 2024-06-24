@@ -18,8 +18,9 @@ public class DependantDAO {
 
     public boolean addDependant(Dependant dependant) {
         Transaction transaction = null;
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(dependant);
             transaction.commit();
@@ -28,79 +29,109 @@ public class DependantDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public List<Dependant> getAllDependantsByUserId(Long userId) {
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             return session.createQuery("from Dependant where user_id = :userId")
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public List<Dependant> searchDependantsByGenderAndUserId(String gender, Long userId) {
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where gender = :gender and userId = :userId")
+            session = sessionFactory.openSession();
+            return session.createQuery("from Dependant where gender = :gender and user_id = :userId")
                     .setParameter("gender", gender)
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public List<Dependant> searchDependantsByUsernameAndUserId(String username, Long userId) {
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             return session.createQuery("from Dependant where username = :username and user_id = :userId")
                     .setParameter("username", username)
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public List<Dependant> searchDependantsByFirstnameAndUserId(String firstname, Long userId) {
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             return session.createQuery("from Dependant where firstname = :firstname and user_id = :userId")
                     .setParameter("firstname", firstname)
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public List<Dependant> searchDependantsByLastnameAndUserId(String lastname, Long userId) {
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             return session.createQuery("from Dependant where lastname = :lastname and user_id = :userId")
                     .setParameter("lastname", lastname)
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     public boolean deleteDependantsByUserId(Long userId) {
         Transaction transaction = null;
+        Session session = null;
         try {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             int deletedCount = session.createQuery("DELETE FROM Dependant where user_id = :userId")
                     .setParameter("userId", userId)
@@ -111,11 +142,83 @@ public class DependantDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean deleteDependantById(Long id) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Dependant dependant = (Dependant) session.get(Dependant.class, id);
+            if (dependant != null) {
+                session.delete(dependant);
+                transaction.commit();
+                return true;
+            } else {
+                transaction.rollback();
+                return false;
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean updateDependant(Dependant dependant) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(dependant);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public Dependant getDependantById(Long id) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            return (Dependant) session.get(Dependant.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
+
+
+
 
 
 
@@ -159,78 +262,17 @@ public class DependantDAO {
 //        }
 //    }
 //
-//    public List<Dependant> getAllDependants() {
+//    public List<Dependant> getAllDependantsByUserId(Long userId) {
 //        try {
 //            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant").list();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//    }
-//
-//    public List<Dependant> searchDependantsByGender(String gender) {
-//        try {
-//            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant where gender = :gender")
-//                    .setParameter("gender", gender)
+//            return session.createQuery("from Dependant where user_iiid = :userId")
+//                    .setParameter("userId", userId)
 //                    .list();
 //        } catch (Exception e) {
 //            System.out.println(e.getMessage());
 //            return null;
 //        }
 //    }
-//
-//    public List<Dependant> searchDependantsByName(String name) {
-//        try {
-//            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant where firstname = :name or lastname = :name or username = :name")
-//                    .setParameter("name", name)
-//                    .list();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
-//    }
-//
-//    public boolean deleteDependant(Long id) {
-//        Transaction transaction = null;
-//        try {
-//            Session session = sessionFactory.openSession();
-//            transaction = session.beginTransaction();
-//            Dependant dependant = (Dependant) session.get(Dependant.class, id);
-//            if (dependant != null) {
-//                session.delete(dependant);
-//                transaction.commit();
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        } catch (Exception e) {
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//            System.out.println(e.getMessage());
-//            return false;
-//        }
-//    }
-//
-//    public void deleteAllDependants() {
-//        Transaction transaction = null;
-//        try {
-//            Session session = sessionFactory.openSession();
-//            transaction = session.beginTransaction();
-//            session.createQuery("DELETE FROM Dependant").executeUpdate();
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (transaction != null) {
-//                transaction.rollback();
-//            }
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//
-//    // New methods added to support UserView functionalities
 //
 //    public List<Dependant> searchDependantsByGenderAndUserId(String gender, Long userId) {
 //        try {
@@ -248,7 +290,7 @@ public class DependantDAO {
 //    public List<Dependant> searchDependantsByUsernameAndUserId(String username, Long userId) {
 //        try {
 //            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant where username = :username and userId = :userId")
+//            return session.createQuery("from Dependant where username = :username and user_id = :userId")
 //                    .setParameter("username", username)
 //                    .setParameter("userId", userId)
 //                    .list();
@@ -261,7 +303,7 @@ public class DependantDAO {
 //    public List<Dependant> searchDependantsByFirstnameAndUserId(String firstname, Long userId) {
 //        try {
 //            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant where firstname = :firstname and userId = :userId")
+//            return session.createQuery("from Dependant where firstname = :firstname and user_id = :userId")
 //                    .setParameter("firstname", firstname)
 //                    .setParameter("userId", userId)
 //                    .list();
@@ -274,7 +316,7 @@ public class DependantDAO {
 //    public List<Dependant> searchDependantsByLastnameAndUserId(String lastname, Long userId) {
 //        try {
 //            Session session = sessionFactory.openSession();
-//            return session.createQuery("from Dependant where lastname = :lastname and userId = :userId")
+//            return session.createQuery("from Dependant where lastname = :lastname and user_id = :userId")
 //                    .setParameter("lastname", lastname)
 //                    .setParameter("userId", userId)
 //                    .list();
@@ -284,4 +326,73 @@ public class DependantDAO {
 //        }
 //    }
 //
+//    public boolean deleteDependantsByUserId(Long userId) {
+//        Transaction transaction = null;
+//        try {
+//            Session session = sessionFactory.openSession();
+//            transaction = session.beginTransaction();
+//            int deletedCount = session.createQuery("DELETE FROM Dependant where user_iiid = :userId")
+//                    .setParameter("userId", userId)
+//                    .executeUpdate();
+//            transaction.commit();
+//            return deletedCount > 0;
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+//    }
+//
+//    public boolean deleteDependantById(Long id) {
+//        Transaction transaction = null;
+//        try {
+//            Session session = sessionFactory.openSession();
+//            transaction = session.beginTransaction();
+//            Dependant dependant = (Dependant) session.get(Dependant.class, id);
+//            if (dependant != null) {
+//                session.delete(dependant);
+//                transaction.commit();
+//                return true;
+//            } else {
+//                transaction.rollback();
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+//    }
+//
+//    public boolean updateDependant(Dependant dependant) {
+//        Transaction transaction = null;
+//        try {
+//            Session session = sessionFactory.openSession();
+//            transaction = session.beginTransaction();
+//            session.saveOrUpdate(dependant);
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+//    }
+//
+//    public Dependant getDependantById(Long id) {
+//        try {
+//            Session session = sessionFactory.openSession();
+//            return (Dependant) session.get(Dependant.class, id);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
+//    }
 //}
+//

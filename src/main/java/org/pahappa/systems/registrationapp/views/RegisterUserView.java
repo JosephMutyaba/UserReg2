@@ -7,13 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RegisterUserView implements Serializable {
 
     private final UserService userService = new UserService();
@@ -95,7 +96,7 @@ public class RegisterUserView implements Serializable {
             if (isRegistered) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User successfully registered!"));
                 user = new User(); // Reset form
-                return "/index"; // Navigate to the index page
+                return "/pages/displayUsers"; // Navigate to the index page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
                 return null;
@@ -105,4 +106,5 @@ public class RegisterUserView implements Serializable {
             return null;
         }
     }
+
 }

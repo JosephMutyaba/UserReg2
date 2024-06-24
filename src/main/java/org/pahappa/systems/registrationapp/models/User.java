@@ -19,6 +19,13 @@ public class User {
     private String lastname;
     private Date dateOfBirth;
 
+    private String password;
+
+    @Column(unique = true)
+    private String email;
+
+    private boolean deleted = false;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Dependant> dependants = new ArrayList<>();
 

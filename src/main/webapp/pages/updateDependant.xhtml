@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Update Dependant</title>
+    <h:outputStylesheet name="css/register.css"/>
+    <h:outputScript name="js/setCookie.js"/>
+</h:head>
+<h:body>
+    <h:form id="backHomeForm" styleClass="form">
+        <h:commandLink value="Back home" action="getUser.xhtml" styleClass="link"/>
+    </h:form>
+    <h1 class="header">Register a New User</h1>
+    <h:form id="registerForm" styleClass="form">
+        <h:outputLabel for="id" value="Id:" styleClass="label"/>
+        <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
+        <br/>
+
+        <h:outputLabel for="username" value="Username:" styleClass="label"/>
+        <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input"/>
+        <br/>
+
+
+        <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+        <h:inputText id="firstname" value="#{updateDependant.firstname}" required="true" styleClass="input"/>
+        <br/>
+
+        <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+        <h:inputText id="lastname" value="#{updateDependant.lastname}" required="true" styleClass="input"/>
+        <br/>
+
+        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+        <h:inputText id="dob" value="#{updateDependant.dateOfBirth}" required="true" styleClass="input"/>
+        <br/>
+
+        <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+        <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
+            <f:selectItem itemLabel="Male" itemValue="Male"/>
+            <f:selectItem itemLabel="Female" itemValue="Female"/>
+        </h:selectOneMenu>
+
+        <h:commandButton value="Add dependant" action="#{updateDependant.updateADependant}" styleClass="button"/>
+        <br/>
+        <h:messages globalOnly="true" styleClass="messages"/>
+    </h:form>
+</h:body>
+</html>

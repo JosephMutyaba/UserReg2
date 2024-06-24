@@ -1,4 +1,7 @@
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\UpdateDependant.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\UpdateUser.java
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\GetDependants.java
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\DeleteDependantOfUser.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\dao\UserDAO.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\RegisterUserView.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\models\Dependant.java
@@ -7,10 +10,13 @@ C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahapp
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\UserView.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\exception\InvalidDateFormatException.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\contextlistener\AppContextListener.java
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\AddDependantView.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\dao\DependantDAO.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\models\User.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\exception\InvalidNameException.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\exception\MissingAttributeException.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\config\SessionConfiguration.java
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\DeleteUserView.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\services\DependantService.java
+C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\DeleteAllDependantsOfUser.java
 C:\Users\Joseph Maximillian\Desktop\internship\UserReg2\src\main\java\org\pahappa\systems\registrationapp\services\UserService.java

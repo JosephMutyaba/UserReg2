@@ -7,19 +7,12 @@
 </h:head>
 <h:body>
     <h:form id="backHomeForm" styleClass="form">
-        <h:commandLink value="Back home" action="/index.xhtml" styleClass="link"/>
+        <h:commandLink value="Back home" action="displayUsers.xhtml" styleClass="link"/>
     </h:form>
     <h1 class="header">Update User Details</h1>
-    <h:form id="fetchUserForm" styleClass="form">
-        <h:outputLabel for="username" value="Enter Username:" styleClass="label"/>
-        <h:inputText id="username" value="#{updateUser.username}" styleClass="input"/>
-        <h:commandButton value="Fetch User" action="#{updateUser.getUserOfUsername}" styleClass="button"/>
-        <br/>
-        <h:messages globalOnly="true" styleClass="messages"/>
-    </h:form>
 
     <h:form id="updateForm" styleClass="form">
-        <h:panelGrid columns="1" rendered="#{not empty updateUser.user}" styleClass="panelGrid">
+        <h:panelGrid columns="2" styleClass="panelGrid">
             <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
             <h:inputText id="firstname" value="#{updateUser.firstname}" styleClass="input"/>
             <br/>

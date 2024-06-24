@@ -1,110 +1,111 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
+/* getUser.css */
 
-.header {
-    color: #333;
-    text-align: center;
-    margin-top: 20px;
-}
-
+/* General styling for the form */
 .form {
-    margin: 20px 0;
-    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 80%;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Header styling */
+.header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Label styling */
 .label {
     font-weight: bold;
-    margin-right: 10px;
+    color: #333;
+    margin-top: 10px;
+    display: block;
 }
 
+/* Input field styling */
 .input {
-    padding: 5px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
+/* Button styling */
 .button {
-    padding: 10px 15px;
-    background-color: #007bff;
+    display: inline-block;
+    padding: 10px 20px;
     color: #fff;
+    background-color: #007bff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    margin: 10px 0;
-    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+.button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #f10d0d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
 }
 
 .button:hover {
     background-color: #0056b3;
 }
 
-.messages {
-    color: red;
-    font-weight: bold;
-    margin: 10px 0;
+.button1:hover {
+    background-color: #d359e6;
 }
 
-.panelGrid {
-    margin: 20px auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-    width: 80%;
-}
-
+/* DataTable styling */
 .dataTable {
     width: 100%;
-    margin: 20px auto;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.dataTable th, .dataTable td {
+.dataTable th,
+.dataTable td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
 }
 
 .dataTable th {
     background-color: #f2f2f2;
-    color: #333;
 }
 
-.dataTable tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* Messages styling */
+.messages {
+    color: red;
+    font-weight: bold;
 }
 
-.dataTable tr:hover {
-    background-color: #f1f1f1;
+/* PanelGrid styling */
+.panelGrid {
+    margin-top: 20px;
 }
 
-.link {
-    display: inline-block;
-    text-align: center;
-    padding: 10px;
-    color: #007bff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
 
-.link:hover {
-    background-color: #0056b3;
-    color: #fff;
-}
 
-.dialog {
-    width: 400px;
-}
 
-.selectMenu {
-    padding: 5px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
+
+
+
+
+
+

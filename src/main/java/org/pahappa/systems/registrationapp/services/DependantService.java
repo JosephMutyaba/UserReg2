@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class DependantService {
-    private final DependantDAO dependantDAO = new DependantDAO();
+    private DependantDAO dependantDAO = new DependantDAO();
 
     public boolean addDependant(Dependant dependant) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateDependant(dependant, "register");
@@ -70,6 +70,17 @@ public class DependantService {
             throw new InvalidDateFormatException("Date of Birth cannot be null.");
         }
         // Additional validation logic if needed
+    }
+    public void deleteDependantById(Long id) {
+        dependantDAO.deleteDependantById(id);
+    }
+
+    public boolean updateDependant(Dependant dependant) {
+        return dependantDAO.updateDependant(dependant);
+    }
+
+    public Dependant getDependantById(Long id) {
+        return dependantDAO.getDependantById(id);
     }
 }
 

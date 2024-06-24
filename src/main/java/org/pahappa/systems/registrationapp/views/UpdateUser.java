@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -18,6 +19,7 @@ import java.util.Date;
 public class UpdateUser implements Serializable {
 
     private final UserService userService = new UserService();
+    private Long id;
     private String username;
     private String firstname;
     private String lastname;
@@ -25,9 +27,20 @@ public class UpdateUser implements Serializable {
 
     private User user;
 
+    public UpdateUser() {
+    }
+
     @PostConstruct
     public void init() {
         user = new User();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -104,7 +117,7 @@ public class UpdateUser implements Serializable {
             if (isUpdated) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User details have been successfully updated!", null));
                 clearForm();
-                return "/index"; // Navigate to the index page
+                return "/pages/displayUsers"; // Navigate to the index page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
                 return null;
@@ -117,6 +130,35 @@ public class UpdateUser implements Serializable {
             return null;
         }
     }
+
+    public String selectUser(User selectedUser) {
+        this.user = selectedUser;
+
+        this.id = selectedUser.getId();
+        this.username = selectedUser.getUsername();
+        this.firstname = selectedUser.getFirstname();
+        this.lastname = selectedUser.getLastname();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+
+        return "updateUser"; // Should match the outcome in faces-config.xml
+    }
+
+    //    public String selectUser(User selectedUser) {
+//        this.user = selectedUser;
+//
+//        this.id = selectedUser.getId();
+//        this.username = selectedUser.getUsername();
+//        this.firstname = selectedUser.getFirstname();
+//        this.lastname = selectedUser.getLastname();
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+////        =selectedUser.getDateOfBirth();
+//
+//        return "/updateUser"; // Navigate to getUser.xhtml
+//    }
 
     private void clearForm() {
         firstname = null;

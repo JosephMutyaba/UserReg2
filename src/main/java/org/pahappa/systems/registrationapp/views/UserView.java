@@ -9,10 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean
 @SessionScoped
@@ -33,11 +36,24 @@ public class UserView implements Serializable {
         dependants = dependantService.getAllDependantsByUserId(user.getId());
     }
 
+
     public List<User> getUsers() {
         return userService.displayAllUsers();
     }
 
     public List<Dependant> getDependants() {
+        // Retrieve the user identifier from the cookie
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
+        Cookie cookie = (Cookie) cookies.get("selectedUser");
+
+        if (cookie != null) {
+            String username = cookie.getValue();
+            user = userService.getUserOfUsername(username);
+        }
+
+        dependants = dependantService.getAllDependantsByUserId(user.getId());
+
         return dependants;
     }
 
@@ -116,7 +132,7 @@ public class UserView implements Serializable {
     public String selectUser(User selectedUser) {
         this.user = selectedUser;
         this.username = selectedUser.getUsername();
-        return "getUser?faces-redirect=true"; // Navigate to getUser.xhtml
+        return "/pages/getUser"; // Navigate to getUser.xhtml
     }
 
     public String deleteUser() {
@@ -124,7 +140,7 @@ public class UserView implements Serializable {
         if (userDeleted) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User deleted successfully"));
             users=userService.displayAllUsers();
-            return "index"; // Navigate to the index page
+            return "/pages/displayUsers"; // Navigate to the index page
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User not found"));
             return null;
@@ -137,7 +153,7 @@ public class UserView implements Serializable {
         if (allUsersDeleted) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("All users have been successfully deleted!"));
             users=userService.displayAllUsers();
-            return "index"; // Navigate to the index page
+            return "/pages/displayUsers"; // Navigate to the index page
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Deletion unsuccessful, please try again!"));
             return null;

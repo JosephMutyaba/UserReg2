@@ -4,40 +4,67 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Display All Users</title>
     <h:outputStylesheet name="css/displayUsers.css"/>
+    <h:outputScript name="js/setCookie.js"/>
 </h:head>
 <h:body>
-    <h:form>
-        <h:commandLink value="Back home" action="/index.xhtml" styleClass="link"/>
+    <h:form styleClass="top-section">
+        <h:commandLink value="New User" action="register.xhtml" styleClass="link"/>
+        <h:commandLink value="Delete All Users" action="deleteAllUsers.xhtml" styleClass="link"/>
     </h:form>
 
     <h1>All Registered Users</h1>
-    <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
-        <h:column>
-            <h:form>
+    <h:form id="userForm">
+        <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
+            <h:column>
                 <f:facet name="header">Username</f:facet>
-                <h:commandLink action="#{userView.selectUser(user)}" value="#{user.username}" styleClass="link">
+                <h:commandLink action="#{userView.selectUser(user)}" onclick="setUserCookie('#{user.username}');" value="#{user.username}" styleClass="link">
                     <f:param name="username" value="#{user.username}" />
                 </h:commandLink>
-            </h:form>
-        </h:column>
+            </h:column>
 
-        <h:column>
-            <f:facet name="header">First Name</f:facet>
-            #{user.firstname}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Last Name</f:facet>
-            #{user.lastname}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Date of Birth</f:facet>
-            #{user.dateOfBirth}
-        </h:column>
-    </h:dataTable>
+            <h:column>
+                <f:facet name="header">First Name</f:facet>
+                #{user.firstname}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Last Name</f:facet>
+                #{user.lastname}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Date of Birth</f:facet>
+                #{user.dateOfBirth}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <p:commandLink value="Delete" styleClass="link" oncomplete="PF('deleteDialog').show()" process="@this">
+                    <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
+                </p:commandLink>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton value="Update1" action="#{updateUser.selectUser(user)}" styleClass="button"/>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+    <!-- Delete Confirmation Dialog -->
+    <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Are you sure you want to delete?" />
+                <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
+                <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+
+    <!-- Remote Command to update the user table -->
+    <p:remoteCommand name="updateUsers" update="userForm" />
 </h:body>
 </html>
