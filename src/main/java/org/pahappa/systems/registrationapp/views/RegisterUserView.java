@@ -6,7 +6,6 @@ import org.pahappa.systems.registrationapp.services.UserService;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -114,9 +113,48 @@ public class RegisterUserView implements Serializable {
             // Register user
             boolean isRegistered = userService.registerUser(user);
             if (isRegistered) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User successfully registered!"));
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered!"));
                 user = new User(); // Reset form
                 return "/pages/displayUsers"; // Navigate to the index page
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
+                return null;
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            return null;
+        }
+    }
+
+
+    public String registerNewUser() {
+        try {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+            // Set user properties from the managed bean fields
+            user.setUsername(username);
+            user.setFirstname(firstname);
+            user.setLastname(lastname);
+            user.setDateOfBirth(dob);
+            user.setEmail(email);
+            user.setPassword(password);
+
+            // Perform validations
+            userService.validateUsername(user.getUsername());
+            userService.validateName(user.getFirstname(), "First name");
+            userService.validateName(user.getLastname(), "Last name");
+            userService.validateDateOfBirth(user.getDateOfBirth());
+
+            // Register user
+            boolean isRegistered = userService.registerUser(user);
+            if (isRegistered) {
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered!"));
+                user = new User(); // Reset form
+                return "/login.xhtml"; // Navigate to the login page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
                 return null;

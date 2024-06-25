@@ -17,6 +17,10 @@
    </h:form>
    <h1 class="header">Get User by Username</h1>
    <h:form id="userDetailsForm" styleClass="form">
+      <h:commandButton value="Edit details" onclick="setUserCookie('#{userView.user.username}');" action="#{updateUser.selectUser(userView.user)}" styleClass="button"/>
+
+
+
       <h:outputLabel for="username" value="Enter Username:" styleClass="label"/>
       <h:inputText id="username" value="#{userView.username}" styleClass="input"/>
       <h:commandButton value="Fetch User" action="#{userView.getUserOfUsername}" update=":userDetailsForm:userDetailsPanel" styleClass="button"/>
@@ -47,7 +51,10 @@
             <f:selectItem itemValue="firstname" itemLabel="First Name"/>
             <f:selectItem itemValue="lastname" itemLabel="Last Name"/>
          </h:selectOneMenu>
-         <h:commandButton value="Search" action="#{userView.searchDependants}" update=":userDetailsForm:dependantsTable" styleClass="button"/>
+
+         <h:commandButton ajax="true" value="Search" action="#{userView.searchDependants}" update="dependantsTable" styleClass="button">
+            <f:ajax execute="@form" render="@form :userDetailsForm:dependantsTable" />
+         </h:commandButton>
 
          <h:dataTable id="dependantsTable" value="#{userView.dependants}" var="dependant" rendered="#{not empty userView.dependants}" styleClass="dataTable">
             <h:column>

@@ -147,18 +147,6 @@ public class DependantView implements Serializable {
         }
     }
 
-//    public void searchDependants() {
-//        switch (searchCriteria) {
-//            case "gender":
-//                dependants = dependantService.searchDependantsByGender(searchValue);
-//                break;
-//            case "name":
-//                dependants = dependantService.searchDependantsByName(searchValue);
-//                break;
-//            default:
-//                dependants = dependantService.displayAllDependants();
-//        }
-//    }
 
     public void deleteDependant(Long id) {
         dependantService.deleteDependantsByUserId(id);
@@ -166,9 +154,4 @@ public class DependantView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant deleted successfully"));
     }
 
-    public void deleteAllDependants() {
-//        dependantService.deleteAllDependants();
-//        dependants = dependantService.displayAllDependants();
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("All dependants deleted successfully"));
-    }
 }

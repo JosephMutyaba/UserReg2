@@ -41,17 +41,6 @@ public class UpdateDependant implements Serializable {
     public void init() {
         dependant = new Dependant();
         user = new User();
-
-//        // Retrieve the user identifier from the cookie
-//        FacesContext facesContext = FacesContext.getCurrentInstance();
-//        Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
-//        Cookie cookie = (Cookie) cookies.get("selectedUser");
-//
-//        if (cookie != null) {
-//            String username = cookie.getValue();
-//            user = userService.getUserOfUsername(username);
-//
-//        }
     }
 
     public UpdateDependant() {
@@ -141,6 +130,78 @@ public class UpdateDependant implements Serializable {
         }
     }
 
+    public String updateADependantUser() {
+        try {
+
+            System.out.println("update dependant called"); // Debug statement
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+//            Dependant dependant = new Dependant();
+            dependant.setId(id);
+            dependant.setUsername(username);
+            dependant.setFirstname(firstname);
+            dependant.setLastname(lastname);
+            dependant.setDateOfBirth(dob);
+            dependant.setGender(gender);
+            dependant.setUser(user); // Set the user retrieved from the cookie
+
+            // Perform validations
+            dependantService.validateUsername(dependant.getUsername());
+            dependantService.validateName(dependant.getFirstname(), "First name");
+            dependantService.validateName(dependant.getLastname(), "Last name");
+            dependantService.validateDateOfBirth(dependant.getDateOfBirth());
+
+            System.out.println("\n\nDependant: "+ dependant);
+
+            dependantService.updateDependant(dependant);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant Updated successfully"));
+
+            return "/pages/userpages/getUserSpecific";
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
+            System.out.println("Exception: " + e.getMessage()); // Debug statement
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+            return "/pages/userpages/getUserSpecific";
+        }
+    }
+
+    public String updateADependantByUser() {
+        try {
+
+            System.out.println("update dependant called"); // Debug statement
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+//            Dependant dependant = new Dependant();
+            dependant.setId(id);
+            dependant.setUsername(username);
+            dependant.setFirstname(firstname);
+            dependant.setLastname(lastname);
+            dependant.setDateOfBirth(dob);
+            dependant.setGender(gender);
+            dependant.setUser(user); // Set the user retrieved from the cookie
+
+            // Perform validations
+            dependantService.validateUsername(dependant.getUsername());
+            dependantService.validateName(dependant.getFirstname(), "First name");
+            dependantService.validateName(dependant.getLastname(), "Last name");
+            dependantService.validateDateOfBirth(dependant.getDateOfBirth());
+
+            System.out.println("\n\nDependant: "+ dependant);
+
+            dependantService.updateDependant(dependant);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant Updated successfully"));
+
+            return "/pages/userpages/getUserSpecific";
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
+            System.out.println("Exception: " + e.getMessage()); // Debug statement
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+            return "/pages/userpages/getUserSpecific";
+        }
+    }
+
     public String selectDependant(Long dependant_id) {
         System.out.println("Commenced SLUSR");
         this.dependant = dependantService.getDependantById(dependant_id);
@@ -155,6 +216,23 @@ public class UpdateDependant implements Serializable {
         System.out.println("Ended SLUSR");
 
         return "/pages/updateDependant";
+
+    }
+
+    public String selectDependantUser(Long dependant_id) {
+        System.out.println("Commenced SLUSR");
+        this.dependant = dependantService.getDependantById(dependant_id);
+        this.id = dependant.getId();
+        this.firstname=dependant.getFirstname();
+        this.lastname=dependant.getLastname();
+        this.gender=dependant.getGender();
+        this.dateOfBirth=dependant.getDateOfBirth().toString();
+        this.username=dependant.getUsername();
+        this.user = dependant.getUser();
+
+        System.out.println("Ended SLUSR");
+
+        return "/pages/userpages/updateDependantUser";
 
     }
 

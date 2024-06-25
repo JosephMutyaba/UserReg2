@@ -77,8 +77,7 @@ public class LoginBean implements Serializable {
             } else {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
                 System.out.println("Non-admin user: " + loggedInUser.getUsername());
-                return "/pages/getUser.xhtml?faces-redirect=true&user=" + loggedInUser.getUsername(); // Redirect to getUser page
-
+                return "/pages/userpages/getUserSpecific.xhtml?faces-redirect=true&user=" + loggedInUser.getUsername(); // Redirect to getUser page
             }
         }
 

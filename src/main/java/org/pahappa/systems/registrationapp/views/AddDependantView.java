@@ -151,6 +151,44 @@ public class AddDependantView implements Serializable {
         }
     }
 
+
+    public String addDependantUser() {
+        try {
+            System.out.println("addDependant called"); // Debug statement
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+            Dependant dependant = new Dependant();
+            dependant.setUsername(username);
+            dependant.setFirstname(firstname);
+            dependant.setLastname(lastname);
+            dependant.setDateOfBirth(dob);
+            dependant.setGender(gender);
+            dependant.setUser(user); // Set the user retrieved from the cookie
+
+            // Perform validations
+            dependantService.validateUsername(dependant.getUsername());
+            dependantService.validateName(dependant.getFirstname(), "First name");
+            dependantService.validateName(dependant.getLastname(), "Last name");
+            dependantService.validateDateOfBirth(dependant.getDateOfBirth());
+
+            dependantService.addDependant(dependant);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
+
+            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
+
+            return "/pages/userpages/getUserSpecific";
+
+
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
+            System.out.println("Exception: " + e.getMessage()); // Debug statement
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+            return "/pages/userpages/getUserSpecific";
+        }
+    }
+
+
     public String selectUser(User selectedUser) {
         try {
             this.user = userService.getUserOfUsername(selectedUser.getUsername());
@@ -158,6 +196,20 @@ public class AddDependantView implements Serializable {
             System.out.println("user role: " + this.user.getRole());
 
             return "/pages/addDependant";
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error selecting user", null));
+            return null; // Handle error case appropriately
+        }
+    }
+
+
+    public String selectUser_User(User selectedUser) {
+        try {
+            this.user = userService.getUserOfUsername(selectedUser.getUsername());
+            this.user_id = this.user.getId(); // Assuming user.getId() exists
+            System.out.println("user role: " + this.user.getRole());
+
+            return "/pages/userpages/addDependantUser";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error selecting user", null));
             return null; // Handle error case appropriately
