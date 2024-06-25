@@ -1,10 +1,12 @@
 package org.pahappa.systems.registrationapp.services;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.systems.registrationapp.dao.UserDAO;
 import org.pahappa.systems.registrationapp.exception.InvalidDateFormatException;
 import org.pahappa.systems.registrationapp.exception.InvalidNameException;
 import org.pahappa.systems.registrationapp.exception.UsernameAlreadyExistsException;
 import org.pahappa.systems.registrationapp.models.User;
+import org.pahappa.systems.registrationapp.util.PasswordUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,7 @@ public class UserService {
 
     public boolean registerUser(User person) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(person, "register");
+        person.setPassword(PasswordUtil.hashPassword(person.getPassword()));
         return usrDAO.registerUser(person);
     }
 
@@ -32,6 +35,8 @@ public class UserService {
 
     public boolean updateUserOfUsername(User user) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(user,"update");
+//        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
         return usrDAO.updateUserOfUsername(user);
     }
 

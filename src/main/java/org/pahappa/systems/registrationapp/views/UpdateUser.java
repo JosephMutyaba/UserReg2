@@ -1,5 +1,6 @@
 package org.pahappa.systems.registrationapp.views;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.UserService;
 
@@ -24,6 +25,10 @@ public class UpdateUser implements Serializable {
     private String firstname;
     private String lastname;
     private String dateOfBirth;
+    private boolean deleted;
+    private String role;
+    private String password;
+    private String email;
 
     private User user;
 
@@ -75,12 +80,44 @@ public class UpdateUser implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void getUserOfUsername() {
@@ -108,6 +145,16 @@ public class UpdateUser implements Serializable {
             user.setFirstname(firstname);
             user.setLastname(lastname);
             user.setDateOfBirth(dob);
+            user.setRole(role);
+//            user.setPassword(password);
+            user.setDeleted(deleted);
+            user.setId(id);
+            user.setEmail(email);
+            user.setUsername(username);
+
+            if (!BCrypt.checkpw(password, user.getPassword() )) {
+                user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+            }
 
             userService.validateName(user.getFirstname(), "First name");
             userService.validateName(user.getLastname(), "Last name");
@@ -138,27 +185,15 @@ public class UpdateUser implements Serializable {
         this.username = selectedUser.getUsername();
         this.firstname = selectedUser.getFirstname();
         this.lastname = selectedUser.getLastname();
+        this.email = selectedUser.getEmail();
+        this.role = selectedUser.getRole();
+        this.deleted = selectedUser.isDeleted();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
 
         return "updateUser"; // Should match the outcome in faces-config.xml
     }
-
-    //    public String selectUser(User selectedUser) {
-//        this.user = selectedUser;
-//
-//        this.id = selectedUser.getId();
-//        this.username = selectedUser.getUsername();
-//        this.firstname = selectedUser.getFirstname();
-//        this.lastname = selectedUser.getLastname();
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
-////        =selectedUser.getDateOfBirth();
-//
-//        return "/updateUser"; // Navigate to getUser.xhtml
-//    }
 
     private void clearForm() {
         firstname = null;

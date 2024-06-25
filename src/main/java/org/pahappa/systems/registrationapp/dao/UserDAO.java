@@ -43,7 +43,7 @@ public class UserDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from User").list();
+            return session.createQuery("from User where deleted = false").list();
         } catch (Exception e) {
             System.out.println("Error fetching all users: " + e.getMessage());
             return null;
@@ -103,8 +103,12 @@ public class UserDAO {
                     .setParameter("username", username)
                     .uniqueResult();
             if (user != null) {
-                session.delete(user);
+                user.setDeleted(true);
+
+                user.setDeleted(true);
+                session.update(user);
                 transaction.commit();
+
                 return true;
             } else {
                 return false;

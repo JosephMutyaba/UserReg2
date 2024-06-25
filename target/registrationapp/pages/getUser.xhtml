@@ -9,8 +9,10 @@
    <h:outputScript name="js/setCookie.js"/> <!-- Include JavaScript for setting cookies -->
 </h:head>
 <h:body>
-   <h:form id="getUserForm" styleClass="form">
+   <h:form id="getUserForm" styleClass="form" >
       <h:commandLink value="Back home" action="displayUsers.xhtml" styleClass="link" onclick="clearUserCookie();"/>
+      <h:commandLink value="Logout" action="#{loginBean.logout()}" styleClass="link"/>
+
    </h:form>
    <h1 class="header">Get User by Username</h1>
    <h:form id="userDetailsForm" styleClass="form">

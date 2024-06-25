@@ -141,10 +141,13 @@ public class AddDependantView implements Serializable {
             System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
 
             return "/pages/getUser";
+
+
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-            return "pages/getUser";
+
+            return "/pages/getUser";
         }
     }
 
@@ -152,9 +155,9 @@ public class AddDependantView implements Serializable {
         try {
             this.user = userService.getUserOfUsername(selectedUser.getUsername());
             this.user_id = this.user.getId(); // Assuming user.getId() exists
-            System.out.println("user: " + this.user);
+            System.out.println("user role: " + this.user.getRole());
 
-            return "/pages/addDependant"; // Correct navigation rule in faces-config.xml
+            return "/pages/addDependant";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error selecting user", null));
             return null; // Handle error case appropriately

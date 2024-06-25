@@ -26,5 +26,16 @@
         <managed-bean-class>org.pahappa.systems.registrationapp.views.DeleteDependantOfUser</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.LoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>userView</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.UserView</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
 

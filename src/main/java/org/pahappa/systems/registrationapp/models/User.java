@@ -1,5 +1,7 @@
 package org.pahappa.systems.registrationapp.models;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +28,8 @@ public class User {
 
     private boolean deleted = false;
 
+    private String role="USER"; // Add role field (e.g., "ADMIN" or "USER")
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Dependant> dependants = new ArrayList<>();
 
@@ -33,21 +37,25 @@ public class User {
 
     }
 
-    public User(Long id, String username, String firstname, String lastname, Date dateOfBirth, List<Dependant> dependants) {
+    private User(String role, Long id, String username, String firstname, String lastname, Date dateOfBirth, String password, String email, boolean deleted, List<Dependant> dependants) {
+        this.role = role;
         this.id = id;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.email = email;
+        this.deleted = deleted;
         this.dependants = dependants;
     }
 
-    public List<Dependant> getDependants() {
-        return dependants;
+    public String getRole() {
+        return role;
     }
 
-    public void setDependants(List<Dependant> dependants) {
-        this.dependants = dependants;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getId() {
@@ -90,6 +98,38 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<Dependant> getDependants() {
+        return dependants;
+    }
+
+    public void setDependants(List<Dependant> dependants) {
+        this.dependants = dependants;
+    }
+
     @Override
     public String toString() {
         return username;
@@ -111,5 +151,11 @@ public class User {
         return Objects.hash(username, firstname, lastname, dateOfBirth);
     }
 
+
+    private String encryptPassword(String password) {
+        // Add your password encryption logic here
+        // Example using BCrypt
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
 
 }

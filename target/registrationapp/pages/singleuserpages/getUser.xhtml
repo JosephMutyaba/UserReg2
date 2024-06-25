@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Get User by Username</title>
+   <h:outputStylesheet name="css/getUser.css"/>
+   <h:outputScript name="js/setCookie.js"/> <!-- Include JavaScript for setting cookies -->
+</h:head>
+<h:body>
+   <h:form id="getUserForm" styleClass="form" >
+      <h:commandLink value="Logout" action="#{loginBean.logout()}" styleClass="link"/>
+
+   </h:form>
+   <h1 class="header">Get User by Username</h1>
+   <h:form id="userDetailsForm" styleClass="form">
+ <h:messages globalOnly="true" styleClass="messages"/>
+
+      <h:panelGrid id="userDetailsPanel" columns="2" rendered="#{loginBean.loggedInUser.username ne null}" styleClass="panelGrid">
+         <h:outputLabel value="Username:" styleClass="label"/>
+         <h:outputText value="#{loginBean.loggedInUser.username}" styleClass="outputText"/>
+         <h:outputLabel value="First Name:" styleClass="label"/>
+         <h:outputText value="#{loginBean.loggedInUser.firstname}" styleClass="outputText"/>
+         <h:outputLabel value="Last Name:" styleClass="label"/>
+         <h:outputText value="#{loginBean.loggedInUser.lastname}" styleClass="outputText"/>
+         <h:outputLabel value="Date of Birth:" styleClass="label"/>
+         <h:outputText value="#{loginBean.loggedInUser.dateOfBirth}" styleClass="outputText"/>
+
+         <h:outputLabel value="Dependants:" style="margin-top:20px;" styleClass="label"/>
+         <h:outputText value=""/>
+
+         <p:commandLink value="Delete All Dependants" styleClass="button1" action="#{deleteAllDependantsOfUser.selectUserId(loginBean.loggedInUser.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this"/>
+
+         <h:commandLink value="Add Dependant" action="#{addDependantView.selectUser(loginBean.loggedInUser)}" onclick="setUserCookie('#{loginBean.loggedInUser.username}');" styleClass="button"/>
+         <h:outputLabel value="Search:" styleClass="label"/>
+         <h:inputText id="searchValue" value="#{loginBean.searchValue}" styleClass="input"/>
+         <h:selectOneMenu value="#{loginBean.searchCriteria}" styleClass="selectMenu">
+            <f:selectItem itemValue="gender" itemLabel="Gender"/>
+            <f:selectItem itemValue="username" itemLabel="Username"/>
+            <f:selectItem itemValue="firstname" itemLabel="First Name"/>
+            <f:selectItem itemValue="lastname" itemLabel="Last Name"/>
+         </h:selectOneMenu>
+         <h:commandButton value="Search" action="#{loginBean.searchDependants}" update=":userDetailsForm:dependantsTable" styleClass="button"/>
+
+         <h:dataTable id="dependantsTable" value="#{loginBean.dependants}" var="dependant" rendered="#{not empty loginBean.dependants}" styleClass="dataTable">
+            <h:column>
+               <f:facet name="header">Username</f:facet>
+               #{dependant.username}
+            </h:column>
+            <h:column>
+               <f:facet name="header">First Name</f:facet>
+               #{dependant.firstname}
+            </h:column>
+            <h:column>
+               <f:facet name="header">Last Name</f:facet>
+               #{dependant.lastname}
+            </h:column>
+            <h:column>
+               <f:facet name="header">Date of Birth</f:facet>
+               #{dependant.dateOfBirth}
+            </h:column>
+            <h:column>
+               <f:facet name="header">Delete</f:facet>
+               <p:commandLink value="Delete" styleClass="button1" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
+                  <f:setPropertyActionListener target="#{deleteDependantOfUser.dependant_id}" value="#{dependant.id}" />
+               </p:commandLink>
+            </h:column>
+            <h:column>
+               <h:commandButton value="Update" onclick="setUserCookie('#{loginBean.loggedInUser.username}');" action="#{updateDependant.selectDependant(dependant.id)}" styleClass="button"/>
+            </h:column>
+         </h:dataTable>
+      </h:panelGrid>
+
+   </h:form>
+
+   <!-- Delete Confirmation Dialog -->
+   <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+      <h:form>
+         <h:panelGrid columns="2">
+            <h:outputText value="Are you sure you want to delete?" />
+            <br/>
+            <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
+            <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+         </h:panelGrid>
+      </h:form>
+   </p:dialog>
+
+   <!-- Delete All dependants Confirmation Dialog -->
+   <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
+      <h:form>
+         <h:panelGrid columns="2">
+            <h:outputText value="Delete All Dependants?" />
+            <br/>
+            <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
+            <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
+         </h:panelGrid>
+      </h:form>
+   </p:dialog>
+
+   <!-- Remote Command to update the user table -->
+   <p:remoteCommand name="updateDependantTable" update="userDetailsForm" />
+</h:body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

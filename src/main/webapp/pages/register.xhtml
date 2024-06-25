@@ -23,8 +23,17 @@
         <h:inputText id="lastname" value="#{registerUserView.lastname}" required="true" styleClass="input"/>
         <br/>
 
+        <h:outputLabel for="email" value="Email:" styleClass="label"/>
+        <h:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input"/>
+        <br/>
+
+
         <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
         <h:inputText id="dob" value="#{registerUserView.dateOfBirth}" required="true" styleClass="input"/>
+        <br/>
+
+        <h:outputLabel for="password" value="Password" styleClass="label"/>
+        <h:inputText id="password" value="#{registerUserView.password}" required="true" styleClass="input"/>
         <br/>
 
         <h:commandButton value="Register" action="#{registerUserView.registerUser}" styleClass="button"/>

@@ -28,7 +28,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>pages/displayUsers.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 
     <context-param>
@@ -36,5 +36,17 @@
         <param-value>1</param-value>
     </context-param>
 
+    <listener>
+        <listener-class>org.pahappa.systems.registrationapp.config.ApplicationStartupListener</listener-class>
+    </listener>
 
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>org.pahappa.systems.registrationapp.filters.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/pages/*</url-pattern>
+    </filter-mapping>
 </web-app>
