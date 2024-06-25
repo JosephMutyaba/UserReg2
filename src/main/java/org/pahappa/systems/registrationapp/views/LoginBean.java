@@ -1,21 +1,15 @@
 package org.pahappa.systems.registrationapp.views;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
-import org.pahappa.systems.registrationapp.services.DependantService;
 import org.pahappa.systems.registrationapp.services.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.List;
 
 @ManagedBean(name = "loginBean")
 @SessionScoped
@@ -24,48 +18,15 @@ public class LoginBean implements Serializable {
     private String password;
     private User loggedInUser;
 
-    private List<Dependant> dependants;
-    DependantService dependantService = new DependantService();
-
-    private String searchCriteria;
-    private String searchValue;
-
     private UserService userService;
 
     @PostConstruct
     public void init() {
         userService = new UserService();
         loggedInUser = new User();
-//        userView = new UserView(); // Initialize userView here
     }
 
     // Getters and setters
-
-
-    public List<Dependant> getDependants() {
-        return dependants;
-    }
-
-    public void setDependants(List<Dependant> dependants) {
-        this.dependants = dependants;
-    }
-
-    public String getSearchCriteria() {
-        return searchCriteria;
-    }
-
-    public void setSearchCriteria(String searchCriteria) {
-        this.searchCriteria = searchCriteria;
-    }
-
-    public String getSearchValue() {
-        return searchValue;
-    }
-
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
-    }
-
     public UserService getUserService() {
         return userService;
     }
@@ -73,10 +34,6 @@ public class LoginBean implements Serializable {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
-//    public UserView getUserView() {
-//        return userView;
-//    }
 
     public String getUsername() {
         return username;
@@ -106,48 +63,33 @@ public class LoginBean implements Serializable {
         return loggedInUser != null && "ADMIN".equals(loggedInUser.getRole());
     }
 
+
     public String login() {
         loggedInUser = userService.getUserOfUsername(username);
+        System.out.println("Logged in user: " + loggedInUser);
+
         if (loggedInUser != null && BCrypt.checkpw(password, loggedInUser.getPassword())) {
-            System.out.println("Logged in user: " + loggedInUser);
+            System.out.println("Password check passed for user: " + loggedInUser.getUsername());
+
             if ("ADMIN".equals(loggedInUser.getRole())) {
                 System.out.println("AdminRole logged in user: " + loggedInUser.getRole());
                 return "/pages/displayUsers.xhtml?faces-redirect=true"; // Redirect to admin home page
             } else {
-                return "/pages/getUser.xhtml"; // Redirect to getUser page
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
+                System.out.println("Non-admin user: " + loggedInUser.getUsername());
+                return "/pages/getUser.xhtml?faces-redirect=true&user=" + loggedInUser.getUsername(); // Redirect to getUser page
+
             }
         }
+
+        System.out.println("Login failed for user: " + username);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed", "Invalid username or password"));
         return "/login.xhtml?faces-redirect=true"; // Redirect to login page if failed
     }
+
 
     public String logout() {
         loggedInUser = null;
         return "/login.xhtml?faces-redirect=true";
-    }
-
-
-
-    public void getUserAndDependants() {
-        dependants = dependantService.getAllDependantsByUserId(loggedInUser.getId());
-    }
-
-    public void searchDependants() {
-        switch (searchCriteria) {
-            case "gender":
-                dependants = dependantService.searchDependantsByGenderAndUserId(searchValue, loggedInUser.getId());
-                break;
-            case "username":
-                dependants = dependantService.searchDependantsByUsernameAndUserId(searchValue, loggedInUser.getId());
-                break;
-            case "firstname":
-                dependants = dependantService.searchDependantsByFirstnameAndUserId(searchValue, loggedInUser.getId());
-                break;
-            case "lastname":
-                dependants = dependantService.searchDependantsByLastnameAndUserId(searchValue, loggedInUser.getId());
-                break;
-            default:
-                dependants = dependantService.getAllDependantsByUserId(loggedInUser.getId());
-                break;
-        }
     }
 }

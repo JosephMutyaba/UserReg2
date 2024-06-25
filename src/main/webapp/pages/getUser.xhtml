@@ -9,6 +9,7 @@
    <h:outputScript name="js/setCookie.js"/> <!-- Include JavaScript for setting cookies -->
 </h:head>
 <h:body>
+   <f:event type="preRenderView" listener="#{userView.loadUserData}"/>
    <h:form id="getUserForm" styleClass="form" >
       <h:commandLink value="Back home" action="displayUsers.xhtml" styleClass="link" onclick="clearUserCookie();"/>
       <h:commandLink value="Logout" action="#{loginBean.logout()}" styleClass="link"/>

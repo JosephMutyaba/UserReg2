@@ -102,6 +102,8 @@ public class RegisterUserView implements Serializable {
             user.setFirstname(firstname);
             user.setLastname(lastname);
             user.setDateOfBirth(dob);
+            user.setEmail(email);
+            user.setPassword(password);
 
             // Perform validations
             userService.validateUsername(user.getUsername());

@@ -21,7 +21,10 @@ public class UserService {
 
     public boolean registerUser(User person) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(person, "register");
-        person.setPassword(PasswordUtil.hashPassword(person.getPassword()));
+        person.setPassword(BCrypt.hashpw(person.getPassword(), BCrypt.gensalt()));
+
+//        admin.setPassword(BCrypt.hashpw(ADMIN_PASSWORD, BCrypt.gensalt()));
+
         return usrDAO.registerUser(person);
     }
 

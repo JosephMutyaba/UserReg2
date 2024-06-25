@@ -31,22 +31,56 @@ public class UserView implements Serializable {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
+//    @PostConstruct
+//    public void init() {
+//        users = userService.displayAllUsers();
+////        String usernameFromParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("user");
+////        if (usernameFromParam != null) {
+////            User foundUser = userService.getUserOfUsername(usernameFromParam);
+////            if (foundUser != null) {
+////                this.user = foundUser;
+////                System.out.println("Found user: " + foundUser);
+////                dependants = dependantService.getAllDependantsByUserId(user.getId());
+////            }else {
+////                System.out.println("User not found-----------------");
+////            }
+////
+////        }
+//        dependants = dependantService.getAllDependantsByUserId(user.getId());
+//    }
+
+
     @PostConstruct
     public void init() {
         users = userService.displayAllUsers();
-//        String usernameFromParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("user");
+
+//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//        String usernameFromParam = params.get("user");
 //        if (usernameFromParam != null) {
 //            User foundUser = userService.getUserOfUsername(usernameFromParam);
 //            if (foundUser != null) {
 //                this.user = foundUser;
-//                System.out.println("Found user: " + foundUser);
-//                dependants = dependantService.getAllDependantsByUserId(user.getId());
-//            }else {
-//                System.out.println("User not found-----------------");
+//                this.username = foundUser.getUsername();
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User not found"));
 //            }
-//
 //        }
         dependants = dependantService.getAllDependantsByUserId(user.getId());
+    }
+
+    public void loadUserData() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String usernameParam = params.get("user");
+        if (usernameParam != null) {
+            User foundUser = userService.getUserOfUsername(usernameParam);
+            if (foundUser != null) {
+                this.user = foundUser;
+                this.username = foundUser.getUsername();
+                this.dependants = dependantService.getAllDependantsByUserId(user.getId());
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User not found", "User not found"));
+            }
+        }
     }
 
     // Getters and setters
@@ -63,10 +97,6 @@ public class UserView implements Serializable {
         return user;
     }
 
-//    public void setUser(User user) {
-//        this.user = user;
-//        dependants = dependantService.getAllDependantsByUserId(user.getId());
-//    }
     public void setUser(User user) {
         this.user = user;
         this.username = user.getUsername();

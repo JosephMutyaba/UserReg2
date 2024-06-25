@@ -152,10 +152,4 @@ public class User {
     }
 
 
-    private String encryptPassword(String password) {
-        // Add your password encryption logic here
-        // Example using BCrypt
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
 }
