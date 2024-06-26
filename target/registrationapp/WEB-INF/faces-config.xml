@@ -31,5 +31,11 @@
         <managed-bean-class>org.pahappa.systems.registrationapp.views.UserView</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>getAllDependants</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.newui.GetAllDependants</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
 

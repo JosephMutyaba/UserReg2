@@ -215,6 +215,21 @@ public class DependantDAO {
             }
         }
     }
+
+    public List<Dependant> getAllDependants() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            return session.createQuery("from Dependant").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
 
 

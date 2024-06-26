@@ -257,6 +257,21 @@ public class UpdateUser implements Serializable {
         return "updateUser"; // Should match the outcome in faces-config.xml
     }
 
+    public void selectUserNewUI(User selectedUser) {
+        this.user = selectedUser;
+
+        this.id = selectedUser.getId();
+        this.username = selectedUser.getUsername();
+        this.firstname = selectedUser.getFirstname();
+        this.lastname = selectedUser.getLastname();
+        this.email = selectedUser.getEmail();
+        this.role = selectedUser.getRole();
+        this.deleted = selectedUser.isDeleted();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+    }
+
     public String selectUser_User(User selectedUser) {
         this.user = selectedUser;
 

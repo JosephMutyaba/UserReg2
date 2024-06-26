@@ -1,0 +1,101 @@
+<ui:composition template="/pages/newui/adminpages/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="sidebar">
+        <ui:include src="/pages/newui/adminpages/sidebar.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="dependants-management">
+            <h2>Dependants</h2>
+            <div class="summary-cards">
+                <div class="card">
+                    <h:outputText value="Users with dependants"/>
+                    <h:outputText value="22"/>
+                </div>
+                <div class="card">
+                    <h:outputText value="Users without dependants"/>
+                    <h:outputText value="18"/>
+                </div>
+                <div class="card">
+                    <h:outputText value="Dependency ratio"/>
+                    <h:outputText value="11:9"/>
+                </div>
+            </div>
+            <div class="dependants-table">
+                <h:form id="dependantsForm">
+                    <h:panelGrid columns="3" styleClass="search-bar">
+                        <h:inputText value="#{userView.searchTerm}" placeholder="Search term"/>
+                        <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date"/>
+                        <h:inputText value="#{userView.dateTo}" placeholder="To" type="date"/>
+                        <h:selectOneMenu value="#{userView.sortBy}">
+                            <f:selectItem itemLabel="Sort by" itemValue=""/>
+                            <f:selectItem itemLabel="Name" itemValue="name"/>
+                            <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
+                            <f:selectItem itemLabel="Date Added" itemValue="dateAdded"/>
+                        </h:selectOneMenu>
+                        <h:commandButton value="Search" action="#{userView.search}" styleClass="search-button"/>
+                    </h:panelGrid>
+                    <p:dataTable value="#{getAllDependants.dependants}" var="dependant" rows="10" paginator="true" rowsPerPageTemplate="5,10,15">
+                        <p:column headerText="No.">
+                            <h:outputText value="#{userView.index}"/>
+                        </p:column>
+                        <p:column headerText="First Name">
+                            <h:outputText value="#{dependant.firstname}"/>
+                        </p:column>
+                        <p:column headerText="Last Name">
+                            <h:outputText value="#{dependant.lastname}"/>
+                        </p:column>
+                        <p:column headerText="Date Of Birth">
+                            <h:outputText value="#{dependant.dateOfBirth}"/>
+                        </p:column>
+                        <p:column headerText="User">
+                            <h:outputText value="#{dependant.user}"/>
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <h:commandLink action="#{updateDependant.selectDependant(dependant.id)}" onclick="PF('editDependantDialog').show()" value="Edit" styleClass="action-link"/>
+                            <h:commandLink action="#{deleteDependantOfUser.selectedId(dependant.id)}" onclick="PF('deleteDialog').show()" value="Delete" styleClass="action-link"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Dialog -->
+        <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Are you sure you want to delete?" />
+                    <br/>
+                    <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
+                    <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Delete All dependants Confirmation Dialog -->
+        <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Delete All Dependants?" />
+                    <br/>
+                    <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
+                    <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Update dependants Confirmation Dialog -->
+        <p:dialog header="Update Dependant" widgetVar="editDependantDialog" modal="true" width="300">
+            <h:form>
+
+            </h:form>
+        </p:dialog>
+
+        <!-- Remote Command to update the dependants table -->
+        <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
+    </ui:define>
+</ui:composition>

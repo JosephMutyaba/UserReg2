@@ -6,12 +6,13 @@ import org.pahappa.systems.registrationapp.services.UserService;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DeleteUserView implements Serializable {
     private User user;
     UserService userService=new UserService();
@@ -49,6 +50,12 @@ public class DeleteUserView implements Serializable {
         this.user = selectedUser;
 //        this.username = selectedUser.getUsername();
         return "getUser?faces-redirect=true"; // Navigate to getUser.xhtml
+    }
+
+    public void selectUserNewUI(User selectedUser) {
+        this.user = selectedUser;
+//        this.username = selectedUser.getUsername();
+//        return "getUser?faces-redirect=true"; // Navigate to getUser.xhtml
     }
 
 

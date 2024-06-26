@@ -1,0 +1,86 @@
+<ui:composition template="/newui/adminpages/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="sidebar">
+        <ui:include src="/newui/adminpages/sidebar.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <div class="user-management">
+            <h2>Users</h2>
+            <div class="summary-cards">
+                <div class="card">
+                    <h:outputText value="Male Users"/>
+                    <h:outputText value="27"/>
+                </div>
+                <div class="card">
+                    <h:outputText value="Female Users"/>
+                    <h:outputText value="13"/>
+                </div>
+                <div class="card">
+                    <h:outputText value="Male to Female Ratio"/>
+                    <h:outputText value="2:1"/>
+                </div>
+            </div>
+            <div class="user-table">
+                <h:form id="userForm">
+                    <h:panelGrid columns="3" styleClass="search-bar">
+                        <h:inputText value="#{userView.searchTerm}" placeholder="Search term"/>
+                        <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date"/>
+                        <h:inputText value="#{userView.dateTo}" placeholder="To" type="date"/>
+                        <h:selectOneMenu value="#{userView.sortBy}">
+                            <f:selectItem itemLabel="Sort by" itemValue=""/>
+                            <f:selectItem itemLabel="Name" itemValue="name"/>
+                            <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
+                        </h:selectOneMenu>
+                        <h:commandButton value="Search" action="#{userView.search}" styleClass="search-button"/>
+                    </h:panelGrid>
+
+
+
+                    <p:dataTable id="userTable" value="#{userView.users}" var="user" rows="10" paginator="true" rowsPerPageTemplate="5,10,15">
+                        <p:column headerText="No.">
+                            <h:outputText value="#{userView.index}"/>
+                        </p:column>
+
+                        <p:column headerText="First Name">
+                            <h:outputText value="#{user.firstname}"/>
+                        </p:column>
+                        <p:column headerText="Last Name">
+                            <h:outputText value="#{user.lastname}"/>
+                        </p:column>
+                        <p:column headerText="Date Of Birth">
+                            <h:outputText value="#{user.dateOfBirth}"/>
+                        </p:column>
+                        <p:column headerText="No. of Dependents">
+                            <h:outputText value="#{user.dependants.size()}"/>
+                        </p:column>
+                        <p:column headerText="Username">
+                            <h:outputText value="#{user.username}"/>
+                        </p:column>
+                        <p:column headerText="Action">
+                            <h:commandLink action="#{updateUser.selectUserNewUI(user)}" onclick="PF('editDependantDialog').show()"  value="Edit" styleClass="action-link"/>
+                            <h:commandLink action="#{deleteUserView.selectUserNewUI(user)}" onclick="PF('deleteDialog').show()" value="Delete" styleClass="action-link"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Dialog -->
+        <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Are you sure you want to delete?" />
+                    <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
+                    <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- Remote Command to update the user table -->
+        <p:remoteCommand name="updateUsers" update="userForm:userTable" />
+    </ui:define>
+</ui:composition>

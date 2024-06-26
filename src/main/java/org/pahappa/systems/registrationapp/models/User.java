@@ -30,7 +30,7 @@ public class User {
 
     private String role="USER"; // Add role field (e.g., "ADMIN" or "USER")
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Dependant> dependants = new ArrayList<>();
 
     public User(){

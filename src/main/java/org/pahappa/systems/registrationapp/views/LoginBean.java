@@ -10,6 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @ManagedBean(name = "loginBean")
 @SessionScoped
@@ -17,6 +20,73 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
     private User loggedInUser;
+
+
+    private Long id;
+    private String firstname;
+    private String lastname;
+    private String dateOfBirth;
+    private boolean deleted;
+    private String role;
+    private String email;
+//    private String userRole;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     private UserService userService;
 
@@ -72,8 +142,19 @@ public class LoginBean implements Serializable {
             System.out.println("Password check passed for user: " + loggedInUser.getUsername());
 
             if ("ADMIN".equals(loggedInUser.getRole())) {
+                this.username = loggedInUser.getUsername();
+                this.password = loggedInUser.getPassword();
+                this.id=loggedInUser.getId();
+                this.dateOfBirth=loggedInUser.getDateOfBirth().toString();
+                this.deleted=loggedInUser.isDeleted();
+                this.firstname=loggedInUser.getFirstname();
+                this.lastname=loggedInUser.getLastname();
+                this.role=loggedInUser.getRole();
+                this.email = loggedInUser.getEmail();
+
                 System.out.println("AdminRole logged in user: " + loggedInUser.getRole());
                 return "/pages/displayUsers.xhtml?faces-redirect=true"; // Redirect to admin home page
+//                return "pages/newui/adminpages/dashboard.xhtml?faces-redirect=true"; // Redirect to admin home page
             } else {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
                 System.out.println("Non-admin user: " + loggedInUser.getUsername());
@@ -91,4 +172,46 @@ public class LoginBean implements Serializable {
         loggedInUser = null;
         return "/login.xhtml?faces-redirect=true";
     }
+
+
+
+    public void updateUser() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+            loggedInUser.setFirstname(firstname);
+            loggedInUser.setLastname(lastname);
+            loggedInUser.setDateOfBirth(dob);
+            loggedInUser.setRole(role);
+            loggedInUser.setDeleted(deleted);
+            loggedInUser.setId(id);
+            loggedInUser.setEmail(email);
+            loggedInUser.setUsername(username);
+
+            if (!BCrypt.checkpw(password, loggedInUser.getPassword() )) {
+                loggedInUser.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+            }
+
+            userService.validateName(loggedInUser.getFirstname(), "First name");
+            userService.validateName(loggedInUser.getLastname(), "Last name");
+            userService.validateDateOfBirth(loggedInUser.getDateOfBirth());
+
+            boolean isUpdated = userService.updateUserOfUsername(loggedInUser);
+            if (isUpdated) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User details have been successfully updated!", null));
+
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
+
+            }
+        } catch (ParseException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+        }
+    }
+
+
 }

@@ -5,6 +5,7 @@ org\pahappa\systems\registrationapp\views\DependantView.class
 org\pahappa\systems\registrationapp\util\PasswordUtil.class
 contextlistener\AppContextListener.class
 org\pahappa\systems\registrationapp\models\Dependant.class
+org\pahappa\systems\registrationapp\views\newui\GetAllDependants.class
 org\pahappa\systems\registrationapp\config\SessionConfiguration.class
 org\pahappa\systems\registrationapp\views\RegisterUserView.class
 org\pahappa\systems\registrationapp\dao\UserDAO.class
@@ -25,3 +26,4 @@ org\pahappa\systems\registrationapp\config\ApplicationStartupListener.class
 org\pahappa\systems\registrationapp\filters\AuthorizationFilter.class
 org\pahappa\systems\registrationapp\views\LoginBean.class
 org\pahappa\systems\registrationapp\views\UserView.class
+org\pahappa\systems\registrationapp\views\newui\AdminView.class

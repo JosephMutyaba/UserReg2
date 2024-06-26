@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,8 @@ public class UserView implements Serializable {
         users = userService.displayAllUsers();
         dependants = dependantService.getAllDependantsByUserId(user.getId());
     }
+
+    
 
     public void loadUserData() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -196,4 +199,54 @@ public class UserView implements Serializable {
             }
         }
     }
+
+    private Long index= 0L;
+
+    public Long getIndex() {
+        return index++;
+    }
+
+    public void setIndex(Long index) {
+        this.index = index;
+    }
+
+    private String searchTerm;
+    private Date dateFrom;
+    private Date dateTo;
+    private String sortBy;
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
+    }
+
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public void search(){}
+
 }
