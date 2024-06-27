@@ -30,6 +30,7 @@ public class UpdateUser implements Serializable {
     private String role;
     private String password;
     private String email;
+    private String gender;
 
     private String userRole;
 
@@ -41,6 +42,14 @@ public class UpdateUser implements Serializable {
     @PostConstruct
     public void init() {
         user = new User();
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Long getId() {
@@ -198,7 +207,8 @@ public class UpdateUser implements Serializable {
     }
 
 
-    public String updateUserUser() {
+
+    public String updateUsernui() {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dob = sdf.parse(dateOfBirth);
@@ -213,6 +223,50 @@ public class UpdateUser implements Serializable {
             user.setUsername(username);
 
             if (!BCrypt.checkpw(password, user.getPassword() )) {
+                user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+            }
+
+            userService.validateName(user.getFirstname(), "First name");
+            userService.validateName(user.getLastname(), "Last name");
+            userService.validateDateOfBirth(user.getDateOfBirth());
+
+            boolean isUpdated = userService.updateUserOfUsername(user);
+            if (isUpdated) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User details have been successfully updated!", null));
+                clearForm();
+
+                return "/pages/displayUsers.xhtml?faces-redirect=true";
+
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
+                return null;
+            }
+        } catch (ParseException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
+            return null;
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+            return null;
+        }
+    }
+
+
+    public String updateUserUser() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = sdf.parse(dateOfBirth);
+
+            user.setFirstname(firstname);
+            user.setLastname(lastname);
+            user.setDateOfBirth(dob);
+            user.setRole(role);
+            user.setDeleted(deleted);
+            user.setId(id);
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setGender(gender);
+
+            if (!BCrypt.checkpw(password, user.getPassword() ) || password != null) {
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             }
 
@@ -250,6 +304,7 @@ public class UpdateUser implements Serializable {
         this.email = selectedUser.getEmail();
         this.role = selectedUser.getRole();
         this.deleted = selectedUser.isDeleted();
+        this.gender = selectedUser.getGender();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
@@ -267,6 +322,7 @@ public class UpdateUser implements Serializable {
         this.email = selectedUser.getEmail();
         this.role = selectedUser.getRole();
         this.deleted = selectedUser.isDeleted();
+        this.gender = selectedUser.getGender();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
@@ -282,6 +338,7 @@ public class UpdateUser implements Serializable {
         this.email = selectedUser.getEmail();
         this.role = selectedUser.getRole();
         this.deleted = selectedUser.isDeleted();
+        this.gender = selectedUser.getGender();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());

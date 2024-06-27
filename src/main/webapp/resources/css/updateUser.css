@@ -5,15 +5,30 @@ body {
     padding: 20px;
 }
 
-.header {
+
+
+.top-nav{
+    display: flex;
+    flex-direction: row;
+}
+
+.top-nav .header {
     color: #333;
     text-align: center;
     margin-top: 20px;
 }
 
-.form {
+.top-nav .form {
+    align-content: flex-start;
     margin: 20px auto;
     text-align: left;
+    width: 400px;
+}
+
+.form {
+    align-content: center;
+    margin: 20px auto;
+    text-align: center;
     width: 400px;
 }
 
@@ -73,4 +88,5 @@ body {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    align-content: center;
 }

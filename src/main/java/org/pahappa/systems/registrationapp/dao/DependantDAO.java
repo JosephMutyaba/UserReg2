@@ -42,7 +42,7 @@ public class DependantDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where user_id = :userId")
+            return session.createQuery("from Dependant where user_id = :userId and deleted = false")
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {
@@ -55,11 +55,12 @@ public class DependantDAO {
         }
     }
 
+
     public List<Dependant> searchDependantsByGenderAndUserId(String gender, Long userId) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where gender = :gender and user_id = :userId")
+            return session.createQuery("from Dependant where gender = :gender and user_id = :userId and deleted = false")
                     .setParameter("gender", gender)
                     .setParameter("userId", userId)
                     .list();
@@ -77,7 +78,7 @@ public class DependantDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where username = :username and user_id = :userId")
+            return session.createQuery("from Dependant where username = :username and user_id = :userId and deleted = false")
                     .setParameter("username", username)
                     .setParameter("userId", userId)
                     .list();
@@ -95,7 +96,7 @@ public class DependantDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where firstname = :firstname and user_id = :userId")
+            return session.createQuery("from Dependant where firstname = :firstname and user_id = :userId and deleted = false")
                     .setParameter("firstname", firstname)
                     .setParameter("userId", userId)
                     .list();
@@ -113,7 +114,7 @@ public class DependantDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant where lastname = :lastname and user_id = :userId")
+            return session.createQuery("from Dependant where lastname = :lastname and user_id = :userId and deleted = false")
                     .setParameter("lastname", lastname)
                     .setParameter("userId", userId)
                     .list();
@@ -127,17 +128,18 @@ public class DependantDAO {
         }
     }
 
+
     public boolean deleteDependantsByUserId(Long userId) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            int deletedCount = session.createQuery("DELETE FROM Dependant where user_id = :userId")
+            int updatedCount = session.createQuery("update Dependant set deleted = true where user_id = :userId")
                     .setParameter("userId", userId)
                     .executeUpdate();
             transaction.commit();
-            return deletedCount > 0;
+            return updatedCount > 0;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -151,6 +153,9 @@ public class DependantDAO {
         }
     }
 
+
+
+
     public boolean deleteDependantById(Long id) {
         Transaction transaction = null;
         Session session = null;
@@ -159,7 +164,8 @@ public class DependantDAO {
             transaction = session.beginTransaction();
             Dependant dependant = (Dependant) session.get(Dependant.class, id);
             if (dependant != null) {
-                session.delete(dependant);
+                dependant.setDeleted(true);
+                session.update(dependant);
                 transaction.commit();
                 return true;
             } else {

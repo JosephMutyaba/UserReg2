@@ -18,8 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@ManagedBean
-@SessionScoped
+
 public class UserView implements Serializable {
 
     private UserService userService = new UserService();
@@ -28,18 +27,82 @@ public class UserView implements Serializable {
     private List<Dependant> dependants;
     private User user = new User();
     private String username;
+    private String gender;
     private String searchCriteria;
     private String searchValue;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
+
+    ///
+    private int maleUserCount;
+    private int femaleUserCount;
+    private String maleFemaleRatio;
+
+
 
 
     @PostConstruct
     public void init() {
         users = userService.displayAllUsers();
         dependants = dependantService.getAllDependantsByUserId(user.getId());
+
+        // Compute counts and ratios
+        computeStatistics();
     }
 
-    
+
+    public int getMaleUserCount() {
+        computeStatistics();
+        return maleUserCount;
+    }
+
+    public void setMaleUserCount(int maleUserCount) {
+        this.maleUserCount = maleUserCount;
+    }
+
+    public int getFemaleUserCount() {
+        computeStatistics();
+        return femaleUserCount;
+    }
+
+    public void setFemaleUserCount(int femaleUserCount) {
+        this.femaleUserCount = femaleUserCount;
+    }
+
+    public String getMaleFemaleRatio() {
+        // Compute counts and ratios
+        computeStatistics();
+        return maleFemaleRatio;
+    }
+
+    public void setMaleFemaleRatio(String maleFemaleRatio) {
+        this.maleFemaleRatio = maleFemaleRatio;
+    }
+
+    private void computeStatistics() {
+        users = userService.displayAllUsers();
+
+        long maleCount = users.stream()
+                .filter(user -> user.getGender().equalsIgnoreCase("Male"))
+                .count();
+
+        long femaleCount = users.stream()
+                .filter(user -> user.getGender().equalsIgnoreCase("Female"))
+                .count();
+
+        this.maleUserCount = (int) maleCount;
+        this.femaleUserCount = (int) femaleCount;
+
+        if (femaleCount > 0) {
+            this.maleFemaleRatio = String.format("%.2f:1", (double) maleCount / femaleCount);
+        } else {
+            this.maleFemaleRatio = "N/A";
+        }
+    }
+
+
 
     public void loadUserData() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -67,6 +130,14 @@ public class UserView implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public void setUser(User user) {

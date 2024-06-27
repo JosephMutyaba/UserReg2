@@ -1,43 +1,51 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
     <title>Register User</title>
-    <h:outputStylesheet name="css/register.css"/>
+    <h:outputStylesheet name="css/registerNewUser.css"/>
 </h:head>
 <h:body>
-    <h1 class="header">Register</h1>
-    <h:form id="registerForm" styleClass="form">
-        <h:outputLabel for="username" value="Username:" styleClass="label"/>
-        <h:inputText id="username" value="#{registerUserView.username}" required="true" styleClass="input"/>
-        <br/>
+    <div class="container">
+        <h1 class="header">Register</h1>
+        <h:form id="registerForm" styleClass="form">
+            <h:outputLabel for="username" value="Username:" styleClass="label"/>
+            <h:inputText id="username" value="#{registerUserView.username}" required="true" styleClass="input"/>
+            <br/>
 
-        <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
-        <h:inputText id="firstname" value="#{registerUserView.firstname}" required="true" styleClass="input"/>
-        <br/>
+            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+            <h:inputText id="firstname" value="#{registerUserView.firstname}" required="true" styleClass="input"/>
+            <br/>
 
-        <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
-        <h:inputText id="lastname" value="#{registerUserView.lastname}" required="true" styleClass="input"/>
-        <br/>
+            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+            <h:inputText id="lastname" value="#{registerUserView.lastname}" required="true" styleClass="input"/>
+            <br/>
 
-        <h:outputLabel for="email" value="Email:" styleClass="label"/>
-        <h:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input"/>
-        <br/>
+            <h:outputLabel for="email" value="Email:" styleClass="label"/>
+            <h:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input"/>
+            <br/>
 
+            <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+            <h:selectOneMenu id="gender" value="#{registerUserView.gender}" required="true" styleClass="selectMenu">
+                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                <f:selectItem itemLabel="Female" itemValue="Female"/>
+            </h:selectOneMenu>
 
-        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
-        <h:inputText id="dob" value="#{registerUserView.dateOfBirth}" required="true" styleClass="input"/>
-        <br/>
+            <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+            <h:inputText id="dob" value="#{registerUserView.dateOfBirth}" required="true" styleClass="input"/>
+            <br/>
 
-        <h:outputLabel for="password" value="Password" styleClass="label"/>
-        <h:inputText id="password" value="#{registerUserView.password}" required="true" styleClass="input"/>
-        <br/>
+            <h:outputLabel for="password" value="Password:" styleClass="label"/>
+            <h:inputSecret id="password" value="#{registerUserView.password}" required="true" styleClass="input"/>
+            <br/>
 
-        <h:commandButton value="Register" action="#{registerUserView.registerNewUser}" styleClass="button"/>
-        <br/>
-        <h:messages globalOnly="true" styleClass="messages"/>
-    </h:form>
-    Already have an account?
-    <h:link style="margin-left: 10px;" value="Login" outcome="/login.xhtml"/>
+            <h:commandButton value="Register" action="#{registerUserView.registerNewUser}" styleClass="button"/>
+            <br/>
+            <h:messages globalOnly="true" styleClass="messages"/>
+        </h:form>
+        <p>Already have an account? <h:link styleClass="link" value="Login" outcome="/login.xhtml"/></p>
+
+    </div>
 </h:body>
 </html>

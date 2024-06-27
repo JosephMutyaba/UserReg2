@@ -1,6 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -10,62 +7,156 @@
 <h:head>
     <title>Display All Users</title>
     <h:outputStylesheet name="css/displayUsers.css"/>
+    <h:outputStylesheet name="css/newui/styles.css"/>
     <h:outputScript name="js/setCookie.js"/>
 </h:head>
 <h:body>
-    <h:form styleClass="top-section">
-        <h:commandLink value="New User" action="register.xhtml" styleClass="link"/>
-        <h:commandLink value="Delete All Users" action="deleteAllUsers.xhtml" styleClass="link"/>
-        <h:commandLink value="Log out" action="#{loginBean.logout()}" styleClass="link"/>
-    </h:form>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="user-management">
+                <h2 class="users-header">Users</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <h:outputText value="Male Users:"/>
+                        <h:outputText value="#{userView.maleUserCount}"/>
+                    </div>
+                    <div class="card">
+                        <h:outputText value="Female Users:"/>
+                        <h:outputText value="#{userView.femaleUserCount}"/>
+                    </div>
+                    <div class="card">
+                        <h:outputText value="Male to Female Ratio:"/>
+                        <h:outputText value="#{userView.maleFemaleRatio}"/>
+                    </div>
+                </div>
 
-    <h1>All Registered Users</h1>
-    <h:form id="userForm">
-        <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
-            <h:column>
-                <f:facet name="header">Username</f:facet>
-                <h:commandLink action="#{userView.selectUser(user)}" onclick="setUserCookie('#{user.username}');" value="#{user.username}" styleClass="link">
-                    <f:param name="username" value="#{user.username}" />
-                </h:commandLink>
-            </h:column>
+                <div>
+                    <h:form id="userForm">
+                        <h:panelGrid columns="5" styleClass="search-bar">
+                            <h:inputText value="#{userView.searchTerm}" placeholder="Search term"/>
+                            <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date"/>
+                            <h:inputText value="#{userView.dateTo}" placeholder="To" type="date"/>
+                            <h:selectOneMenu value="#{userView.sortBy}">
+                                <f:selectItem itemLabel="Sort by" itemValue=""/>
+                                <f:selectItem itemLabel="Name" itemValue="name"/>
+                                <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
+                            </h:selectOneMenu>
+                            <h:commandButton value="Search" action="#{userView.search}" styleClass="search-button"/>
+                        </h:panelGrid>
+                    </h:form>
+                </div>
 
-            <h:column>
-                <f:facet name="header">First Name</f:facet>
-                #{user.firstname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Last Name</f:facet>
-                #{user.lastname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Date of Birth</f:facet>
-                #{user.dateOfBirth}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Delete</f:facet>
-                <p:commandLink value="Delete" styleClass="link" oncomplete="PF('deleteDialog').show()" process="@this">
-                    <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
-                </p:commandLink>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Update</f:facet>
-                <h:commandButton value="Update1" action="#{updateUser.selectUser(user)}" styleClass="button"/>
-            </h:column>
-        </h:dataTable>
-    </h:form>
+                <div>
+                    <h:form id="displayForm" styleClass="top-section">
+                        <h:commandLink value="New User" action="/pages/register.xhtml" styleClass="link"/>
+                        <h:commandLink value="Delete All Users" action="/pages/deleteAllUsers.xhtml" styleClass="link"/>
+                    </h:form>
+                </div>
+                <div>
+                    <h:form id="userForma">
+                        <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
 
-    <!-- Delete Confirmation Dialog -->
-    <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputText value="Are you sure you want to delete?" />
-                <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
-                <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
-            </h:panelGrid>
-        </h:form>
-    </p:dialog>
+                            <h:column>
+                                <f:facet name="header">Number</f:facet>
+                                #{userView.users.indexOf(user) + 1}
+                            </h:column>
 
-    <!-- Remote Command to update the user table -->
-    <p:remoteCommand name="updateUsers" update="userForm" />
+                            <h:column>
+                                <f:facet name="header">Username</f:facet>
+                                <h:commandLink action="#{userView.selectUser(user)}" onclick="setUserCookie('#{user.username}');" value="#{user.username}" styleClass="link">
+                                    <f:param name="username" value="#{user.username}" />
+                                </h:commandLink>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">First Name</f:facet>
+                                #{user.firstname}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Gender</f:facet>
+                                #{user.gender}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Last Name</f:facet>
+                                #{user.lastname}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Date of Birth</f:facet>
+                                #{user.dateOfBirth}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Delete</f:facet>
+                                <p:commandLink value="Delete" styleClass="link" oncomplete="PF('deleteDialog').show()" process="@this">
+                                    <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
+                                </p:commandLink>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Update</f:facet>
+                                <h:commandButton value="Update" action="#{updateUser.selectUser(user)}" styleClass="link"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+
+                    <!-- Delete Confirmation Dialog -->
+                    <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+                        <h:form id="deleteForm">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Are you sure you want to delete?" />
+                                <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
+                                <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <p:dialog header="Update User" widgetVar="updateUserDialog" modal="true" width="500" height="400">
+                        <h:form id="updateForm" styleClass="form">
+                            <h:panelGrid columns="2" styleClass="panelGrid">
+                                <h:outputLabel for="username" value="Username" styleClass="label"/>
+                                <h:inputText id="username" value="#{updateUser.username}" styleClass="input"/>
+                                <br/>
+
+                                <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                                <h:inputText id="firstname" value="#{updateUser.firstname}" styleClass="input"/>
+                                <br/>
+                                <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                                <h:inputText id="lastname" value="#{updateUser.lastname}" styleClass="input"/>
+                                <br/>
+                                <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                                <h:inputText id="dob" value="#{updateUser.dateOfBirth}" styleClass="input"/>
+                                <br/>
+
+                                <h:outputLabel for="lastname" value="Last Name:" styleClass="label" rendered="#{loginBean.admin}"/>
+                                <h:selectOneMenu label="User role" id="role" value="#{updateUser.role}" styleClass="input" >
+                                    <f:selectItem itemLabel="USER" itemValue="USER"/>
+                                    <f:selectItem itemLabel="ADMIN" itemValue="ADMIN"/>
+                                </h:selectOneMenu>
+                                <br/>
+
+                                <h:outputLabel for="deleted" value="Deleted" rendered="#{loginBean.admin}"/>
+                                <h:selectBooleanCheckbox label="Deleted" id="deleted" value="#{updateUser.deleted}" rendered="#{loginBean.admin}" />
+                                <br/>
+
+                                <h:outputLabel for="email" value="Email" styleClass="label"/>
+                                <h:inputText id="email" value="#{updateUser.email}" styleClass="input"/>
+                                <br/>
+
+                                <h:outputLabel for="password" value="Password" styleClass="label"/>
+                                <h:inputText id="password" value="#{updateUser.password}" styleClass="input"/>
+                                <br/>
+                                <h:commandButton value="Update" action="#{updateUser.updateUser}" styleClass="button" oncomplete="PF('deleteDialog').hide(); updateUsers();"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Remote Command to update the user table -->
+                    <p:remoteCommand name="updateUsers" update="userForma" />
+                </div>
+            </div>
+        </div>
+    </div>
 </h:body>
 </html>

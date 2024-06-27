@@ -18,6 +18,7 @@ public class Dependant {
     private String lastname;
     private Date dateOfBirth;
     private String gender;
+    private boolean deleted=false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,8 +27,9 @@ public class Dependant {
     public Dependant() {
     }
 
-    public Dependant(Long id, String username, String firstname, String lastname, Date dateOfBirth, String gender, User user) {
+    public Dependant(Long id, boolean deleted, String username, String firstname, String lastname, Date dateOfBirth, String gender, User user) {
         this.id = id;
+        this.deleted = deleted;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -42,6 +44,14 @@ public class Dependant {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public String getUsername() {

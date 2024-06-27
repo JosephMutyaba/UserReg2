@@ -26,6 +26,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    private String gender;
+
     private boolean deleted = false;
 
     private String role="USER"; // Add role field (e.g., "ADMIN" or "USER")
@@ -37,8 +39,9 @@ public class User {
 
     }
 
-    private User(String role, Long id, String username, String firstname, String lastname, Date dateOfBirth, String password, String email, boolean deleted, List<Dependant> dependants) {
+    private User(String role, String gender, Long id, String username, String firstname, String lastname, Date dateOfBirth, String password, String email, boolean deleted, List<Dependant> dependants) {
         this.role = role;
+        this.gender = gender;
         this.id = id;
         this.username = username;
         this.firstname = firstname;
@@ -56,6 +59,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Long getId() {

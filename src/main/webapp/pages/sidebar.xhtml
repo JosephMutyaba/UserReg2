@@ -1,0 +1,14 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="sidebar">
+        <h:link outcome="/pages/dashboard.xhtml" styleClass="menu-item">Dashboard</h:link>
+        <h:link outcome="/pages/displayUsers.xhtml" styleClass="menu-item">Users</h:link>
+        <h:link outcome="/pages/dependants.xhtml" styleClass="menu-item">Dependants</h:link>
+        <h:link outcome="/pages/settings.xhtml" styleClass="menu-item">Settings</h:link>
+        <h:form>
+            <h:commandLink action="#{loginBean.logout}" value="Logout" styleClass="menu-item"/>
+        </h:form>
+    </h:panelGroup>
+</ui:composition>

@@ -5,20 +5,22 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Login</title>
+    <h:outputStylesheet name="css/login.css"/>
 </h:head>
 <h:body>
-    <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel for="username" value="Username:"/>
-            <h:inputText id="username" value="#{loginBean.username}"/>
+    <div class="login-container">
+        <h1>Login</h1>
+        <h:form styleClass="form-panel">
+            <h:outputLabel for="username" styleClass="input-label" value="Username:"/>
+            <h:inputText id="username" styleClass="input-field" value="#{loginBean.username}"/>
 
-            <h:outputLabel for="password" value="Password:"/>
-            <h:inputSecret id="password" value="#{loginBean.password}"/>
+            <h:outputLabel for="password" styleClass="input-label" value="Password:"/>
+            <h:inputSecret id="password" styleClass="input-field" value="#{loginBean.password}"/>
 
-            <h:commandButton value="Login" action="#{loginBean.login}"/>
-        </h:panelGrid>
-    </h:form>
-    Have no account?
-    <h:link style="margin-left: 10px;" value="Register" outcome="/pages/userpages/registerNewUser.xhtml"/>
+            <h:commandButton styleClass="login-button" value="Login" action="#{loginBean.login}"/>
+        </h:form>
+        <h:outputText value="Don't have an account?" styleClass="register-link"/>
+        <h:link value="Register" styleClass="register-link" outcome="/pages/userpages/registerNewUser.xhtml"/>
+    </div>
 </h:body>
 </html>

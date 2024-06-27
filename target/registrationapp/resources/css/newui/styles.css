@@ -1,3 +1,10 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
 /*Admin dashboard styles*/
 
 .container {
@@ -6,7 +13,7 @@
 
 .sidebar {
     width: 20%;
-    background-color: #f8f9fa;
+    background-color: #e2e6ec;
     padding: 10px;
 }
 
@@ -14,12 +21,13 @@
     display: block;
     padding: 10px;
     text-decoration: none;
-    color: #000;
+    color: #000000;
 }
 
 .main-content {
     width: 80%;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .cards {
@@ -71,19 +79,13 @@
     width: 30%;
 }
 
-.user-table {
-    margin-top: 20px;
-}
-
 .search-bar {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.search-bar .search-button {
-    align-self: center;
-}
 
 .action-link {
     margin-right: 10px;
@@ -93,6 +95,31 @@
 
 .action-link:hover {
     text-decoration: underline;
+}
+
+.dataTable {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dataTable th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
 }
 
 
@@ -100,51 +127,91 @@
 
 
 /* Dependants styles... */
-
 .dependants-management {
     padding: 20px;
 }
 
 .summary-cards {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
-.summary-cards .card {
-    background-color: #fff;
-    padding: 20px;
+.card {
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 30%;
+    flex: 1;
+    margin: 0 10px;
 }
 
-.dependants-table {
-    margin-top: 20px;
-}
-
-.search-bar {
+.search-form .search-bar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.search-bar .search-button {
-    align-self: center;
+.search-input {
+    padding: 5px;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.search-select {
+    padding: 5px;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.search-button {
+    padding: 5px 10px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 .action-link {
     margin-right: 10px;
-    text-decoration: none;
     color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-.action-link:hover {
-    text-decoration: underline;
+.confirmation-dialog {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+}
+
+.dialog-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog-button {
+    padding: 5px 10px;
+    margin: 5px;
 }
 
 
 /* Settings styles... */
+.settings-header .dependants-header .users-header .dashboard-header{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #ffffff;
+    text-align: left;
+ }
 
 .settings-panel {
     padding: 20px;

@@ -7,8 +7,10 @@ body {
 
 h1 {
     color: #333;
+    padding-bottom: 20px;
+    padding-top: 20px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 form {
@@ -19,8 +21,8 @@ form {
 .link {
     display: inline-block;
     text-align: center;
-    margin: 10px 0;
-    padding: 10px;
+    margin-left: 5px;
+    padding: 5px;
     color: #fff;
     background-color: #007bff;
     text-decoration: none;
@@ -33,7 +35,7 @@ form {
 }
 
 .dataTable {
-    width: 80%;
+    width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
 }
@@ -58,7 +60,9 @@ form {
 }
 
 .top-section{
+    background-color: #f3e9e9;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: right;
+
 }

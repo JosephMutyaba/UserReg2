@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
     <title>Register User</title>
@@ -7,7 +8,7 @@
 </h:head>
 <h:body>
     <h:form id="backHomeForm" styleClass="form">
-        <h:commandLink value="Back home" action="displayUsers.xhtml" styleClass="link"/>
+        <h:commandLink value="Back home" action="/pages/displayUsers.xhtml" styleClass="link"/>
     </h:form>
     <h1 class="header">Register a New User</h1>
     <h:form id="registerForm" styleClass="form">
@@ -27,6 +28,11 @@
         <h:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input"/>
         <br/>
 
+        <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+        <h:selectOneMenu id="gender" value="#{registerUserView.gender}" required="true" styleClass="selectMenu">
+            <f:selectItem itemLabel="Male" itemValue="Male"/>
+            <f:selectItem itemLabel="Female" itemValue="Female"/>
+        </h:selectOneMenu>
 
         <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
         <h:inputText id="dob" value="#{registerUserView.dateOfBirth}" required="true" styleClass="input"/>

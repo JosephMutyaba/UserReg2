@@ -14,8 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@ManagedBean(name = "loginBean")
-@SessionScoped
+
 public class LoginBean implements Serializable {
     private String username;
     private String password;
@@ -153,7 +152,7 @@ public class LoginBean implements Serializable {
                 this.email = loggedInUser.getEmail();
 
                 System.out.println("AdminRole logged in user: " + loggedInUser.getRole());
-                return "/pages/displayUsers.xhtml?faces-redirect=true"; // Redirect to admin home page
+                return "/pages/dashboard.xhtml?faces-redirect=true"; // Redirect to admin home page
 //                return "pages/newui/adminpages/dashboard.xhtml?faces-redirect=true"; // Redirect to admin home page
             } else {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);

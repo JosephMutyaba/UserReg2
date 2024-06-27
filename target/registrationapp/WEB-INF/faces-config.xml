@@ -9,6 +9,12 @@
         <managed-bean-class>org.pahappa.systems.registrationapp.views.AddDependantView</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>dependantView</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.DependantView</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>updateDependant</managed-bean-name>
         <managed-bean-class>org.pahappa.systems.registrationapp.views.UpdateDependant</managed-bean-class>
@@ -37,5 +43,26 @@
         <managed-bean-class>org.pahappa.systems.registrationapp.views.newui.GetAllDependants</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>updateUser</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.UpdateUser</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>registerUserView</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.RegisterUserView</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>deleteUserView</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.DeleteUserView</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+
+
 </faces-config>
 

@@ -6,6 +6,7 @@ import org.pahappa.systems.registrationapp.services.UserService;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class RegisterUserView implements Serializable {
     private String dateOfBirth;
     private String email;
     private String password;
+    private String gender;
     // default in user model: user_role="USER", deleted=false;
     private User user;
 
@@ -32,6 +34,14 @@ public class RegisterUserView implements Serializable {
     @PostConstruct
     public void init() {
         user = new User();
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getPassword() {
@@ -103,6 +113,7 @@ public class RegisterUserView implements Serializable {
             user.setDateOfBirth(dob);
             user.setEmail(email);
             user.setPassword(password);
+            user.setGender(gender);
 
             // Perform validations
             userService.validateUsername(user.getUsername());
@@ -141,6 +152,7 @@ public class RegisterUserView implements Serializable {
             user.setDateOfBirth(dob);
             user.setEmail(email);
             user.setPassword(password);
+            user.setGender(gender);
 
             // Perform validations
             userService.validateUsername(user.getUsername());
