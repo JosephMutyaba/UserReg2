@@ -2,6 +2,7 @@ package org.pahappa.systems.registrationapp.views;
 
 import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.UserService;
+import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -21,7 +22,7 @@ public class RegisterUserView implements Serializable {
     private String username;
     private String firstname;
     private String lastname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String email;
     private String password;
     private String gender;
@@ -84,11 +85,11 @@ public class RegisterUserView implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -100,17 +101,21 @@ public class RegisterUserView implements Serializable {
         this.user = user;
     }
 
+    public Date getToday() {
+        return new Date();
+    }
+
     public String registerUser() {
         try {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             // Set user properties from the managed bean fields
             user.setUsername(username);
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            user.setDateOfBirth(dob);
+            user.setDateOfBirth(dateOfBirth);
             user.setEmail(email);
             user.setPassword(password);
             user.setGender(gender);
@@ -125,15 +130,19 @@ public class RegisterUserView implements Serializable {
             boolean isRegistered = userService.registerUser(user);
             if (isRegistered) {
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered!"));
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "User registered successfully"));
+                PrimeFaces.current().ajax().update("registerForm:messages");
                 user = new User(); // Reset form
                 return "/pages/displayUsers"; // Navigate to the index page
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong, please try again!"));
+                PrimeFaces.current().ajax().update("registerForm:messages");
                 return null;
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            PrimeFaces.current().ajax().update("registerForm:messages");
             return null;
         }
     }
@@ -142,14 +151,14 @@ public class RegisterUserView implements Serializable {
     public String registerNewUser() {
         try {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             // Set user properties from the managed bean fields
             user.setUsername(username);
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            user.setDateOfBirth(dob);
+            user.setDateOfBirth(dateOfBirth);
             user.setEmail(email);
             user.setPassword(password);
             user.setGender(gender);

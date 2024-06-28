@@ -1,41 +1,51 @@
-<ui:composition template="/pages/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:define name="sidebar">
-        <ui:include src="/pages/sidebar.xhtml"/>
-    </ui:define>
-    <ui:define name="content">
-        <div class="dashboard">
-            <h2 class="dashboard-header">Dashboard</h2>
-            <div class="cards">
-                <div class="card">
-                    <h:outputText value="Users: "/>
-                    <h:outputText value="#{userView.users.size()}"/>
-                </div>
-                <div class="card">
-                    <h:outputText value="Dependants: "/>
-                    <h:outputText value="#{getAllDependants.dependants.size()}"/>
-                </div>
-                <div class="card">
-                    <h:outputText value="Users W/D: "/>
-                    <h:outputText value="22"/>
-                </div>
-                <div class="card">
-                    <h:outputText value="Users N/D: "/>
-                    <h:outputText value="18"/>
-                </div>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Display All Users</title>
+
+    <h:outputStylesheet name="css/newui/dashboard.css"/>
+
+</h:head>
+    <h:body>
+
+        <div class="container">
+            <div class="sidebar">
+                <ui:include src="sidebar.xhtml"/>
             </div>
-            <div class="charts">
-                <div class="chart">
-                    <h3>Weekly Activity</h3>
-                    <!-- Chart content here -->
-                </div>
-                <div class="chart">
-                    <h3>Gender Statistics</h3>
-                    <!-- Chart content here -->
+            <div class="main-content">
+                <div class="dashboard">
+                    <h2 class="dashboard-header">Dashboard</h2>
+                    <div class="cards">
+                        <div class="card">
+                            <h:outputText value="Users: "/>
+                            <h:outputText value="#{userView.users.size()}"/>
+                        </div>
+                        <div class="card">
+                            <h:outputText value="Dependants: "/>
+                            <h:outputText value="#{getAllDependants.dependants.size()}"/>
+                        </div>
+                        <div class="card">
+                            <h:outputText value="Users W/D: "/><br/>
+                            <h:outputText value="#{userView.usersWithDependants()}"/>
+                        </div>
+                        <div class="card">
+                            <h:outputText value="Users N/D: "/><br/>
+                            <h:outputText value="#{userView.usersWithoutDependants()}"/>
+                        </div>
+                    </div>
+                    <div class="charts">
+                        <div class="chart">
+                            <h3>Weekly Activity</h3>
+                        </div>
+                        <div class="chart">
+                            <h3>Gender Statistics</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </ui:define>
-</ui:composition>
+    </h:body>
+
+</html>

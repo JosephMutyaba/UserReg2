@@ -1,0 +1,55 @@
+
+/* Settings styles... */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.container {
+    display: flex;
+}
+
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sidebar{
+    width: 20%;
+}
+
+.settings-header .dependants-header .users-header .dashboard-header{
+    padding-bottom: 25px;
+    padding-top: 25px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.settings-panel {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-panel .save-button {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings-panel .save-button:hover {
+    background-color: #0056b3;
+}
+

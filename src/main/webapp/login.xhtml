@@ -12,10 +12,16 @@
         <h1>Login</h1>
         <h:form styleClass="form-panel">
             <h:outputLabel for="username" styleClass="input-label" value="Username:"/>
-            <h:inputText id="username" styleClass="input-field" value="#{loginBean.username}"/>
+            <h:inputText id="username" styleClass="input-field" value="#{loginBean.username}" required="true">
+                <f:validateLength minimum="4" maximum="20"/>
+            </h:inputText>
+            <br/>
+            <h:message for="username" style="color: red; display: block;"/>
 
             <h:outputLabel for="password" styleClass="input-label" value="Password:"/>
-            <h:inputSecret id="password" styleClass="input-field" value="#{loginBean.password}"/>
+            <h:inputSecret id="password" styleClass="input-field" value="#{loginBean.password}" required="false"/>
+            <br/>
+            <h:message for="password" style="color: red; display: block;"/>
 
             <h:commandButton styleClass="login-button" value="Login" action="#{loginBean.login}"/>
         </h:form>

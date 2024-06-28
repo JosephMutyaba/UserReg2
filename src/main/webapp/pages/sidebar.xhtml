@@ -1,14 +1,43 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:panelGroup layout="block" styleClass="sidebar">
-        <h:link outcome="/pages/dashboard.xhtml" styleClass="menu-item">Dashboard</h:link>
-        <h:link outcome="/pages/displayUsers.xhtml" styleClass="menu-item">Users</h:link>
-        <h:link outcome="/pages/dependants.xhtml" styleClass="menu-item">Dependants</h:link>
-        <h:link outcome="/pages/settings.xhtml" styleClass="menu-item">Settings</h:link>
-        <h:form>
-            <h:commandLink action="#{loginBean.logout}" value="Logout" styleClass="menu-item"/>
-        </h:form>
-    </h:panelGroup>
+    <h:head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <h:outputStylesheet name="css/sidebar.css"/>
+    </h:head>
+
+    <h:body>
+        <h:panelGroup layout="block" styleClass="sidebar">
+            <h1 class="sidebar-heading">Admin</h1>
+
+            <div class="menu-item">
+                <i class="fas fa-tachometer-alt"/>
+                <h:link outcome="/pages/dashboard.xhtml" styleClass="menu-link">Dashboard</h:link>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-users"/>
+                <h:link outcome="/pages/displayUsers.xhtml" styleClass="menu-link">Users</h:link>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-user-friends"/>
+                <h:link outcome="/pages/dependants.xhtml" styleClass="menu-link">Dependants</h:link>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-cogs"/>
+                <h:link outcome="/pages/settings.xhtml" styleClass="menu-link">Settings</h:link>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-sign-out-alt"/>
+                <h:form>
+                    <h:commandLink action="#{loginBean.logout}" value="Logout" styleClass="menu-link"/>
+                </h:form>
+            </div>
+        </h:panelGroup>
+    </h:body>
 </ui:composition>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Update Dependant</title>
+    <h:outputStylesheet name="css/register.css"/>
+    <h:outputScript name="js/setCookie.js"/>
+    <style>
+        .error {
+            color: red;
+            display: block;
+            margin-top: 4px; /* Adjust as needed */
+        }
+        .input, .selectMenu {
+            margin-bottom: 10px;
+        }
+        .messages {
+            color: red;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h:form id="backHomeForm" styleClass="form">
+        <h:commandLink value="Back home" action="dependants.xhtml" styleClass="link"/>
+    </h:form>
+    <h1 class="header">Update Dependant</h1>
+    <h:form id="registerForm" styleClass="form">
+        <h:panelGrid columns="2" styleClass="panelGrid">
+            <h:outputLabel for="id" value="Id:" styleClass="label"/>
+            <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
+            <br/>
+
+            <h:outputLabel for="username" value="Username:" styleClass="label"/>
+            <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input">
+                <f:validateLength minimum="4" maximum="20"/>
+            </h:inputText>
+            <h:message for="username" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+            <h:inputText id="firstname" value="#{updateDependant.firstname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="firstname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+            <h:inputText id="lastname" value="#{updateDependant.lastname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="lastname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+            <p:calendar id="dob" value="#{updateDependant.dateOfBirth}" required="true" showButtonPanel="true"
+                        navigator="true" maxdate="#{updateDependant.today}" yearRange="c-100:c"
+                        pattern="yyyy-MM-dd" styleClass="input"/>
+            <h:message for="dob" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+            <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
+                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                <f:selectItem itemLabel="Female" itemValue="Female"/>
+            </h:selectOneMenu>
+            <h:message for="gender" styleClass="error"/>
+            <br/>
+
+            <h:commandButton value="Update" action="#{updateDependant.updateADependantAdmin()}" styleClass="button"/>
+            <br/>
+            <h:messages globalOnly="true" styleClass="messages"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>

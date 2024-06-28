@@ -5,58 +5,6 @@ body {
     padding: 0;
 }
 
-/*Admin dashboard styles*/
-
-.container {
-    display: flex;
-}
-
-.sidebar {
-    width: 20%;
-    background-color: #e2e6ec;
-    padding: 10px;
-}
-
-.menu-item {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: #000000;
-}
-
-.main-content {
-    width: 80%;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-between;
-}
-
-.card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.charts {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.chart {
-    width: 48%;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 
 
 /* Users styles... */
@@ -86,17 +34,6 @@ body {
     margin-bottom: 10px;
 }
 
-
-.action-link {
-    margin-right: 10px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.action-link:hover {
-    text-decoration: underline;
-}
-
 .dataTable {
     width: 100%;
     margin: 20px auto;
@@ -123,116 +60,21 @@ body {
 }
 
 
-
-
-
-/* Dependants styles... */
-.dependants-management {
-    padding: 20px;
-}
-
-.summary-cards {
+.container {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
 }
 
-.card {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    flex: 1;
-    margin: 0 10px;
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.search-form .search-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.search-input {
-    padding: 5px;
-    margin-right: 10px;
-    flex: 1;
-}
-
-.search-select {
-    padding: 5px;
-    margin-right: 10px;
-    flex: 1;
-}
-
-.search-button {
-    padding: 5px 10px;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.data-table th, .data-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.action-link {
-    margin-right: 10px;
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.confirmation-dialog {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    max-width: 400px;
-    margin: 20px auto;
-    background-color: #f9f9f9;
-}
-
-.dialog-content {
-    display: flex;
-    justify-content: space-between;
-}
-
-.dialog-button {
-    padding: 5px 10px;
-    margin: 5px;
+.sidebar{
+    width: 20%;
 }
 
 
-/* Settings styles... */
-.settings-header .dependants-header .users-header .dashboard-header{
-    padding-bottom: 20px;
-    padding-top: 20px;
-    background-color: #ffffff;
-    text-align: left;
- }
 
-.settings-panel {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.settings-panel .save-button {
-    margin-top: 20px;
-    display: block;
-    width: 100%;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.settings-panel .save-button:hover {
-    background-color: #0056b3;
-}
 

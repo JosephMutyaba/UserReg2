@@ -26,7 +26,7 @@ public class AddDependantView implements Serializable {
     private String username;
     private String firstname;
     private String lastname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String gender;
     private Long user_id;
 
@@ -74,11 +74,11 @@ public class AddDependantView implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -96,6 +96,10 @@ public class AddDependantView implements Serializable {
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
+    }
+
+    public Date getToday() {
+        return new Date();
     }
 
     @PostConstruct
@@ -118,14 +122,14 @@ public class AddDependantView implements Serializable {
     public String addDependant() {
         try {
             System.out.println("addDependant called"); // Debug statement
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             Dependant dependant = new Dependant();
             dependant.setUsername(username);
             dependant.setFirstname(firstname);
             dependant.setLastname(lastname);
-            dependant.setDateOfBirth(dob);
+            dependant.setDateOfBirth(dateOfBirth);
             dependant.setGender(gender);
             dependant.setUser(user); // Set the user retrieved from the cookie
 
@@ -143,7 +147,7 @@ public class AddDependantView implements Serializable {
             return "/pages/getUser";
 
 
-        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
@@ -155,14 +159,14 @@ public class AddDependantView implements Serializable {
     public String addDependantUser() {
         try {
             System.out.println("addDependant called"); // Debug statement
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             Dependant dependant = new Dependant();
             dependant.setUsername(username);
             dependant.setFirstname(firstname);
             dependant.setLastname(lastname);
-            dependant.setDateOfBirth(dob);
+            dependant.setDateOfBirth(dateOfBirth);
             dependant.setGender(gender);
             dependant.setUser(user); // Set the user retrieved from the cookie
 
@@ -180,7 +184,7 @@ public class AddDependantView implements Serializable {
             return "/pages/userpages/getUserSpecific";
 
 
-        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException | ParseException e) {
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 

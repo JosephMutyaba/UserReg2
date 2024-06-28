@@ -24,10 +24,17 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("loginBean") == null || ((LoginBean) session.getAttribute("loginBean")).getLoggedInUser() == null) {
-            res.sendRedirect(req.getContextPath() + "/login.xhtml");
-        } else {
+        String loginURI = req.getContextPath() + "/login.xhtml";
+        String registerURI = req.getContextPath() + "/pages/userpages/registerNewUser.xhtml";
+
+        boolean loggedIn = session != null && session.getAttribute("loginBean") != null && ((LoginBean) session.getAttribute("loginBean")).getLoggedInUser() != null;
+        boolean loginRequest = req.getRequestURI().equals(loginURI);
+        boolean registerRequest = req.getRequestURI().equals(registerURI);
+
+        if (loggedIn || loginRequest || registerRequest) {
             chain.doFilter(request, response);
+        } else {
+            res.sendRedirect(loginURI);
         }
     }
 

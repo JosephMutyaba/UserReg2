@@ -25,7 +25,7 @@ public class UpdateUser implements Serializable {
     private String username;
     private String firstname;
     private String lastname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private boolean deleted;
     private String role;
     private String password;
@@ -84,11 +84,11 @@ public class UpdateUser implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -132,6 +132,10 @@ public class UpdateUser implements Serializable {
         this.password = password;
     }
 
+    public Date getToday() {
+        return new Date();
+    }
+
     // Add a getter and setter for userRole
     public String getUserRole() {
         // Assuming the userRole is stored in the session, retrieve it from there
@@ -156,8 +160,8 @@ public class UpdateUser implements Serializable {
             } else {
                 firstname = user.getFirstname();
                 lastname = user.getLastname();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                dateOfBirth = sdf.format(user.getDateOfBirth());
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                dateOfBirth = user.getDateOfBirth();
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error fetching user details!", e.getMessage()));
@@ -166,19 +170,19 @@ public class UpdateUser implements Serializable {
 
     public String updateUser() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            user.setDateOfBirth(dob);
+            user.setDateOfBirth(dateOfBirth);
             user.setRole(role);
             user.setDeleted(deleted);
             user.setId(id);
             user.setEmail(email);
             user.setUsername(username);
 
-            if (!BCrypt.checkpw(password, user.getPassword() )) {
+            if (!password.trim().isEmpty()  && !BCrypt.checkpw(password, user.getPassword() )) {
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             }
 
@@ -197,9 +201,6 @@ public class UpdateUser implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
                 return null;
             }
-        } catch (ParseException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
-            return null;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             return null;
@@ -210,19 +211,19 @@ public class UpdateUser implements Serializable {
 
     public String updateUsernui() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            user.setDateOfBirth(dob);
+            user.setDateOfBirth(dateOfBirth);
             user.setRole(role);
             user.setDeleted(deleted);
             user.setId(id);
             user.setEmail(email);
             user.setUsername(username);
 
-            if (!BCrypt.checkpw(password, user.getPassword() )) {
+            if (!password.trim().isEmpty()  && !BCrypt.checkpw(password, user.getPassword() )) {
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             }
 
@@ -241,9 +242,6 @@ public class UpdateUser implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
                 return null;
             }
-        } catch (ParseException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
-            return null;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             return null;
@@ -253,12 +251,12 @@ public class UpdateUser implements Serializable {
 
     public String updateUserUser() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             user.setFirstname(firstname);
             user.setLastname(lastname);
-            user.setDateOfBirth(dob);
+            user.setDateOfBirth(dateOfBirth);
             user.setRole(role);
             user.setDeleted(deleted);
             user.setId(id);
@@ -266,7 +264,7 @@ public class UpdateUser implements Serializable {
             user.setUsername(username);
             user.setGender(gender);
 
-            if (!BCrypt.checkpw(password, user.getPassword() ) || password != null) {
+            if (!password.trim().isEmpty()  && !BCrypt.checkpw(password, user.getPassword() )) {
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             }
 
@@ -285,9 +283,6 @@ public class UpdateUser implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
                 return null;
             }
-        } catch (ParseException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
-            return null;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             return null;
@@ -306,8 +301,8 @@ public class UpdateUser implements Serializable {
         this.deleted = selectedUser.isDeleted();
         this.gender = selectedUser.getGender();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth = selectedUser.getDateOfBirth();
 
         return "updateUser"; // Should match the outcome in faces-config.xml
     }
@@ -324,8 +319,8 @@ public class UpdateUser implements Serializable {
         this.deleted = selectedUser.isDeleted();
         this.gender = selectedUser.getGender();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth = selectedUser.getDateOfBirth();
     }
 
     public String selectUser_User(User selectedUser) {
@@ -340,8 +335,8 @@ public class UpdateUser implements Serializable {
         this.deleted = selectedUser.isDeleted();
         this.gender = selectedUser.getGender();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        this.dateOfBirth = sdf.format(selectedUser.getDateOfBirth());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth =selectedUser.getDateOfBirth();
 
         return "/pages/userpages/updateUser_User"; // Should match the outcome in faces-config.xml
     }

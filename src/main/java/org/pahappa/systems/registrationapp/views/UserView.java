@@ -4,6 +4,8 @@ import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.DependantService;
 import org.pahappa.systems.registrationapp.services.UserService;
+//import org.primefaces.model.chart.ChartSeries;
+
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -18,7 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+@ManagedBean
+@SessionScoped
 public class UserView implements Serializable {
 
     private UserService userService = new UserService();
@@ -50,6 +53,7 @@ public class UserView implements Serializable {
 
         // Compute counts and ratios
         computeStatistics();
+
     }
 
 
@@ -319,5 +323,33 @@ public class UserView implements Serializable {
     }
 
     public void search(){}
+
+
+
+
+
+
+
+
+
+    // Method to calculate the number of users with dependants
+    public long usersWithDependants() {
+        users= userService.displayAllUsers();
+        return users.stream().filter(user -> !user.getDependants().isEmpty()).count();
+    }
+
+    // Method to calculate the number of users without dependants
+    public long usersWithoutDependants() {
+        users= userService.displayAllUsers();
+        return users.stream().filter(user -> user.getDependants().isEmpty()).count();
+    }
+
+    // Method to calculate the dependency ratio
+    public String dependencyRatio() {
+        long usersWithDependants = usersWithDependants();
+        long usersWithoutDependants = usersWithoutDependants();
+        return usersWithDependants + ":" + usersWithoutDependants;
+    }
+
 
 }

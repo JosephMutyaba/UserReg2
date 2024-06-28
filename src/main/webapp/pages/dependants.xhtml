@@ -1,108 +1,123 @@
-<ui:composition template="/pages/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="sidebar">
-        <ui:include src="/pages/sidebar.xhtml"/>
-    </ui:define>
+<h:head>
+    <title>Display All Users</title>
+    <h:outputStylesheet name="css/newui/dependants.css"/>
+</h:head>
 
-    <ui:define name="content">
-        <div class="dependants-management">
-            <h2 class="dependants-header">Dependants</h2>
-            <div class="summary-cards">
-                <div class="card">
-                    <h:outputText value="Users with dependants" />
-                    <h:outputText value="22" />
-                </div>
-                <div class="card">
-                    <h:outputText value="Users without dependants" />
-                    <h:outputText value="18" />
-                </div>
-                <div class="card">
-                    <h:outputText value="Dependency ratio" />
-                    <h:outputText value="11:9" />
-                </div>
-            </div>
-
-            <h:form id="seachDependantsForm" class="search-form">
-                <div class="search-bar">
-                    <h:inputText value="#{userView.searchTerm}" placeholder="Search term" class="search-input"/>
-                    <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date" class="search-input"/>
-                    <h:inputText value="#{userView.dateTo}" placeholder="To" type="date" class="search-input"/>
-                    <h:selectOneMenu value="#{userView.sortBy}" class="search-select">
-                        <f:selectItem itemLabel="Sort by" itemValue=""/>
-                        <f:selectItem itemLabel="Name" itemValue="name"/>
-                        <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
-                        <f:selectItem itemLabel="Date Added" itemValue="dateAdded"/>
-                    </h:selectOneMenu>
-                    <h:commandButton value="Search" action="#{userView.search}" class="search-button"/>
-                </div>
-            </h:form>
-
-            <div class="dependants-table">
-                <h:form id="dependantsForm">
-                    <h:dataTable value="#{getAllDependants.dependants}" var="dependant" styleClass="data-table">
-                        <h:column>
-                            <f:facet name="header">No.</f:facet>
-                            <h:outputText value="#{userView.index}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">First Name</f:facet>
-                            <h:outputText value="#{dependant.firstname}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Last Name</f:facet>
-                            <h:outputText value="#{dependant.lastname}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Date Of Birth</f:facet>
-                            <h:outputText value="#{dependant.dateOfBirth}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">User</f:facet>
-                            <h:outputText value="#{dependant.user}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Action</f:facet>
-                            <h:commandLink action="#{updateDependant.selectDependant(dependant.id)}" value="Edit" class="action-link"/>
-                            <h:commandLink action="#{deleteDependantOfUser.selectedId(dependant.id)}" value="Delete" class="action-link"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:form>
-            </div>
+<h:body>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
         </div>
+        <div class="main-content">
+            <div class="dependants-management">
+                <h2 class="dependants-header">Dependants</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <h:outputText value="Users with dependants" /><br/>
+                        <h:outputText value="#{userView.usersWithDependants()}" />
+                    </div>
+                    <div class="card">
+                        <h:outputText value="Users without dependants" /><br/>
+                        <h:outputText value="#{userView.usersWithoutDependants()}" />
+                    </div>
+                    <div class="card">
+                        <h:outputText value="Dependency ratio" /><br/>
+                        <h:outputText value="#{userView.dependencyRatio()}" />
+                    </div>
+                </div>
 
-        <!-- Delete Confirmation Dialog -->
-        <h:form id="deleteForm" class="confirmation-dialog">
-            <div class="dialog-content">
-                <h:outputText value="Are you sure you want to delete?" />
-                <h:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" class="dialog-button"/>
-                <h:commandButton value="Cancel" class="dialog-button"/>
+                <h:form id="seachDependantsForm" class="search-form">
+                    <div class="search-bar">
+                        <h:inputText value="#{userView.searchTerm}" placeholder="Search term" class="search-input"/>
+                        <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date" class="search-input"/>
+                        <h:inputText value="#{userView.dateTo}" placeholder="To" type="date" class="search-input"/>
+                        <h:selectOneMenu value="#{userView.sortBy}" class="search-select">
+                            <f:selectItem itemLabel="Sort by" itemValue=""/>
+                            <f:selectItem itemLabel="Name" itemValue="name"/>
+                            <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
+                            <f:selectItem itemLabel="Date Added" itemValue="dateAdded"/>
+                        </h:selectOneMenu>
+                        <h:commandButton value="Search" action="#{userView.search}" class="search-button"/>
+                    </div>
+                </h:form>
+
+                <div class="dependants-table">
+                    <h:form id="dependantsForm">
+                        <h:dataTable id="dependants-table" value="#{getAllDependants.dependants}" var="dependant" styleClass="data-table">
+                            <h:column>
+                                <f:facet name="header">Number</f:facet>
+                                #{userView.dependants.indexOf(dependant) + 1}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">First Name</f:facet>
+                                <h:outputText value="#{dependant.firstname}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Last Name</f:facet>
+                                <h:outputText value="#{dependant.lastname}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Date Of Birth</f:facet>
+                                <h:outputText value="#{dependant.dateOfBirth}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Gender</f:facet>
+                                <h:outputText value="#{dependant.gender}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">User</f:facet>
+                                <h:outputText value="#{dependant.user}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Action</f:facet>
+                                <h:commandLink action="#{updateDependant.selectDependantAdmin(dependant.id)}" value="Edit" class="action-link"/>
+                                <h:commandLink action="#{deleteDependantOfUser.selectedId(dependant.id)}" onclick="PF('deleteDialoga').show()" value="Delete" class="action-link"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </div>
             </div>
-        </h:form>
 
-        <!-- Delete All Dependants Confirmation Dialog -->
-        <h:form id="deleteAllForm" class="confirmation-dialog">
-            <div class="dialog-content">
-                <h:outputText value="Delete All Dependants?" />
-                <h:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" class="dialog-button"/>
-                <h:commandButton value="Cancel" class="dialog-button"/>
-            </div>
-        </h:form>
 
-        <!-- Update Dependants Confirmation Dialog -->
-        <h:form id="updateForm" class="confirmation-dialog">
-            <!-- Update form contents here -->
-        </h:form>
+            <!-- Delete Confirmation Dialog -->
+            <p:dialog header="Confirm Deletion" widgetVar="deleteDialoga" modal="true" width="300">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Are you sure you want to delete?" />
+                        <br/>
+                        <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
+                        <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
 
-        <!-- Remote Command to update the dependants table -->
-        <h:form>
-            <h:commandButton value="Update Dependants Table"  style="display:none;" />
-        </h:form>
-    </ui:define>
-</ui:composition>
+
+            <!-- Delete All dependants Confirmation Dialog -->
+            <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Delete All Dependants?" />
+                        <br/>
+                        <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
+                        <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+
+            <!-- Remote Command to update the user table -->
+            <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
+
+        </div>
+    </div>
+</h:body>
+
+</html>
 
 
 

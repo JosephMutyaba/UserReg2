@@ -3,39 +3,48 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="sidebar">
-        <ui:include src="/pages/sidebar.xhtml"/>
-    </ui:define>
-    <ui:define name="content">
-        <h2 class="settings-header">
-            Settings
-        </h2>
-        <h:form>
+<h:head>
+    <title>Display All Users</title>
+    <h:outputStylesheet name="css/newui/settings.css"/>
+</h:head>
 
-            <h:panelGroup layout="block" styleClass="settings-panel">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="firstName" value="First Name:"/>
-                    <h:inputText id="firstName" value="#{loginBean.firstname}"/>
+<h:body>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <h2 class="settings-header">
+                Settings
+            </h2>
+            <h:form>
 
-                    <h:outputLabel for="lastName" value="Last Name:"/>
-                    <h:inputText id="lastName" value="#{loginBean.lastname}"/>
+                <h:panelGroup layout="block" styleClass="settings-panel">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="firstName" value="First Name:"/>
+                        <h:inputText id="firstName" value="#{loginBean.firstname}"/>
 
-                    <h:outputLabel for="dateOfBirth" value="Date of Birth:"/>
-                    <h:inputText id="dateOfBirth" value="#{loginBean.dateOfBirth}"
-                                 placeholder="dd MMMM yyyy"/>
+                        <h:outputLabel for="lastName" value="Last Name:"/>
+                        <h:inputText id="lastName" value="#{loginBean.lastname}"/>
 
-                    <h:outputLabel for="userName" value="User Name:"/>
-                    <h:inputText id="userName" value="#{loginBean.username}"/>
+                        <h:outputLabel for="dateOfBirth" value="Date of Birth:"/>
+                        <h:inputText id="dateOfBirth" value="#{loginBean.dateOfBirth}"
+                                     placeholder="dd MMMM yyyy"/>
 
-                    <h:outputLabel for="password" value="Password:"/>
-                    <h:inputSecret id="password" value="#{loginBean.password}"/>
+                        <h:outputLabel for="userName" value="User Name:"/>
+                        <h:inputText id="userName" value="#{loginBean.username}"/>
 
-                    <h:outputLabel for="email" value="Email Address:"/>
-                    <h:inputText id="email" value="#{loginBean.email}"/>
+                        <h:outputLabel for="password" value="Password:"/>
+                        <h:inputSecret id="password" value="#{loginBean.password}"/>
 
-                </h:panelGrid>
-                <h:commandButton value="Save" action="#{loginBean.updateUser()}" styleClass="save-button"/>
-            </h:panelGroup>
-        </h:form>
-    </ui:define>
+                        <h:outputLabel for="email" value="Email Address:"/>
+                        <h:inputText id="email" value="#{loginBean.email}"/>
+
+                    </h:panelGrid>
+                    <h:commandButton value="Save" action="#{loginBean.updateUser()}" styleClass="save-button"/>
+                </h:panelGroup>
+            </h:form>
+        </div>
+    </div>
+</h:body>
 </html>

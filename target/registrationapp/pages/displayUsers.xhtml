@@ -7,7 +7,6 @@
 <h:head>
     <title>Display All Users</title>
     <h:outputStylesheet name="css/displayUsers.css"/>
-    <h:outputStylesheet name="css/newui/styles.css"/>
     <h:outputScript name="js/setCookie.js"/>
 </h:head>
 <h:body>
@@ -57,7 +56,7 @@
                 </div>
                 <div>
                     <h:form id="userForma">
-                        <h:dataTable value="#{userView.users}" var="user" styleClass="dataTable">
+                        <p:dataTable value="#{userView.users}" var="user" paginator="true" rows="3" styleClass="dataTable">
 
                             <h:column>
                                 <f:facet name="header">Number</f:facet>
@@ -90,15 +89,15 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Delete</f:facet>
-                                <p:commandLink value="Delete" styleClass="link" oncomplete="PF('deleteDialog').show()" process="@this">
+                                <p:commandLink value="Delete" styleClass="link-del" oncomplete="PF('deleteDialog').show()" process="@this">
                                     <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
                                 </p:commandLink>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Update</f:facet>
-                                <h:commandButton value="Update" action="#{updateUser.selectUser(user)}" styleClass="link"/>
+                                <h:commandButton value="Update" action="#{updateUser.selectUser(user)}" styleClass="link-up"/>
                             </h:column>
-                        </h:dataTable>
+                        </p:dataTable>
                     </h:form>
 
                     <!-- Delete Confirmation Dialog -->

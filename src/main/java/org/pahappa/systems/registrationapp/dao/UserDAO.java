@@ -93,6 +93,7 @@ public class UserDAO {
         }
     }
 
+
     public boolean deleteUserOfUsername(String username) {
         Session session = null;
         Transaction transaction = null;
@@ -104,11 +105,14 @@ public class UserDAO {
                     .uniqueResult();
             if (user != null) {
                 user.setDeleted(true);
-
-                user.setDeleted(true);
                 session.update(user);
-                transaction.commit();
 
+                // Soft delete dependants
+                session.createQuery("update Dependant set deleted = true where user_id = :userId")
+                        .setParameter("userId", user.getId())
+                        .executeUpdate();
+
+                transaction.commit();
                 return true;
             } else {
                 return false;
@@ -132,7 +136,13 @@ public class UserDAO {
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.createQuery("DELETE FROM User").executeUpdate();
+
+            // Soft delete all users
+            session.createQuery("update User set deleted = true").executeUpdate();
+
+            // Soft delete all dependants
+            session.createQuery("update Dependant set deleted = true").executeUpdate();
+
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -147,7 +157,6 @@ public class UserDAO {
             }
         }
     }
-
 
 }
 

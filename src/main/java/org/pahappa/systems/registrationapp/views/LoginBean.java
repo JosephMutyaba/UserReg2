@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -169,7 +170,10 @@ public class LoginBean implements Serializable {
 
     public String logout() {
         loggedInUser = null;
-        return "/login.xhtml?faces-redirect=true";
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.invalidateSession(); // Invalidate current session
+        return "/login.xhtml?faces-redirect=true"; // Redirect to login page
     }
 
 
@@ -188,7 +192,7 @@ public class LoginBean implements Serializable {
             loggedInUser.setEmail(email);
             loggedInUser.setUsername(username);
 
-            if (!BCrypt.checkpw(password, loggedInUser.getPassword() )) {
+            if (!password.trim().isEmpty() && !BCrypt.checkpw(password, loggedInUser.getPassword() )) {
                 loggedInUser.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             }
 

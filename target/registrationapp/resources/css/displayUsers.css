@@ -5,11 +5,12 @@ body {
     padding: 0;
 }
 
-h1 {
+h2 {
+    background-color: #ffffff;
     color: #333;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    text-align: center;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    text-align: left;
     margin-top: 20px;
 }
 
@@ -34,11 +35,6 @@ form {
     background-color: #0056b3;
 }
 
-.dataTable {
-    width: 100%;
-    margin: 20px auto;
-    border-collapse: collapse;
-}
 
 .dataTable th, .dataTable td {
     border: 1px solid #ddd;
@@ -66,3 +62,53 @@ form {
     justify-content: right;
 
 }
+
+.user-management {
+    padding: 20px;
+}
+
+.summary-cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-cards .card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.dataTable {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.container {
+    display: flex;
+}
+
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sidebar{
+    width: 20%;
+}
+
+
+
+
+
