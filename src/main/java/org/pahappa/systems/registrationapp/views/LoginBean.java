@@ -6,8 +6,6 @@ import org.pahappa.systems.registrationapp.services.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -25,7 +23,7 @@ public class LoginBean implements Serializable {
     private Long id;
     private String firstname;
     private String lastname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private boolean deleted;
     private String role;
     private String email;
@@ -56,11 +54,11 @@ public class LoginBean implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -133,6 +131,9 @@ public class LoginBean implements Serializable {
         return loggedInUser != null && "ADMIN".equals(loggedInUser.getRole());
     }
 
+    public Date getToday() {
+        return new Date();
+    }
 
     public String login() {
         loggedInUser = userService.getUserOfUsername(username);
@@ -145,7 +146,7 @@ public class LoginBean implements Serializable {
                 this.username = loggedInUser.getUsername();
                 this.password = loggedInUser.getPassword();
                 this.id=loggedInUser.getId();
-                this.dateOfBirth=loggedInUser.getDateOfBirth().toString();
+                this.dateOfBirth=loggedInUser.getDateOfBirth();
                 this.deleted=loggedInUser.isDeleted();
                 this.firstname=loggedInUser.getFirstname();
                 this.lastname=loggedInUser.getLastname();
@@ -180,12 +181,12 @@ public class LoginBean implements Serializable {
 
     public void updateUser() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dob = sdf.parse(dateOfBirth);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date dob = sdf.parse(dateOfBirth);
 
             loggedInUser.setFirstname(firstname);
             loggedInUser.setLastname(lastname);
-            loggedInUser.setDateOfBirth(dob);
+            loggedInUser.setDateOfBirth(dateOfBirth);
             loggedInUser.setRole(role);
             loggedInUser.setDeleted(deleted);
             loggedInUser.setId(id);
@@ -208,9 +209,6 @@ public class LoginBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
 
             }
-        } catch (ParseException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format! Please use yyyy-MM-dd.", null));
-
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
         }

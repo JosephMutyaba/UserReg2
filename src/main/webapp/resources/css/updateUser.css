@@ -5,9 +5,13 @@ body {
     padding: 20px;
 }
 
+.error {
+    color: red;
+    display: block;
+    margin-top: 5px;
+}
 
-
-.top-nav{
+.top-nav {
     display: flex;
     flex-direction: row;
 }
@@ -16,20 +20,25 @@ body {
     color: #333;
     text-align: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .top-nav .form {
-    align-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     margin: 20px auto;
     text-align: left;
-    width: 400px;
+    width: 80%;
 }
 
 .form {
-    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     margin: 20px auto;
     text-align: center;
-    width: 400px;
+    width: 80%;
 }
 
 .label {
@@ -40,7 +49,7 @@ body {
     text-align: right;
 }
 
-.input {
+.input, .selectMenu {
     padding: 5px;
     margin: 5px 0;
     border: 1px solid #ccc;
@@ -86,7 +95,8 @@ body {
 
 .panelGrid {
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-content: center;
 }

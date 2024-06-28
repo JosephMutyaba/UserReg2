@@ -12,13 +12,13 @@ public class ApplicationStartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("ApplicationStartupListener initialized successfully.");
-        // Initialization logic here, e.g., database initialization, etc.
+        // Initialization logic here
         AdminInitializer.initializeAdmin();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         System.out.println("ApplicationStartupListener destroyed successfully.");
-        // Cleanup logic here, if needed
+
     }
 }

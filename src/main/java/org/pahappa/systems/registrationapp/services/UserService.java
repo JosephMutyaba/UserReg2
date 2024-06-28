@@ -6,7 +6,6 @@ import org.pahappa.systems.registrationapp.exception.InvalidDateFormatException;
 import org.pahappa.systems.registrationapp.exception.InvalidNameException;
 import org.pahappa.systems.registrationapp.exception.UsernameAlreadyExistsException;
 import org.pahappa.systems.registrationapp.models.User;
-import org.pahappa.systems.registrationapp.util.PasswordUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

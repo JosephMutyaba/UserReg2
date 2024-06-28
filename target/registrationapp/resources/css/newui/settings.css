@@ -11,6 +11,7 @@ body {
 
 .container {
     display: flex;
+    overflow: hidden; /* Prevent child elements from overflowing */
 }
 
 .main-content {
@@ -51,5 +52,12 @@ body {
 
 .settings-panel .save-button:hover {
     background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    display: block;
+    margin-top: 5px;
+    font-size: 14px; /* Adjust font size as needed */
 }
 

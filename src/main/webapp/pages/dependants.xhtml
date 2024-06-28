@@ -49,41 +49,30 @@
 
                 <div class="dependants-table">
                     <h:form id="dependantsForm">
-                        <h:dataTable id="dependants-table" value="#{getAllDependants.dependants}" var="dependant" styleClass="data-table">
-                            <h:column>
-                                <f:facet name="header">Number</f:facet>
-                                #{userView.dependants.indexOf(dependant) + 1}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">First Name</f:facet>
+                        <p:dataTable id="dependants-table" value="#{getAllDependants.dependants}" var="dependant" paginator="true" rows="5" styleClass="data-table">
+                            <p:column headerText="First Name">
                                 <h:outputText value="#{dependant.firstname}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Last Name</f:facet>
+                            </p:column>
+                            <p:column headerText="Last Name">
                                 <h:outputText value="#{dependant.lastname}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Date Of Birth</f:facet>
+                            </p:column>
+                            <p:column headerText="Date Of Birth">
                                 <h:outputText value="#{dependant.dateOfBirth}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Gender</f:facet>
+                            </p:column>
+                            <p:column headerText="Gender">
                                 <h:outputText value="#{dependant.gender}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">User</f:facet>
+                            </p:column>
+                            <p:column headerText="User">
                                 <h:outputText value="#{dependant.user}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Action</f:facet>
+                            </p:column>
+                            <p:column headerText="Action">
                                 <h:commandLink action="#{updateDependant.selectDependantAdmin(dependant.id)}" value="Edit" class="action-link"/>
                                 <h:commandLink action="#{deleteDependantOfUser.selectedId(dependant.id)}" onclick="PF('deleteDialoga').show()" value="Delete" class="action-link"/>
-                            </h:column>
-                        </h:dataTable>
+                            </p:column>
+                        </p:dataTable>
                     </h:form>
                 </div>
             </div>
-
 
             <!-- Delete Confirmation Dialog -->
             <p:dialog header="Confirm Deletion" widgetVar="deleteDialoga" modal="true" width="300">
@@ -91,12 +80,11 @@
                     <h:panelGrid columns="2">
                         <h:outputText value="Are you sure you want to delete?" />
                         <br/>
-                        <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
-                        <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                        <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialoga').hide(); updateDependantTable();" />
+                        <p:commandButton value="Cancel" onclick="PF('deleteDialoga').hide(); return false;" />
                     </h:panelGrid>
                 </h:form>
             </p:dialog>
-
 
             <!-- Delete All dependants Confirmation Dialog -->
             <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
@@ -112,14 +100,7 @@
 
             <!-- Remote Command to update the user table -->
             <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
-
         </div>
     </div>
 </h:body>
-
 </html>
-
-
-
-
-

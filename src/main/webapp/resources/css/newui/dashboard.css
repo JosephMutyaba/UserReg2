@@ -8,6 +8,7 @@ body {
 
 .container {
     display: flex;
+    overflow: hidden; /* Prevent child elements from overflowing */
 }
 
 .main-content {

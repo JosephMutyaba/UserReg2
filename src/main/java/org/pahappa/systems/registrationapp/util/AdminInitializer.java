@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AdminInitializer {
-    private static final String ADMIN_USERNAME = "admina";
+    private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin@jsf"; // Replace with a secure password
 
     private static final SessionFactory sessionFactory;
@@ -38,6 +38,7 @@ public class AdminInitializer {
                 admin.setPassword(BCrypt.hashpw(ADMIN_PASSWORD, BCrypt.gensalt()));
                 admin.setFirstname("Joseph");
                 admin.setLastname("Maximillian");
+                admin.setGender("Male");
                 admin.setRole("ADMIN"); // Assuming you have a role field
                 admin.setEmail("admin@email.com");
 

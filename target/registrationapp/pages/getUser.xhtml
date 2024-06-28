@@ -10,20 +10,28 @@
 </h:head>
 <h:body>
    <f:event type="preRenderView" listener="#{userView.loadUserData}"/>
-   <h:form id="getUserForm" styleClass="form" >
+   <h:form id="getUserForm" style="display: flex; justify-content: space-evenly" styleClass="form" >
       <h:commandLink value="Back home" action="displayUsers.xhtml" styleClass="link" onclick="clearUserCookie();"/>
       <h:commandLink value="Logout" action="#{loginBean.logout()}" styleClass="link"/>
 
    </h:form>
    <h1 class="header">Get User by Username</h1>
    <h:form id="userDetailsForm" styleClass="form">
-      <h:commandButton value="Edit details" onclick="setUserCookie('#{userView.user.username}');" action="#{updateUser.selectUser(userView.user)}" styleClass="button"/>
+
+      <diV style="display: flex; width: 100%; justify-content: space-between">
+         <h:commandButton value="Edit details" onclick="setUserCookie('#{userView.user.username}');" action="#{updateUser.selectUser(userView.user)}" style="height: 30px" styleClass="button"/>
+
+         <div style="display:flex; flex-direction: row">
+            <h:outputLabel for="username" value="Enter Username:" style="" styleClass="label"/>
+            <h:inputText id="username" value="#{userView.username}" styleClass="input"/>
+            <h:commandButton value="Fetch User" action="#{userView.getUserOfUsername}" update=":userDetailsForm:userDetailsPanel" style="height: 30px" styleClass="button"/>
+
+         </div>
+      </diV>
 
 
 
-      <h:outputLabel for="username" value="Enter Username:" styleClass="label"/>
-      <h:inputText id="username" value="#{userView.username}" styleClass="input"/>
-      <h:commandButton value="Fetch User" action="#{userView.getUserOfUsername}" update=":userDetailsForm:userDetailsPanel" styleClass="button"/>
+
 
       <h:messages globalOnly="true" styleClass="messages"/>
 
@@ -40,21 +48,28 @@
          <h:outputLabel value="Dependants:" style="margin-top:20px;" styleClass="label"/>
          <h:outputText value=""/>
 
-         <p:commandLink value="Delete All Dependants" styleClass="button1" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this"/>
+         <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-between" >
+            <div style="display: flex; justify-content: space-between;">
+               <p:commandLink value="Delete All Dependants" styleClass="button1" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this"/>
+               <h:commandLink value="Add Dependant" action="#{addDependantView.selectUser(userView.user)}" onclick="setUserCookie('#{userView.user.username}');" styleClass="button"/>
+            </div>
+            <div style="display: flex; flex-direction: row">
+               <h:outputLabel value="Search:" styleClass="label"/>
+               <h:inputText id="searchValue" value="#{userView.searchValue}" styleClass="input"/>
+               <h:selectOneMenu value="#{userView.searchCriteria}" styleClass="selectMenu">
+                  <f:selectItem itemValue="gender" itemLabel="Gender"/>
+                  <f:selectItem itemValue="username" itemLabel="Username"/>
+                  <f:selectItem itemValue="firstname" itemLabel="First Name"/>
+                  <f:selectItem itemValue="lastname" itemLabel="Last Name"/>
+               </h:selectOneMenu>
 
-         <h:commandLink value="Add Dependant" action="#{addDependantView.selectUser(userView.user)}" onclick="setUserCookie('#{userView.user.username}');" styleClass="button"/>
-         <h:outputLabel value="Search:" styleClass="label"/>
-         <h:inputText id="searchValue" value="#{userView.searchValue}" styleClass="input"/>
-         <h:selectOneMenu value="#{userView.searchCriteria}" styleClass="selectMenu">
-            <f:selectItem itemValue="gender" itemLabel="Gender"/>
-            <f:selectItem itemValue="username" itemLabel="Username"/>
-            <f:selectItem itemValue="firstname" itemLabel="First Name"/>
-            <f:selectItem itemValue="lastname" itemLabel="Last Name"/>
-         </h:selectOneMenu>
+               <h:commandButton ajax="true" value="Search" action="#{userView.searchDependants}" update="dependantsTable" styleClass="button">
+                  <f:ajax execute="@form" render="@form :userDetailsForm:dependantsTable" />
+               </h:commandButton>
 
-         <h:commandButton ajax="true" value="Search" action="#{userView.searchDependants}" update="dependantsTable" styleClass="button">
-            <f:ajax execute="@form" render="@form :userDetailsForm:dependantsTable" />
-         </h:commandButton>
+            </div>
+         </div>
+
 
          <h:dataTable id="dependantsTable" value="#{userView.dependants}" var="dependant" rendered="#{not empty userView.dependants}" styleClass="dataTable">
             <h:column>

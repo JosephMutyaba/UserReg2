@@ -2,7 +2,6 @@ org\pahappa\systems\registrationapp\exception\InvalidNameException.class
 org\pahappa\systems\registrationapp\dao\DependantDAO.class
 org\pahappa\systems\registrationapp\views\DeleteAllDependantsOfUser.class
 org\pahappa\systems\registrationapp\views\DependantView.class
-org\pahappa\systems\registrationapp\util\PasswordUtil.class
 contextlistener\AppContextListener.class
 org\pahappa\systems\registrationapp\models\Dependant.class
 org\pahappa\systems\registrationapp\views\newui\GetAllDependants.class

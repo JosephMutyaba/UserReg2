@@ -6,16 +6,6 @@
 <h:head>
     <title>Update User</title>
     <h:outputStylesheet name="css/updateUser.css"/>
-    <style>
-        .error {
-            color: red;
-            display: block;
-            margin-top: 5px;
-        }
-        .input, .selectMenu {
-            margin-bottom: 10px;
-        }
-    </style>
 </h:head>
 <h:body>
     <div class="top-nav">
@@ -26,7 +16,7 @@
     </div>
 
     <h:form id="updateForm" styleClass="form">
-        <h:panelGrid columns="2" styleClass="panelGrid">
+        <h:panelGrid columns="1" styleClass="panelGrid">
             <h:outputLabel for="username" value="Username" styleClass="label"/>
             <h:inputText id="username" value="#{updateUser.username}" styleClass="input" required="true">
                 <f:validateLength minimum="4" maximum="20"/>

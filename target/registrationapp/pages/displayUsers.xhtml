@@ -58,45 +58,41 @@
                     <h:form id="userForma">
                         <p:dataTable value="#{userView.users}" var="user" paginator="true" rows="3" styleClass="dataTable">
 
-                            <h:column>
-                                <f:facet name="header">Number</f:facet>
+                            <p:column headerText="Number">
                                 #{userView.users.indexOf(user) + 1}
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Username</f:facet>
+                            <p:column headerText="Username">
                                 <h:commandLink action="#{userView.selectUser(user)}" onclick="setUserCookie('#{user.username}');" value="#{user.username}" styleClass="link">
                                     <f:param name="username" value="#{user.username}" />
                                 </h:commandLink>
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">First Name</f:facet>
+                            <p:column headerText="First Name">
                                 #{user.firstname}
-                            </h:column>
+                            </p:column>
 
-                            <h:column>
-                                <f:facet name="header">Gender</f:facet>
+                            <p:column headerText="Gender">
                                 #{user.gender}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Last Name</f:facet>
+                            </p:column>
+
+                            <p:column headerText="Last Name">
                                 #{user.lastname}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Date of Birth</f:facet>
+                            </p:column>
+
+                            <p:column headerText="Date of Birth">
                                 #{user.dateOfBirth}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Delete</f:facet>
+                            </p:column>
+
+                            <p:column headerText="Delete">
                                 <p:commandLink value="Delete" styleClass="link-del" oncomplete="PF('deleteDialog').show()" process="@this">
                                     <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
                                 </p:commandLink>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Update</f:facet>
+                            </p:column>
+
+                            <p:column headerText="Update">
                                 <h:commandButton value="Update" action="#{updateUser.selectUser(user)}" styleClass="link-up"/>
-                            </h:column>
+                            </p:column>
                         </p:dataTable>
                     </h:form>
 
@@ -111,6 +107,7 @@
                         </h:form>
                     </p:dialog>
 
+                    <!-- Update User Dialog -->
                     <p:dialog header="Update User" widgetVar="updateUserDialog" modal="true" width="500" height="400">
                         <h:form id="updateForm" styleClass="form">
                             <h:panelGrid columns="2" styleClass="panelGrid">
@@ -121,15 +118,17 @@
                                 <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
                                 <h:inputText id="firstname" value="#{updateUser.firstname}" styleClass="input"/>
                                 <br/>
+
                                 <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
                                 <h:inputText id="lastname" value="#{updateUser.lastname}" styleClass="input"/>
                                 <br/>
+
                                 <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
                                 <h:inputText id="dob" value="#{updateUser.dateOfBirth}" styleClass="input"/>
                                 <br/>
 
-                                <h:outputLabel for="lastname" value="Last Name:" styleClass="label" rendered="#{loginBean.admin}"/>
-                                <h:selectOneMenu label="User role" id="role" value="#{updateUser.role}" styleClass="input" >
+                                <h:outputLabel for="role" value="User role" styleClass="label" rendered="#{loginBean.admin}"/>
+                                <h:selectOneMenu label="User role" id="role" value="#{updateUser.role}" styleClass="input" rendered="#{loginBean.admin}">
                                     <f:selectItem itemLabel="USER" itemValue="USER"/>
                                     <f:selectItem itemLabel="ADMIN" itemValue="ADMIN"/>
                                 </h:selectOneMenu>
@@ -146,7 +145,8 @@
                                 <h:outputLabel for="password" value="Password" styleClass="label"/>
                                 <h:inputText id="password" value="#{updateUser.password}" styleClass="input"/>
                                 <br/>
-                                <h:commandButton value="Update" action="#{updateUser.updateUser}" styleClass="button" oncomplete="PF('deleteDialog').hide(); updateUsers();"/>
+
+                                <h:commandButton value="Update" action="#{updateUser.updateUser}" styleClass="button" oncomplete="PF('updateUserDialog').hide(); updateUsers();" />
                             </h:panelGrid>
                         </h:form>
                     </p:dialog>

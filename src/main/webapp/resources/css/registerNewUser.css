@@ -75,3 +75,15 @@ body {
     text-decoration: underline; /* Underline on hover */
     color: #0056b3; /* Hover color */
 }
+
+
+.error {
+    color: red;
+    display: block;
+}
+.input, .selectMenu {
+    margin-bottom: 10px;
+}
+.messages {
+    color: red;
+}
