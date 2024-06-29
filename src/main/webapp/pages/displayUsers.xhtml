@@ -33,18 +33,22 @@
                 </div>
 
                 <div>
-                    <h:form id="userForm">
-                        <h:panelGrid columns="5" styleClass="search-bar">
-                            <h:inputText value="#{userView.searchTerm}" placeholder="Search term"/>
-                            <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date"/>
-                            <h:inputText value="#{userView.dateTo}" placeholder="To" type="date"/>
-                            <h:selectOneMenu value="#{userView.sortBy}">
-                                <f:selectItem itemLabel="Sort by" itemValue=""/>
-                                <f:selectItem itemLabel="Name" itemValue="name"/>
-                                <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
-                            </h:selectOneMenu>
-                            <h:commandButton value="Search" action="#{userView.search}" styleClass="search-button"/>
-                        </h:panelGrid>
+                    <!-- Search Form -->
+                    <h:form id="search-form">
+                        <div class="search-bar">
+                            <h:outputLabel for="searchUsername" value="Username"/>
+                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" />
+
+                            <h:outputLabel for="searchFirstName" value="First Name"/>
+                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" />
+
+                            <h:outputLabel for="searchLastName" value="Last Name"/>
+                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" />
+
+                            <p:commandButton value="Search" action="#{userView.search}" update="userForma" />
+                            <p:commandButton value="Reset" action="#{userView.reset}" update="userForma" />
+
+                        </div>
                     </h:form>
                 </div>
 
@@ -80,9 +84,13 @@
                                 #{user.lastname}
                             </p:column>
 
+
                             <p:column headerText="Date of Birth">
-                                #{user.dateOfBirth}
+                                <h:outputText value="#{user.dateOfBirth}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
                             </p:column>
+
 
                             <p:column headerText="Delete">
                                 <p:commandLink value="Delete" styleClass="link-del" oncomplete="PF('deleteDialog').show()" process="@this">
@@ -103,50 +111,6 @@
                                 <h:outputText value="Are you sure you want to delete?" />
                                 <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
                                 <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
-                            </h:panelGrid>
-                        </h:form>
-                    </p:dialog>
-
-                    <!-- Update User Dialog -->
-                    <p:dialog header="Update User" widgetVar="updateUserDialog" modal="true" width="500" height="400">
-                        <h:form id="updateForm" styleClass="form">
-                            <h:panelGrid columns="2" styleClass="panelGrid">
-                                <h:outputLabel for="username" value="Username" styleClass="label"/>
-                                <h:inputText id="username" value="#{updateUser.username}" styleClass="input"/>
-                                <br/>
-
-                                <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
-                                <h:inputText id="firstname" value="#{updateUser.firstname}" styleClass="input"/>
-                                <br/>
-
-                                <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
-                                <h:inputText id="lastname" value="#{updateUser.lastname}" styleClass="input"/>
-                                <br/>
-
-                                <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
-                                <h:inputText id="dob" value="#{updateUser.dateOfBirth}" styleClass="input"/>
-                                <br/>
-
-                                <h:outputLabel for="role" value="User role" styleClass="label" rendered="#{loginBean.admin}"/>
-                                <h:selectOneMenu label="User role" id="role" value="#{updateUser.role}" styleClass="input" rendered="#{loginBean.admin}">
-                                    <f:selectItem itemLabel="USER" itemValue="USER"/>
-                                    <f:selectItem itemLabel="ADMIN" itemValue="ADMIN"/>
-                                </h:selectOneMenu>
-                                <br/>
-
-                                <h:outputLabel for="deleted" value="Deleted" rendered="#{loginBean.admin}"/>
-                                <h:selectBooleanCheckbox label="Deleted" id="deleted" value="#{updateUser.deleted}" rendered="#{loginBean.admin}" />
-                                <br/>
-
-                                <h:outputLabel for="email" value="Email" styleClass="label"/>
-                                <h:inputText id="email" value="#{updateUser.email}" styleClass="input"/>
-                                <br/>
-
-                                <h:outputLabel for="password" value="Password" styleClass="label"/>
-                                <h:inputText id="password" value="#{updateUser.password}" styleClass="input"/>
-                                <br/>
-
-                                <h:commandButton value="Update" action="#{updateUser.updateUser}" styleClass="button" oncomplete="PF('updateUserDialog').hide(); updateUsers();" />
                             </h:panelGrid>
                         </h:form>
                     </p:dialog>

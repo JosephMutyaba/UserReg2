@@ -83,11 +83,10 @@ form {
 }
 
 /* Search bar styles */
-.search-bar {
+.search-form .search-bar {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 /* Data table styles */

@@ -34,6 +34,17 @@ public class DeleteAllDependantsOfUser implements Serializable {
         System.out.println("deleteAllDependants exited");
     }
 
+    public String deleteAllDependantsFromDB(){
+        boolean allDeleted=dependantService.deleteAllDependantsFromDb();
+        if (allDeleted) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("All dependants have been deleted successfully"));
+            return "/pages/dependants";
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong. Dependants not deleted"));
+            return "/pages/dependants";
+        }
+    }
+
     public void selectUserId(Long user_id) {
         this.user_id = user_id;
     }

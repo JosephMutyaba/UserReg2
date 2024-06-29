@@ -25,6 +25,8 @@ public class AddDependantView implements Serializable {
     private User user;
     private String username;
     private String firstname;
+    private String user_username;
+
     private String lastname;
     private Date dateOfBirth;
     private String gender;
@@ -40,6 +42,14 @@ public class AddDependantView implements Serializable {
 
     public void setUserView(UserView userView) {
         this.userView = userView;
+    }
+
+    public String getUser_username() {
+        return user_username;
+    }
+
+    public void setUser_username(String user_username) {
+        this.user_username = user_username;
     }
 
     public User getUser() {
@@ -189,6 +199,40 @@ public class AddDependantView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
             return "/pages/userpages/getUserSpecific";
+        }
+    }
+    public String addDependantAdmin() {
+        try {
+            Dependant dependant = new Dependant();
+            dependant.setUsername(username);
+            dependant.setFirstname(firstname);
+            dependant.setLastname(lastname);
+            dependant.setDateOfBirth(dateOfBirth);
+            dependant.setGender(gender);
+
+            User associated_user = userService.getUserOfUsername(user_username);
+
+            dependant.setUser(associated_user); // Set the user retrieved from the cookie
+
+            // Perform validations
+            dependantService.validateUsername(dependant.getUsername());
+            dependantService.validateName(dependant.getFirstname(), "First name");
+            dependantService.validateName(dependant.getLastname(), "Last name");
+            dependantService.validateDateOfBirth(dependant.getDateOfBirth());
+
+            dependantService.addDependant(dependant);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
+
+            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
+
+            return "/pages/dependants.xhtml";
+
+
+        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
+            System.out.println("Exception: " + e.getMessage()); // Debug statement
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+            return "/pages/dependants.xhtml";
         }
     }
 

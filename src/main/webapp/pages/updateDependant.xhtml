@@ -8,18 +8,7 @@
     <title>Update Dependant</title>
     <h:outputStylesheet name="css/register.css"/>
     <h:outputScript name="js/setCookie.js"/>
-    <style>
-        .error {
-            color: red;
-            display: block;
-        }
-        .input, .selectMenu {
-            margin-bottom: 10px;
-        }
-        .messages {
-            color: red;
-        }
-    </style>
+
 </h:head>
 <h:body>
     <h:form id="backHomeForm" styleClass="form">
@@ -29,29 +18,24 @@
     <h:form id="registerForm" styleClass="form">
         <h:outputLabel for="id" value="Id:" styleClass="label"/>
         <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
-        <br/>
 
         <h:outputLabel for="username" value="Username:" styleClass="label"/>
         <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input"/>
         <h:message for="username" styleClass="error"/>
-        <br/>
 
         <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
         <h:inputText id="firstname" value="#{updateDependant.firstname}" required="true" styleClass="input"/>
         <h:message for="firstname" styleClass="error"/>
-        <br/>
 
         <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
         <h:inputText id="lastname" value="#{updateDependant.lastname}" required="true" styleClass="input"/>
         <h:message for="lastname" styleClass="error"/>
-        <br/>
 
         <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
         <p:calendar id="dob" value="#{updateDependant.dateOfBirth}" required="true" showButtonPanel="true"
                     navigator="true" maxdate="#{updateDependant.today}" yearRange="c-100:c"
                     pattern="yyyy-MM-dd" styleClass="input"/>
         <h:message for="dob" styleClass="error"/>
-        <br/>
 
         <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
         <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
@@ -59,10 +43,8 @@
             <f:selectItem itemLabel="Female" itemValue="Female"/>
         </h:selectOneMenu>
         <h:message for="gender" styleClass="error"/>
-        <br/>
 
         <h:commandButton value="Update" action="#{updateDependant.updateADependant}" styleClass="button"/>
-        <br/>
         <h:messages globalOnly="true" styleClass="messages"/>
     </h:form>
 </h:body>

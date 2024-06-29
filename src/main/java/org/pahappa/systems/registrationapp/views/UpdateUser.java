@@ -180,6 +180,7 @@ public class UpdateUser implements Serializable {
             user.setDeleted(deleted);
             user.setId(id);
             user.setEmail(email);
+            user.setGender(gender);
             user.setUsername(username);
 
             if (!password.trim().isEmpty()  && !BCrypt.checkpw(password, user.getPassword() )) {
@@ -222,6 +223,7 @@ public class UpdateUser implements Serializable {
             user.setId(id);
             user.setEmail(email);
             user.setUsername(username);
+            user.setGender(gender);
 
             if (!password.trim().isEmpty()  && !BCrypt.checkpw(password, user.getPassword() )) {
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));

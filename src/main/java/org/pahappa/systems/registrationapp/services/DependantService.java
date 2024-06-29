@@ -86,4 +86,22 @@ public class DependantService {
     public List<Dependant> getAllDependants() {
         return dependantDAO.getAllDependants();
     }
+
+
+
+    public boolean deleteAllDependantsFromDb(){
+        return dependantDAO.deleteAllDependantsFromDb();
+    }
+
+    public List<Dependant> findDependantsByUserAndGender(Long selectedUserId, String selectedGender) {
+        return dependantDAO.findDependantsByUserAndGender(selectedUserId, selectedGender);
+    }
+
+    public List<Dependant> findDependantsByUser(Long selectedUserId) {
+        return dependantDAO.findDependantsByUser(selectedUserId);
+    }
+
+    public List<Dependant> findDependantsByGender(String selectedGender) {
+        return dependantDAO.findDependantsByGender(selectedGender);
+    }
 }

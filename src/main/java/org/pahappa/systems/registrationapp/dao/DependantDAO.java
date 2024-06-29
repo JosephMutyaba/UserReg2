@@ -1,5 +1,6 @@
 package org.pahappa.systems.registrationapp.dao;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -252,11 +253,91 @@ public class DependantDAO {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return session.createQuery("from Dependant").list();
+            return session.createQuery("from Dependant where deleted=false").list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean deleteAllDependantsFromDb() {
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+
+            int updatedCount = session.createQuery("UPDATE Dependant SET deleted = true").executeUpdate();
+            transaction.commit();
+
+            return updatedCount > 0; // Return true if any records were updated
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace(); // Handle or log the exception as needed
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Dependant> findDependantsByUserAndGender(Long selectedUserId, String selectedGender) {
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("from Dependant where user_id = :userId and gender = :selGender and deleted=false")
+                    .setParameter("selGender", selectedGender)
+                    .setParameter("userId", selectedUserId)
+                    .list();
+
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Dependant> findDependantsByUser(Long selectedUserId) {
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("from Dependant where user_id = :userId and deleted=false ")
+                    .setParameter("userId", selectedUserId)
+                    .list();
+
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Dependant> findDependantsByGender(String selectedGender) {
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("from Dependant where gender = :selGender and deleted=false ")
+                    .setParameter("selGender", selectedGender)
+                    .list();
+
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }finally {
             if (session != null) {
                 session.close();
             }

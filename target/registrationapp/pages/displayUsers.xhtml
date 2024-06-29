@@ -33,18 +33,22 @@
                 </div>
 
                 <div>
-                    <h:form id="userForm">
-                        <h:panelGrid columns="5" styleClass="search-bar">
-                            <h:inputText value="#{userView.searchTerm}" placeholder="Search term"/>
-                            <h:inputText value="#{userView.dateFrom}" placeholder="From" type="date"/>
-                            <h:inputText value="#{userView.dateTo}" placeholder="To" type="date"/>
-                            <h:selectOneMenu value="#{userView.sortBy}">
-                                <f:selectItem itemLabel="Sort by" itemValue=""/>
-                                <f:selectItem itemLabel="Name" itemValue="name"/>
-                                <f:selectItem itemLabel="Date of Birth" itemValue="dob"/>
-                            </h:selectOneMenu>
-                            <h:commandButton value="Search" action="#{userView.search}" styleClass="search-button"/>
-                        </h:panelGrid>
+                    <!-- Search Form -->
+                    <h:form id="search-form">
+                        <div class="search-bar">
+                            <h:outputLabel for="searchUsername" value="Username"/>
+                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" />
+
+                            <h:outputLabel for="searchFirstName" value="First Name"/>
+                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" />
+
+                            <h:outputLabel for="searchLastName" value="Last Name"/>
+                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" />
+
+                            <p:commandButton value="Search" action="#{userView.search}" update="userForma" />
+                            <p:commandButton value="Reset" action="#{userView.reset}" update="userForma" />
+
+                        </div>
                     </h:form>
                 </div>
 
@@ -80,9 +84,13 @@
                                 #{user.lastname}
                             </p:column>
 
+
                             <p:column headerText="Date of Birth">
-                                #{user.dateOfBirth}
+                                <h:outputText value="#{user.dateOfBirth}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
                             </p:column>
+
 
                             <p:column headerText="Delete">
                                 <p:commandLink value="Delete" styleClass="link-del" oncomplete="PF('deleteDialog').show()" process="@this">

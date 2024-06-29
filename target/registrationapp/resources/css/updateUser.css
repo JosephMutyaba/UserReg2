@@ -2,7 +2,10 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensure full viewport height */
 }
 
 .error {
@@ -99,4 +102,29 @@ body {
     grid-template-columns: auto auto;
     gap: 10px;
     justify-content: center;
+}
+
+
+
+/*////////////*/
+/* Container and main content */
+.container {
+    display: flex;
+    flex: 1; /* Fill remaining vertical space */
+    overflow: hidden; /* Prevent child elements from overflowing */
+}
+
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-y: auto; /* Enable vertical scrolling for main content */
+}
+
+.sidebar {
+    width: 20%;
+}
+
+.update-user-management{
+
 }
