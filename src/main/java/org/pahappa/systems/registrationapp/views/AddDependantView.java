@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Qualifier;
 import javax.servlet.http.Cookie;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -37,12 +39,6 @@ public class AddDependantView implements Serializable {
 
     public AddDependantView() {}
 
-    @ManagedProperty(value = "#{userView}")
-    private UserView userView;
-
-    public void setUserView(UserView userView) {
-        this.userView = userView;
-    }
 
     public String getUser_username() {
         return user_username;
@@ -114,19 +110,18 @@ public class AddDependantView implements Serializable {
 
     @PostConstruct
     public void init() {
-        user = new User();
-        userView = new UserView();
-
-        // Retrieve the user identifier from the cookie
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
-        Cookie cookie = (Cookie) cookies.get("selectedUser");
-
-        if (cookie != null) {
-            String username = cookie.getValue();
-            user = userService.getUserOfUsername(username);
-            user_id = user.getId(); // Assuming user.getId() exists
-        }
+//        user = new User();
+//
+//        // Retrieve the user identifier from the cookie
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
+//        Cookie cookie = (Cookie) cookies.get("selectedUser");
+//
+//        if (cookie != null) {
+//            String username = cookie.getValue();
+//            user = userService.getUserOfUsername(username);
+//            user_id = user.getId(); // Assuming user.getId() exists
+//        }
     }
 
     public String addDependant() {
@@ -166,7 +161,7 @@ public class AddDependantView implements Serializable {
     }
 
 
-    public String addDependantUser() {
+    public String addDependantUser(User passedInUser) {
         try {
             System.out.println("addDependant called"); // Debug statement
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -178,7 +173,7 @@ public class AddDependantView implements Serializable {
             dependant.setLastname(lastname);
             dependant.setDateOfBirth(dateOfBirth);
             dependant.setGender(gender);
-            dependant.setUser(user); // Set the user retrieved from the cookie
+            dependant.setUser(passedInUser); // Set the user retrieved from the cookie
 
             // Perform validations
             dependantService.validateUsername(dependant.getUsername());
@@ -189,16 +184,15 @@ public class AddDependantView implements Serializable {
             dependantService.addDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
 
-            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
 
-            return "/pages/userpages/getUserSpecific";
+            return "/pages/userpages/dependants";
 
 
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/userpages/getUserSpecific";
+            return "/pages/userpages/addDependantUser";
         }
     }
     public String addDependantAdmin() {
@@ -255,6 +249,7 @@ public class AddDependantView implements Serializable {
         try {
             this.user = userService.getUserOfUsername(selectedUser.getUsername());
             this.user_id = this.user.getId(); // Assuming user.getId() exists
+            this.user_username=selectedUser.getUsername();
             System.out.println("user role: " + this.user.getRole());
 
             return "/pages/userpages/addDependantUser";

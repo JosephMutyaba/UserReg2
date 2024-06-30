@@ -63,6 +63,12 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
+    <managed-bean>
+        <managed-bean-name>userDashboardStats</managed-bean-name>
+        <managed-bean-class>org.pahappa.systems.registrationapp.views.newui.UserDashboardStats</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
 
 
 </faces-config>

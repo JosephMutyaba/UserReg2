@@ -1,6 +1,8 @@
 package org.pahappa.systems.registrationapp.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +18,11 @@ public class Dependant {
 
     private String firstname;
     private String lastname;
+
     private Date dateOfBirth;
+
+    private Date dateOfRegistration=toDate(LocalDate.now());
+
     private String gender;
     private boolean deleted=false;
 
@@ -102,6 +108,14 @@ public class Dependant {
         this.user = user;
     }
 
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,6 +139,10 @@ public class Dependant {
                 ", dateOfBirth=" + dateOfBirth +
                 ", gender=" + gender +
                 '}';
+    }
+
+    private Date toDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }
 

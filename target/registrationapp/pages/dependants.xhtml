@@ -67,16 +67,12 @@
                             <p:column headerText="Last Name">
                                 <h:outputText value="#{dependant.lastname}"/>
                             </p:column>
-                            <p:column headerText="Date Of Birth">
-                                <h:outputText value="#{dependant.dateOfBirth}"/>
-                            </p:column>
+
                             <p:column headerText="Date of Birth">
                                 <h:outputText value="#{dependant.dateOfBirth}">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:outputText>
                             </p:column>
-
-
 
                             <p:column headerText="Gender">
                                 <h:outputText value="#{dependant.gender}"/>
@@ -94,9 +90,6 @@
 
                             </p:column>
 
-
-
-
                         </p:dataTable>
 
 
@@ -104,31 +97,6 @@
                 </div>
             </div>
 
-            <!-- Delete Confirmation Dialog -->
-            <p:dialog header="Confirm Deletion" widgetVar="deleteDialoga" modal="true" width="300">
-                <h:form id="deleteForm">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Are you sure you want to delete?" />
-                        <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant()}" oncomplete="PF('deleteDialoga').hide(); updateDependantTable();" />
-                        <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
-                    </h:panelGrid>
-                </h:form>
-            </p:dialog>
-
-            <!-- Delete All dependants Confirmation Dialog -->
-            <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
-                <h:form>
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Delete All Dependants?" />
-                        <br/>
-                        <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependantsFromDB}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" immediate="true"/>
-                        <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" immediate="true"/>
-                    </h:panelGrid>
-                </h:form>
-            </p:dialog>
-
-            <!-- Remote Command to update the user table -->
-            <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
         </div>
     </div>
 </h:body>

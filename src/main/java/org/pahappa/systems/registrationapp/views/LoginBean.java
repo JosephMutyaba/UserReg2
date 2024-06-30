@@ -141,23 +141,17 @@ public class LoginBean implements Serializable {
             System.out.println("Password check passed for user: " + loggedInUser.getUsername());
 
             if ("ADMIN".equals(loggedInUser.getRole())) {
-                this.username = loggedInUser.getUsername();
-                this.password = loggedInUser.getPassword();
-                this.id=loggedInUser.getId();
-                this.dateOfBirth=loggedInUser.getDateOfBirth();
-                this.deleted=loggedInUser.isDeleted();
-                this.firstname=loggedInUser.getFirstname();
-                this.lastname=loggedInUser.getLastname();
-                this.role=loggedInUser.getRole();
-                this.email = loggedInUser.getEmail();
+                setUserDetails();
 
                 System.out.println("AdminRole logged in user: " + loggedInUser.getRole());
                 return "/pages/dashboard.xhtml?faces-redirect=true"; // Redirect to admin home page
-//                return "pages/newui/adminpages/dashboard.xhtml?faces-redirect=true"; // Redirect to admin home page
             } else {
+
+                setUserDetails();
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", loggedInUser);
                 System.out.println("Non-admin user: " + loggedInUser.getUsername());
-                return "/pages/userpages/getUserSpecific.xhtml?faces-redirect=true&user=" + loggedInUser.getUsername(); // Redirect to getUser page
+                return "/pages/userpages/dashboard.xhtml?faces-redirect=true&user=" + loggedInUser.getUsername(); // Redirect to getUser page
             }
         }
 
@@ -179,9 +173,6 @@ public class LoginBean implements Serializable {
 
     public void updateUser() {
         try {
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//            Date dob = sdf.parse(dateOfBirth);
-
             loggedInUser.setFirstname(firstname);
             loggedInUser.setLastname(lastname);
             loggedInUser.setDateOfBirth(dateOfBirth);
@@ -210,6 +201,18 @@ public class LoginBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
         }
+    }
+
+    private void setUserDetails(){
+        this.username = loggedInUser.getUsername();
+        this.password = loggedInUser.getPassword();
+        this.id=loggedInUser.getId();
+        this.dateOfBirth=loggedInUser.getDateOfBirth();
+        this.deleted=loggedInUser.isDeleted();
+        this.firstname=loggedInUser.getFirstname();
+        this.lastname=loggedInUser.getLastname();
+        this.role=loggedInUser.getRole();
+        this.email = loggedInUser.getEmail();
     }
 
 

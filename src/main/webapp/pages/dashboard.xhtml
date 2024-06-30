@@ -3,7 +3,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-    <title>Display All Users</title>
+    <title>Dashboard</title>
 
     <h:outputStylesheet name="css/newui/dashboard.css"/>
 
@@ -38,9 +38,12 @@
                     <div class="charts">
                         <div class="chart">
                             <h3>Weekly Activity</h3>
+                            <p:chart type="bar" model="#{weeklyActivityView.barModel}" style="width:400px;height:300px"/>
                         </div>
                         <div class="chart">
                             <h3>Gender Statistics</h3>
+                            <p:chart type="pie" model="#{chartView.pieModel}" style="width:400px;height:300px"/>
+
                         </div>
                     </div>
                 </div>

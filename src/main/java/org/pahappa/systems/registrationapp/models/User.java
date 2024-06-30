@@ -3,6 +3,8 @@ package org.pahappa.systems.registrationapp.models;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,8 @@ public class User {
     private String firstname;
     private String lastname;
     private Date dateOfBirth;
+
+    private Date dateOfRegistration=toDate(LocalDate.now());
 
     private String password;
 
@@ -125,6 +129,14 @@ public class User {
         this.email = email;
     }
 
+    public Date getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -163,4 +175,7 @@ public class User {
     }
 
 
+    private Date toDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 }

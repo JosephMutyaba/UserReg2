@@ -1,5 +1,6 @@
 package org.pahappa.systems.registrationapp.dao;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,6 +8,7 @@ import org.pahappa.systems.registrationapp.config.SessionConfiguration;
 import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserDAO {
@@ -158,5 +160,21 @@ public class UserDAO {
         }
     }
 
+    public List<User> getUsersRegisteredOnADay(Date dateRegistered) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            return session.createQuery("from User where dateOfRegistration=:date_of_registration")
+                    .setParameter("date_of_registration", dateRegistered)
+                    .list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(session != null) {
+                session.close();
+            }
+        }
+        return null;
+    }
 }
 

@@ -130,7 +130,7 @@ public class UpdateDependant implements Serializable {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/getUser";
+            return "/pages/updateDependant";
         }
     }
 
@@ -197,12 +197,12 @@ public class UpdateDependant implements Serializable {
             dependantService.updateDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant Updated successfully"));
 
-            return "/pages/userpages/getUserSpecific";
+            return "/pages/userpages/dependants";
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/userpages/getUserSpecific";
+            return "/pages/userpages/updateADependantUser";
         }
     }
 

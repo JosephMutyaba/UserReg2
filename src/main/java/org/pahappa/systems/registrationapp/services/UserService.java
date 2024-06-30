@@ -115,7 +115,7 @@ public class UserService {
     }
 
 
-
-
-
+    public List<User> getUsersRegisteredOnADay(Date registrationDate) {
+        return usrDAO.getUsersRegisteredOnADay(registrationDate);
+    }
 }

@@ -6,6 +6,7 @@ contextlistener\AppContextListener.class
 org\pahappa\systems\registrationapp\models\Dependant.class
 org\pahappa\systems\registrationapp\views\newui\GetAllDependants.class
 org\pahappa\systems\registrationapp\config\SessionConfiguration.class
+org\pahappa\systems\registrationapp\views\newui\WeeklyActivityView.class
 org\pahappa\systems\registrationapp\views\RegisterUserView.class
 org\pahappa\systems\registrationapp\dao\UserDAO.class
 org\pahappa\systems\registrationapp\views\GetDependants.class
@@ -18,8 +19,10 @@ org\pahappa\systems\registrationapp\services\DependantService.class
 org\pahappa\systems\registrationapp\views\DeleteUserView.class
 org\pahappa\systems\registrationapp\views\AddDependantView.class
 org\pahappa\systems\registrationapp\models\User.class
+org\pahappa\systems\registrationapp\views\newui\ChartView.class
 org\pahappa\systems\registrationapp\exception\InvalidDateFormatException.class
 org\pahappa\systems\registrationapp\exception\MissingAttributeException.class
+org\pahappa\systems\registrationapp\views\newui\UserDashboardStats.class
 org\pahappa\systems\registrationapp\views\UpdateDependant.class
 org\pahappa\systems\registrationapp\config\ApplicationStartupListener.class
 org\pahappa\systems\registrationapp\filters\AuthorizationFilter.class

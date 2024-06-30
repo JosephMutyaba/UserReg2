@@ -19,11 +19,14 @@ C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\sy
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\DeleteDependantOfUser.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\RegisterUserView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\filters\AuthorizationFilter.java
+C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\WeeklyActivityView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\config\SessionConfiguration.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\dao\UserDAO.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\AdminView.java
+C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\ChartView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\GetAllDependants.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\contextlistener\AppContextListener.java
+C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\UserDashboardStats.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\AddDependantView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\LoginBean.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\config\ApplicationStartupListener.java

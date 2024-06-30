@@ -6,7 +6,6 @@ import org.pahappa.systems.registrationapp.exception.InvalidNameException;
 import org.pahappa.systems.registrationapp.exception.UsernameAlreadyExistsException;
 import org.pahappa.systems.registrationapp.models.Dependant;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -103,5 +102,17 @@ public class DependantService {
 
     public List<Dependant> findDependantsByGender(String selectedGender) {
         return dependantDAO.findDependantsByGender(selectedGender);
+    }
+
+    public List<Dependant> getUsersRegisteredOnADay(Date date) {
+        return dependantDAO.getUsersRegisteredOnADay(date);
+    }
+
+    public List<Dependant> findDependantsByGenderAndUserId(Long userId, String selectedGender) {
+        return dependantDAO.findDependantsByGenderAndUserId(userId,selectedGender);
+    }
+
+    public List<Dependant> getDependantsRegisteredOnADayAndOfUserId(Date dateOfReg, Long userId) {
+        return dependantDAO.getDependantsRegisteredOnADayAndOfUserId(dateOfReg, userId);
     }
 }

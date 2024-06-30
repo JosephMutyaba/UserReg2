@@ -7,8 +7,7 @@
 <h:head>
     <title>Update Dependant</title>
     <h:outputStylesheet name="css/register.css"/>
-    <!-- Include your JavaScript file if needed -->
-    <!-- <h:outputScript name="js/setCookie.js"/> -->
+
     <style>
         .error {
             color: red;
@@ -24,48 +23,58 @@
     </style>
 </h:head>
 <h:body>
-    <h:form id="backHomeForm" styleClass="form">
-        <h:commandLink value="Back home" action="/pages/userpages/getUserSpecific.xhtml" styleClass="link"/>
-    </h:form>
-    <h1 class="header">Update dependant</h1>
-    <h:form id="registerForm" styleClass="form">
-        <h:outputLabel for="id" value="Id:" styleClass="label"/>
-        <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
-        <br/>
 
-        <h:outputLabel for="username" value="Username:" styleClass="label"/>
-        <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input"/>
-        <br/>
-        <h:message for="username" styleClass="error"/>
 
-        <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
-        <h:inputText id="firstname" value="#{updateDependant.firstname}" required="true" styleClass="input"/>
-        <br/>
-        <h:message for="firstname" styleClass="error"/>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="/pages/userpages/sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="update-dependant-management">
+                <h1 class="header">Update dependant</h1>
+                <h:form id="registerForm" styleClass="form">
+                    <h:outputLabel for="id" value="Id:" styleClass="label"/>
+                    <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
+                    <br/>
 
-        <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
-        <h:inputText id="lastname" value="#{updateDependant.lastname}" required="true" styleClass="input"/>
-        <br/>
-        <h:message for="lastname" styleClass="error"/>
+                    <h:outputLabel for="username" value="Username:" styleClass="label"/>
+                    <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input"/>
+                    <br/>
+                    <h:message for="username" styleClass="error"/>
 
-        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
-        <p:calendar id="dob" value="#{updateDependant.dateOfBirth}" required="true" showButtonPanel="true"
-                    navigator="true" maxdate="#{updateDependant.today}" yearRange="c-100:c"
-                    pattern="yyyy-MM-dd" styleClass="input"/>
-        <br/>
-        <h:message for="dob" styleClass="error"/>
+                    <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                    <h:inputText id="firstname" value="#{updateDependant.firstname}" required="true" styleClass="input"/>
+                    <br/>
+                    <h:message for="firstname" styleClass="error"/>
 
-        <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
-        <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
-            <f:selectItem itemLabel="Male" itemValue="Male"/>
-            <f:selectItem itemLabel="Female" itemValue="Female"/>
-        </h:selectOneMenu>
-        <br/>
-        <h:message for="gender" styleClass="error"/>
+                    <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                    <h:inputText id="lastname" value="#{updateDependant.lastname}" required="true" styleClass="input"/>
+                    <br/>
+                    <h:message for="lastname" styleClass="error"/>
 
-        <h:commandButton value="Update" action="#{updateDependant.updateADependantUser}" styleClass="button"/>
-        <br/>
-        <h:messages globalOnly="true" styleClass="messages"/>
-    </h:form>
+                    <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                    <p:calendar id="dob" value="#{updateDependant.dateOfBirth}" required="true" showButtonPanel="true"
+                                navigator="true" maxdate="#{updateDependant.today}" yearRange="c-100:c"
+                                pattern="yyyy-MM-dd" styleClass="input"/>
+                    <br/>
+                    <h:message for="dob" styleClass="error"/>
+
+                    <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+                    <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
+                        <f:selectItem itemLabel="Male" itemValue="Male"/>
+                        <f:selectItem itemLabel="Female" itemValue="Female"/>
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:message for="gender" styleClass="error"/>
+
+                    <h:commandButton value="Update" action="#{updateDependant.updateADependantUser}" styleClass="button"/>
+                    <br/>
+                    <h:messages globalOnly="true" styleClass="messages"/>
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+
 </h:body>
 </html>

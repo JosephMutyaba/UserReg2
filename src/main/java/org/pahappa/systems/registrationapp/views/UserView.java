@@ -114,7 +114,13 @@ public class UserView implements Serializable {
     }
 
     public List<Dependant> getDependants() {
-        return dependantService.getAllDependantsByUserId(user.getId());
+        if ((searchDependantUsername == null || searchDependantUsername.isEmpty()) &&
+                (searchDependantFirstName == null || searchDependantFirstName.isEmpty()) &&
+                (searchDependantLastName == null || searchDependantLastName.isEmpty())) {
+            return dependantService.getAllDependantsByUserId(user.getId());
+        } else {
+            return searchDependants_nofilter();
+        }
     }
 
 
@@ -260,6 +266,7 @@ public class UserView implements Serializable {
 
 
     public List<User> searchUsers() {
+        users= userService.displayAllUsers();
         return users.stream()
                 .filter(user -> (searchUsername == null || searchUsername.isEmpty() || user.getUsername().contains(searchUsername)) &&
                         (searchFirstName == null || searchFirstName.isEmpty() || user.getFirstname().contains(searchFirstName)) &&
@@ -278,4 +285,82 @@ public class UserView implements Serializable {
         searchLastName = null;
         users = userService.displayAllUsers();
     }
+
+
+
+
+
+    ////////// DEPENDANT UNDER USER ROLE:USER
+    private String selectedGender; // Add getter and setter
+
+    public String getSelectedGender() {
+        return selectedGender;
+    }
+
+    public void setSelectedGender(String selectedGender) {
+        this.selectedGender = selectedGender;
+    }
+
+    public void filterDependants() {
+        if (selectedGender == null || selectedGender.isEmpty()) {
+            dependants = dependantService.getAllDependantsByUserId(user.getId());
+        } else if(selectedGender != null || !selectedGender.isEmpty()) {
+            dependants = dependantService.findDependantsByGenderAndUserId(user.getId(),selectedGender);
+        }else {
+            dependants = dependantService.getAllDependantsByUserId(user.getId());
+        }
+    }
+
+    ////SEARCH FOR DEPENDANTS
+    /////////////////////
+    private String searchDependantUsername;
+    private String searchDependantFirstName;
+    private String searchDependantLastName;
+
+    public String getSearchDependantUsername() {
+        return searchDependantUsername;
+    }
+
+    public void setSearchDependantUsername(String searchDependantUsername) {
+        this.searchDependantUsername = searchDependantUsername;
+    }
+
+    public String getSearchDependantFirstName() {
+        return searchDependantFirstName;
+    }
+
+    public void setSearchDependantFirstName(String searchDependantFirstName) {
+        this.searchDependantFirstName = searchDependantFirstName;
+    }
+
+    public String getSearchDependantLastName() {
+        return searchDependantLastName;
+    }
+
+    public void setSearchDependantLastName(String searchDependantLastName) {
+        this.searchDependantLastName = searchDependantLastName;
+    }
+
+    public List<Dependant> searchDependants_nofilter() {
+        dependants=dependantService.getAllDependantsByUserId(user.getId());
+        return dependants.stream()
+                .filter(dependant -> (searchDependantUsername == null || searchDependantUsername.isEmpty() || dependant.getUsername().contains(searchDependantUsername)) &&
+                        (searchDependantFirstName == null || searchDependantFirstName.isEmpty() || dependant.getFirstname().contains(searchDependantFirstName)) &&
+                        (searchDependantLastName == null || searchDependantLastName.isEmpty() || user.getLastname().contains(searchDependantLastName)))
+                .collect(Collectors.toList());
+    }
+
+
+    public void searchingDependants() {
+        dependants = getDependants();
+    }
+
+
+    public void resetDependants() {
+        searchDependantUsername = null;
+        searchDependantFirstName = null;
+        searchDependantLastName = null;
+        dependants = dependantService.getAllDependantsByUserId(user.getId());
+    }
+
 }

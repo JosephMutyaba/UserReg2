@@ -63,23 +63,4 @@ public class GetAllDependants implements Serializable {
         return dependants;
     }
 
-
-    //    public List<Dependant> filterDependants() {
-//        // Fetch dependants based on selectedUserId and selectedGender
-//        if (selectedUserId != null && selectedGender != null) {
-//            return dependantService.findDependantsByUserAndGender(selectedUserId, selectedGender);
-//        } else if (selectedUserId != null) {
-//            return dependantService.findDependantsByUser(selectedUserId);
-//        } else if (selectedGender != null) {
-//            return dependantService.findDependantsByGender(selectedGender);
-//        }else {
-//            return dependantService.getAllDependants();
-//        }
-//
-//    }
-//
-//    public List<Dependant> getDependants() {
-//        System.out.println("Dependants---: "+filterDependants());
-//        return filterDependants();
-//    }
 }

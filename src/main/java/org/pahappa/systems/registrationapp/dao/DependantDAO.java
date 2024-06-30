@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.pahappa.systems.registrationapp.config.SessionConfiguration;
 import org.pahappa.systems.registrationapp.models.Dependant;
 
+import java.util.Date;
 import java.util.List;
 
 public class DependantDAO {
@@ -336,6 +337,59 @@ public class DependantDAO {
 
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Dependant> getUsersRegisteredOnADay(Date date) {
+        Session session =null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("FROM Dependant WHERE dateOfRegistration=:date_of_reg")
+                    .setParameter("date_of_reg", date)
+                    .list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
+    }
+
+    public List<Dependant> findDependantsByGenderAndUserId(Long userId, String selectedGender) {
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("FROM Dependant WHERE user_id=:user_id AND gender=:selected_gender")
+                    .setParameter("user_id", userId)
+                    .setParameter("selected_gender", selectedGender)
+                    .list();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Dependant> getDependantsRegisteredOnADayAndOfUserId(Date dateOfReg, Long userId) {
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return session.createQuery("FROM Dependant WHERE user_id=:userI_d AND dateOfRegistration=:date_of_registration")
+                    .setParameter("userI_d", userId)
+                    .setParameter("date_of_registration", dateOfReg)
+                    .list();
+        }catch (Exception e) {
+            e.printStackTrace();
             return null;
         }finally {
             if (session != null) {
