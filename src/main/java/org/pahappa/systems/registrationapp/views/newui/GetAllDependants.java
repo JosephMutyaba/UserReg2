@@ -60,7 +60,13 @@ public class GetAllDependants implements Serializable {
     }
 
     public List<Dependant> getDependants() {
+        dependants = dependantService.getAllDependants();
+        filterDependants();
         return dependants;
     }
+
+
+
+
 
 }

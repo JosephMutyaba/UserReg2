@@ -35,18 +35,18 @@
                 <div>
                     <!-- Search Form -->
                     <h:form id="search-form">
-                        <div class="search-bar">
+                        <div class="search-bar" style="display: flex; flex-direction: row; justify-content: space-between;">
                             <h:outputLabel for="searchUsername" value="Username"/>
-                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" />
+                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" styleClass="input-field"/>
 
                             <h:outputLabel for="searchFirstName" value="First Name"/>
-                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" />
+                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" styleClass="input-field"/>
 
                             <h:outputLabel for="searchLastName" value="Last Name"/>
-                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" />
+                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" styleClass="input-field" />
 
-                            <p:commandButton value="Search" action="#{userView.search}" update="userForma" />
-                            <p:commandButton value="Reset" action="#{userView.reset}" update="userForma" />
+                            <p:commandButton styleClass="link" value="Search" action="#{userView.search}" update="userForma" />
+                            <p:commandButton styleClass="link" value="Reset" action="#{userView.reset}" update="userForma" />
 
                         </div>
                     </h:form>
@@ -54,8 +54,12 @@
 
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
-                        <h:commandLink value="New User" action="/pages/register.xhtml" styleClass="link"/>
-                        <h:commandLink value="Delete All Users" action="/pages/deleteAllUsers.xhtml" styleClass="link"/>
+                        <h:commandLink action="/pages/register.xhtml" styleClass="link">
+                            <i class="fa fa-plus"/> New User
+                        </h:commandLink>
+                        <h:commandLink action="/pages/deleteAllUsers.xhtml" styleClass="link">
+                            <i class="fa fa-trash" style="color: red"/> Delete All Users
+                        </h:commandLink>
                     </h:form>
                 </div>
                 <div>
@@ -93,13 +97,16 @@
 
 
                             <p:column headerText="Delete">
-                                <p:commandLink value="Delete" styleClass="link-del" oncomplete="PF('deleteDialog').show()" process="@this">
+                                <p:commandLink oncomplete="PF('deleteDialog').show()" process="@this">
+                                    <i class="fa fa-trash" style="color: red"/>
                                     <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
                                 </p:commandLink>
                             </p:column>
 
-                            <p:column headerText="Update">
-                                <h:commandButton value="Update" action="#{updateUser.selectUser(user)}" styleClass="link-up"/>
+                            <p:column headerText="Edit">
+                                <h:commandLink action="#{updateUser.selectUser(user)}" >
+                                    <i class="fa fa-edit"/>
+                                </h:commandLink>
                             </p:column>
                         </p:dataTable>
                     </h:form>

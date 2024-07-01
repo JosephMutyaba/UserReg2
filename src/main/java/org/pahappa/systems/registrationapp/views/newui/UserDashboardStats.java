@@ -4,6 +4,7 @@ import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.DependantService;
 import org.pahappa.systems.registrationapp.services.UserService;
+import org.pahappa.systems.registrationapp.views.LoginBean;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
@@ -82,6 +83,7 @@ public class UserDashboardStats implements Serializable {
     }
 
     public int getFemaleUserCount() {
+        computeStatistics();
         return femaleUserCount;
     }
 
@@ -127,6 +129,8 @@ public class UserDashboardStats implements Serializable {
         }
     }
 
+
+
     private void computeStatistics() {
         dependants = dependantService.getAllDependantsByUserId(user.getId());
 
@@ -166,6 +170,7 @@ public class UserDashboardStats implements Serializable {
         pieModel.setTitle("Gender Statistics");
         pieModel.setLegendPosition("w");
         pieModel.setShowDataLabels(true);
+//        pieModel.get("animatePie");
     }
 
     private void createBarModel() {
@@ -195,7 +200,6 @@ public class UserDashboardStats implements Serializable {
 
         barModel.setTitle("Weekly Activity");
         barModel.setLegendPosition("ne");
-        barModel.setAnimate(true);
     }
 
     private int getDependantsRegisteredOn(Date date) {

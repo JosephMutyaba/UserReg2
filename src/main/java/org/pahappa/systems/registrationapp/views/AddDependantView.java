@@ -110,21 +110,10 @@ public class AddDependantView implements Serializable {
 
     @PostConstruct
     public void init() {
-//        user = new User();
-//
-//        // Retrieve the user identifier from the cookie
-//        FacesContext facesContext = FacesContext.getCurrentInstance();
-//        Map<String, Object> cookies = facesContext.getExternalContext().getRequestCookieMap();
-//        Cookie cookie = (Cookie) cookies.get("selectedUser");
-//
-//        if (cookie != null) {
-//            String username = cookie.getValue();
-//            user = userService.getUserOfUsername(username);
-//            user_id = user.getId(); // Assuming user.getId() exists
-//        }
+
     }
 
-    public String addDependant() {
+    public String addDependant(User selectedUser) {
         try {
             System.out.println("addDependant called"); // Debug statement
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -136,7 +125,7 @@ public class AddDependantView implements Serializable {
             dependant.setLastname(lastname);
             dependant.setDateOfBirth(dateOfBirth);
             dependant.setGender(gender);
-            dependant.setUser(user); // Set the user retrieved from the cookie
+            dependant.setUser(selectedUser); // Set the user retrieved from the cookie
 
             // Perform validations
             dependantService.validateUsername(dependant.getUsername());
@@ -147,7 +136,7 @@ public class AddDependantView implements Serializable {
             dependantService.addDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
 
-            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
+//            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
 
             return "/pages/getUser";
 
@@ -156,7 +145,7 @@ public class AddDependantView implements Serializable {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/getUser";
+            return null;
         }
     }
 
@@ -217,7 +206,7 @@ public class AddDependantView implements Serializable {
             dependantService.addDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
 
-            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
+//            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
 
             return "/pages/dependants.xhtml";
 

@@ -7,7 +7,8 @@
 <h:head>
    <title>Get User by Username</title>
    <h:outputStylesheet name="css/getUser.css"/>
-   <h:outputScript name="js/setCookie.js"/> <!-- Include JavaScript for setting cookies -->
+   <h:outputScript name="js/setCookie.js"/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 </h:head>
 <h:body>
    <div class="container">
@@ -19,24 +20,19 @@
             <f:event type="preRenderView" listener="#{userView.loadUserData}"/>
             <h2 class="header">Get User by Username</h2>
             <h:form id="userDetailsForm" styleClass="form">
-
-               <diV style="display: flex; width: 100%; justify-content: space-between">
-                  <h:commandButton value="Edit details" onclick="setUserCookie('#{userView.user.username}');" action="#{updateUser.selectUser(userView.user)}" style="height: 30px" styleClass="button"/>
-
-                  <div style="display:flex; flex-direction: row">
-                     <h:outputLabel for="username" value="Enter Username:" style="" styleClass="label"/>
+               <div class="input-group">
+                  <h:commandLink onclick="setUserCookie('#{userView.user.username}');" action="#{updateUser.selectUser(userView.user)}" styleClass="button1">
+                     <i class="fa fa-edit" style="color: white"/> Edit details
+                  </h:commandLink>
+                  <div class="search-group">
+                     <h:outputLabel for="username" value="Enter Username:" styleClass="label"/>
                      <h:inputText id="username" value="#{userView.username}" styleClass="input"/>
-                     <h:commandButton value="Fetch User" action="#{userView.getUserOfUsername}" update=":userDetailsForm:userDetailsPanel" style="height: 30px" styleClass="button"/>
-
+                     <h:commandLink action="#{userView.getUserOfUsername}" update=":userDetailsForm:userDetailsPanel" styleClass="button1">
+                        <i class="fa fa-download"/> Fetch User
+                     </h:commandLink>
                   </div>
-               </diV>
-
-
-
-
-
+               </div>
                <h:messages globalOnly="true" styleClass="messages"/>
-
                <h:panelGrid id="userDetailsPanel" columns="2" rendered="#{userView.user.username ne null}" styleClass="panelGrid">
                   <h:outputLabel value="Username:" styleClass="label"/>
                   <h:outputText value="#{userView.user.username}" styleClass="outputText"/>
@@ -45,114 +41,83 @@
                   <h:outputLabel value="Last Name:" styleClass="label"/>
                   <h:outputText value="#{userView.user.lastname}" styleClass="outputText"/>
                   <h:outputLabel value="Date of Birth:" styleClass="label"/>
-                  <h:outputText value="#{userView.user.dateOfBirth}" styleClass="outputText"/>
-
-                  <h:outputLabel value="Dependants:" style="margin-top:20px;" styleClass="label"/>
-                  <h:outputText value=""/>
-
-                  <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-between" >
-                     <div style="display: flex; justify-content: space-between;">
-                        <p:commandLink value="Delete All Dependants" styleClass="button1" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this"/>
-                        <h:commandLink value="Add Dependant" action="#{addDependantView.selectUser(userView.user)}" onclick="setUserCookie('#{userView.user.username}');" styleClass="button"/>
-                     </div>
-                     <div style="display: flex; flex-direction: row">
-                        <h:outputLabel value="Search:" styleClass="label"/>
-                        <h:inputText id="searchValue" value="#{userView.searchValue}" styleClass="input"/>
-                        <h:selectOneMenu value="#{userView.searchCriteria}" styleClass="selectMenu">
-                           <f:selectItem itemValue="gender" itemLabel="Gender"/>
-                           <f:selectItem itemValue="username" itemLabel="Username"/>
-                           <f:selectItem itemValue="firstname" itemLabel="First Name"/>
-                           <f:selectItem itemValue="lastname" itemLabel="Last Name"/>
-                        </h:selectOneMenu>
-
-                        <h:commandButton ajax="true" value="Search" action="#{userView.searchDependants}" update="dependantsTable" styleClass="button">
-                           <f:ajax execute="@form" render="@form :userDetailsForm:dependantsTable" />
-                        </h:commandButton>
-
-                     </div>
-                  </div>
+                  <h:outputText value="#{userView.user.dateOfBirth}" styleClass="outputText">
+                     <f:convertDateTime pattern="yyyy-MM-dd"/>
+                  </h:outputText>
 
 
-                  <h:dataTable id="dependantsTable" value="#{userView.dependants}" var="dependant" rendered="#{not empty userView.dependants}" styleClass="dataTable">
-                     <h:column>
-                        <f:facet name="header">Username</f:facet>
-                        #{dependant.username}
-                     </h:column>
-                     <h:column>
-                        <f:facet name="header">First Name</f:facet>
-                        #{dependant.firstname}
-                     </h:column>
-                     <h:column>
-                        <f:facet name="header">Last Name</f:facet>
-                        #{dependant.lastname}
-                     </h:column>
-                     <h:column>
-                        <f:facet name="header">Date of Birth</f:facet>
-                        #{dependant.dateOfBirth}
-                     </h:column>
-                     <h:column>
-                        <f:facet name="header">Delete</f:facet>
-                        <p:commandLink value="Delete" styleClass="button1" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
-                           <f:setPropertyActionListener target="#{deleteDependantOfUser.dependant_id}" value="#{dependant.id}" />
-                        </p:commandLink>
-                     </h:column>
-                     <h:column>
-                        <h:commandButton value="Update" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependant(dependant.id)}" styleClass="button"/>
-                     </h:column>
-                  </h:dataTable>
                </h:panelGrid>
 
-            </h:form>
+               <diV>
+                  <h2>
+                     Dependants
+                  </h2>
+               </diV>
 
+               <div class="actions-group">
+                  <h:commandLink styleClass="button1" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
+                     <i class="fa fa-trash" style="color: red"/> Delete All Dependants
+                  </h:commandLink>
+                  <h:commandLink styleClass="button1" action="#{addDependantView.selectUser(userView.user)}" onclick="setUserCookie('#{userView.user.username}');">
+                     <i class="fa fa-plus"/> Add Dependant
+                  </h:commandLink>
+
+               </div>
+
+               <p:dataTable id="dependantsTable" value="#{userView.dependants}" var="dependant" rendered="#{not empty userView.dependants}" paginator="true" rows="5" styleClass="dataTable">
+                  <p:column headerText="No">
+                     <h:outputText value="#{userView.dependants.indexOf(dependant) + 1}"/>
+                  </p:column>
+                  <p:column headerText="Username">
+                     <h:outputText value="#{dependant.username}"/>
+                  </p:column>
+                  <p:column headerText="First Name">
+                     <h:outputText value="#{dependant.firstname}"/>
+                  </p:column>
+                  <p:column headerText="Last Name">
+                     <h:outputText value="#{dependant.lastname}"/>
+                  </p:column>
+                  <p:column headerText="Date of Birth">
+                     <h:outputText value="#{dependant.dateOfBirth}">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                     </h:outputText>
+                  </p:column>
+                  <p:column headerText="Actions">
+                     <p:commandLink action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
+                        <i class="fa fa-trash" style="color: red; margin-right: 10px"/>
+                        <f:setPropertyActionListener target="#{deleteDependantOfUser.dependant_id}" value="#{dependant.id}"/>
+                     </p:commandLink>
+
+                     <p:commandLink title="Update" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependant(dependant.id)}">
+                        <i class="fa fa-edit"/>
+                     </p:commandLink>
+                  </p:column>
+               </p:dataTable>
+            </h:form>
             <!-- Delete Confirmation Dialog -->
             <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
                <h:form>
                   <h:panelGrid columns="2">
-                     <h:outputText value="Are you sure you want to delete?" />
-                     <br/>
-                     <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
-                     <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                     <h:outputText value="Are you sure you want to delete?"/>
+                     <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();"/>
+                     <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;"/>
                   </h:panelGrid>
                </h:form>
             </p:dialog>
-
-            <!-- Delete All dependants Confirmation Dialog -->
+            <!-- Delete All Dependants Confirmation Dialog -->
             <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
                <h:form>
                   <h:panelGrid columns="2">
-                     <h:outputText value="Delete All Dependants?" />
-                     <br/>
-                     <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
-                     <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
+                     <h:outputText value="Delete All Dependants?"/>
+                     <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();"/>
+                     <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;"/>
                   </h:panelGrid>
                </h:form>
             </p:dialog>
-
             <!-- Remote Command to update the user table -->
-            <p:remoteCommand name="updateDependantTable" update="userDetailsForm" />
+            <p:remoteCommand name="updateDependantTable" update="userDetailsForm"/>
          </div>
       </div>
    </div>
-
-
-
-
 </h:body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,7 +31,7 @@ public class DeleteDependantOfUser implements Serializable {
 
     public String deleteDependantAdmin() {
         dependantService.deleteDependantById(dependant_id);
-        return "/pages/dependants.xhtml";
+        return "/pages/dependants.xhtml?faces-redirect=true";
     }
 
     public void selectedId(Long dependant_id){
@@ -40,7 +40,7 @@ public class DeleteDependantOfUser implements Serializable {
 
     public String selectedIdAdmin(Long dependant_id){
         this.dependant_id=dependant_id;
-        return "/pages/deleteDependant.xhtml";
+        return "/pages/deleteDependant.xhtml?faces-redirect=true";
     }
 
 }

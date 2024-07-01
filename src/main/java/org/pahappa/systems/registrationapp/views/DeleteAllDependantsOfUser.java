@@ -38,10 +38,10 @@ public class DeleteAllDependantsOfUser implements Serializable {
         boolean allDeleted=dependantService.deleteAllDependantsFromDb();
         if (allDeleted) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("All dependants have been deleted successfully"));
-            return "/pages/dependants";
+            return "/pages/dependants.xhtml?faces-redirect=true";
         }else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Something went wrong. Dependants not deleted"));
-            return "/pages/dependants";
+            return "/pages/dependants.xhtml?faces-redirect=true";
         }
     }
 

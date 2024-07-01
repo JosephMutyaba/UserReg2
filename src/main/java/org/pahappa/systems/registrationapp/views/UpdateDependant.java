@@ -166,7 +166,7 @@ public class UpdateDependant implements Serializable {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/dependants";
+            return null;
         }
     }
 
@@ -202,7 +202,7 @@ public class UpdateDependant implements Serializable {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/userpages/updateADependantUser";
+            return null;
         }
     }
 

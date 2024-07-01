@@ -113,15 +113,16 @@ public class UserView implements Serializable {
         }
     }
 
-    public List<Dependant> getDependants() {
-        if ((searchDependantUsername == null || searchDependantUsername.isEmpty()) &&
-                (searchDependantFirstName == null || searchDependantFirstName.isEmpty()) &&
-                (searchDependantLastName == null || searchDependantLastName.isEmpty())) {
-            return dependantService.getAllDependantsByUserId(user.getId());
-        } else {
-            return searchDependants_nofilter();
-        }
-    }
+//    public List<Dependant> getDependants() {
+//        if ((searchDependantUsername == null || searchDependantUsername.isEmpty()) &&
+//                (searchDependantFirstName == null || searchDependantFirstName.isEmpty()) &&
+//                (searchDependantLastName == null || searchDependantLastName.isEmpty())) {
+//            return dependantService.getAllDependantsByUserId(user.getId());
+//        } else {
+//
+//            return searchDependants_nofilter();
+//        }
+//    }
 
 
     public String getSearchLastName() {
@@ -301,15 +302,15 @@ public class UserView implements Serializable {
         this.selectedGender = selectedGender;
     }
 
-    public void filterDependants() {
-        if (selectedGender == null || selectedGender.isEmpty()) {
-            dependants = dependantService.getAllDependantsByUserId(user.getId());
-        } else if(selectedGender != null || !selectedGender.isEmpty()) {
-            dependants = dependantService.findDependantsByGenderAndUserId(user.getId(),selectedGender);
-        }else {
-            dependants = dependantService.getAllDependantsByUserId(user.getId());
-        }
-    }
+//    public void filterDependants() {
+//        if (selectedGender == null || selectedGender.isEmpty()) {
+//            dependants = dependantService.getAllDependantsByUserId(user.getId());
+//        } else if(selectedGender != null || !selectedGender.isEmpty()) {
+//            dependants = dependantService.findDependantsByGenderAndUserId(user.getId(),selectedGender);
+//        }else {
+//            dependants = dependantService.getAllDependantsByUserId(user.getId());
+//        }
+//    }
 
     ////SEARCH FOR DEPENDANTS
     /////////////////////
@@ -341,25 +342,61 @@ public class UserView implements Serializable {
         this.searchDependantLastName = searchDependantLastName;
     }
 
-    public List<Dependant> searchDependants_nofilter() {
-        dependants=dependantService.getAllDependantsByUserId(user.getId());
-        return dependants.stream()
-                .filter(dependant -> (searchDependantUsername == null || searchDependantUsername.isEmpty() || dependant.getUsername().contains(searchDependantUsername)) &&
-                        (searchDependantFirstName == null || searchDependantFirstName.isEmpty() || dependant.getFirstname().contains(searchDependantFirstName)) &&
-                        (searchDependantLastName == null || searchDependantLastName.isEmpty() || user.getLastname().contains(searchDependantLastName)))
-                .collect(Collectors.toList());
-    }
+//    public List<Dependant> searchDependants_nofilter() {
+//        dependants=dependantService.getAllDependantsByUserId(user.getId());
+//        return dependants.stream()
+//                .filter(dependant -> (searchDependantUsername == null || searchDependantUsername.isEmpty() || dependant.getUsername().contains(searchDependantUsername)) &&
+//                        (searchDependantFirstName == null || searchDependantFirstName.isEmpty() || dependant.getFirstname().contains(searchDependantFirstName)) &&
+//                        (searchDependantLastName == null || searchDependantLastName.isEmpty() || user.getLastname().contains(searchDependantLastName)))
+//                .collect(Collectors.toList());
+//    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<Dependant> getDependants() {
+        // Retrieve all dependants for the user
+        dependants = dependantService.getAllDependantsByUserId(user.getId());
+
+        // Apply gender filter if selected
+        if (selectedGender != null && !selectedGender.isEmpty()) {
+            dependants = dependants.stream()
+                    .filter(dependant -> dependant.getGender().equalsIgnoreCase(selectedGender))
+                    .collect(Collectors.toList());
+        }
+
+        // Apply search criteria if provided
+        if ((searchDependantUsername != null && !searchDependantUsername.isEmpty()) ||
+                (searchDependantFirstName != null && !searchDependantFirstName.isEmpty()) ||
+                (searchDependantLastName != null && !searchDependantLastName.isEmpty())) {
+            dependants = dependants.stream()
+                    .filter(dependant -> (searchDependantUsername == null || searchDependantUsername.isEmpty() || dependant.getUsername().contains(searchDependantUsername)) &&
+                            (searchDependantFirstName == null || searchDependantFirstName.isEmpty() || dependant.getFirstname().contains(searchDependantFirstName)) &&
+                            (searchDependantLastName == null || searchDependantLastName.isEmpty() || dependant.getLastname().contains(searchDependantLastName)))
+                    .collect(Collectors.toList());
+        }
+
+        return dependants;
+    }
 
     public void searchingDependants() {
         dependants = getDependants();
     }
 
-
     public void resetDependants() {
         searchDependantUsername = null;
         searchDependantFirstName = null;
         searchDependantLastName = null;
+        selectedGender = null;
         dependants = dependantService.getAllDependantsByUserId(user.getId());
     }
 

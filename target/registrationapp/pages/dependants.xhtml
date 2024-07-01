@@ -53,14 +53,21 @@
 
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
-                        <h:commandLink value="Add Dependant" action="/pages/addDependantWithoutUser.xhtml" styleClass="link"/>
-                        <h:commandLink value="Delete all dependants" action="/pages/deleteAllDependants.xhtml" styleClass="link"/>
+                        <h:commandLink action="/pages/addDependantWithoutUser.xhtml" styleClass="link">
+                            <i class="fa fa-plus"/> Add Dependant
+                        </h:commandLink>
+                        <h:commandLink action="/pages/deleteAllDependants.xhtml" styleClass="link">
+                            <i class="fa fa-trash" style="color: red" />Delete all dependants
+                        </h:commandLink>
                     </h:form>
                 </div>
 
                 <div class="dependants-table">
                     <h:form id="dependantsForm">
                         <p:dataTable id="dependants-table" value="#{getAllDependants.dependants}" var="dependant" paginator="true" rows="5" styleClass="data-table">
+                            <p:column headerText="No">
+                                <h:outputText value="#{getAllDependants.dependants.indexOf(dependant) + 1}"/>
+                            </p:column>
                             <p:column headerText="First Name">
                                 <h:outputText value="#{dependant.firstname}"/>
                             </p:column>
@@ -81,12 +88,14 @@
                                 <h:outputText value="#{dependant.user}"/>
                             </p:column>
 
-
-
                             <p:column headerText="Action">
-                                <h:commandLink action="#{updateDependant.selectDependantAdmin(dependant.id)}" value="Edit" class="action-link"/>
+                                <h:commandLink action="#{updateDependant.selectDependantAdmin(dependant.id)}" class="action-link">
+                                    <i class="fa fa-edit"/>
+                                </h:commandLink>
 
-                                <h:commandLink action="#{deleteDependantOfUser.selectedIdAdmin(dependant.id)}" value="Delete" class="action-link"/>
+                                <h:commandLink action="#{deleteDependantOfUser.selectedIdAdmin(dependant.id)}" class="action-link">
+                                    <i class="fa fa-trash" style="color: red"/>
+                                </h:commandLink>
 
                             </p:column>
 

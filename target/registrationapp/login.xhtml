@@ -6,11 +6,12 @@
 <h:head>
     <title>Login</title>
     <h:outputStylesheet name="css/login.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 </h:head>
 <h:body>
     <div class="login-container">
         <h1>Login</h1>
-        <h:form styleClass="form-panel">
+        <h:form id="loginForm" styleClass="form-panel">
             <h:outputLabel for="username" styleClass="input-label" value="Username:"/>
             <h:inputText id="username" styleClass="input-field" value="#{loginBean.username}" required="true">
                 <f:validateLength minimum="4" maximum="20"/>
@@ -19,11 +20,12 @@
             <h:message for="username" style="color: red; display: block;"/>
 
             <h:outputLabel for="password" styleClass="input-label" value="Password:"/>
-            <h:inputSecret id="password" styleClass="input-field" value="#{loginBean.password}" required="false"/>
+            <h:inputSecret id="password" styleClass="input-field" value="#{loginBean.password}"/>
             <br/>
             <h:message for="password" style="color: red; display: block;"/>
 
-            <h:commandButton styleClass="login-button" value="Login" action="#{loginBean.login}"/>
+            <h:commandButton styleClass="login-button" value="Login" action="#{loginBean.login}" update=":loginForm:messages"/>
+            <h:messages id="messages" globalOnly="true" style="color: red; display: block;" styleClass="messages"/>
         </h:form>
         <h:outputText value="Don't have an account?" styleClass="register-link"/>
         <h:link value="Register" styleClass="register-link" outcome="/pages/userpages/registerNewUser.xhtml"/>

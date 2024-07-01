@@ -26,6 +26,7 @@ org\pahappa\systems\registrationapp\views\newui\UserDashboardStats.class
 org\pahappa\systems\registrationapp\views\UpdateDependant.class
 org\pahappa\systems\registrationapp\config\ApplicationStartupListener.class
 org\pahappa\systems\registrationapp\filters\AuthorizationFilter.class
+org\pahappa\systems\registrationapp\views\newui\UserDashBoardCharts.class
 org\pahappa\systems\registrationapp\views\LoginBean.class
 org\pahappa\systems\registrationapp\views\UserView.class
 org\pahappa\systems\registrationapp\converters\UserConverter.class

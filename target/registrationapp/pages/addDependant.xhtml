@@ -68,7 +68,7 @@
                     <h:message for="gender" styleClass="error"/>
                     <br/>
 
-                    <h:commandButton value="Add dependant" action="#{addDependantView.addDependant}" styleClass="button"/>
+                    <h:commandButton value="Add dependant" action="#{addDependantView.addDependant(userView.user)}" styleClass="button"/>
                     <br/>
                     <h:messages globalOnly="true" styleClass="messages"/>
                 </h:form>

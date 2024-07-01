@@ -30,8 +30,9 @@ body {
 .search-bar {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:space-evenly ;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .dataTable {

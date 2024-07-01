@@ -33,36 +33,30 @@
                     </div>
                 </div>
 
-                <h:form id="seachDependantsForm" styleClass="search-form">
-                    <div class="search-bar">
 
-                        <h:selectOneMenu value="#{userView.selectedGender}">
-                            <f:selectItem itemLabel="Select Gender" itemValue="" />
-                            <f:selectItem itemLabel="Male" itemValue="Male" />
-                            <f:selectItem itemLabel="Female" itemValue="Female" />
-                        </h:selectOneMenu>
 
-                        <p:commandButton value="Apply Filter" action="#{userView.filterDependants}" update="dependantsForm" />
-
-                    </div>
-                </h:form>
 
                 <div>
-                    <!-- Search Form -->
-                    <h:form id="search-form">
+                    <h:form id="searchDependantsForm" styleClass="search-form">
                         <div class="search-bar">
-                            <h:outputLabel for="searchUsername" value="Username"/>
-                            <h:inputText id="searchUsername" value="#{userView.searchDependantUsername}" />
+                            <h:selectOneMenu value="#{userView.selectedGender}">
+                                <f:selectItem itemLabel="Select Gender" itemValue="" />
+                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                <f:selectItem itemLabel="Female" itemValue="Female" />
+                            </h:selectOneMenu>
 
-                            <h:outputLabel for="searchFirstName" value="First Name"/>
-                            <h:inputText id="searchFirstName" value="#{userView.searchDependantFirstName}" />
+                            <p:inputText placeholder="username" id="searchUsername" value="#{userView.searchDependantUsername}" />
 
-                            <h:outputLabel for="searchLastName" value="Last Name"/>
-                            <h:inputText id="searchLastName" value="#{userView.searchDependantLastName}" />
+                            <p:inputText placeholder="firstname" id="searchFirstName" value="#{userView.searchDependantFirstName}" />
 
-                            <p:commandButton value="Search" action="#{userView.searchingDependants}" update="dependantsForm" />
-                            <p:commandButton value="Reset" action="#{userView.resetDependants}" update="dependantsForm" />
+                            <p:inputText placeholder="lastname" id="searchLastName" value="#{userView.searchDependantLastName}" />
 
+                            <h:commandLink action="#{userView.searchingDependants}" update="dependantsForm" styleClass="link">
+                                <i class="fa fa-search" style="color:white;"/>
+                            </h:commandLink>
+                            <h:commandLink action="#{userView.resetDependants}" update="dependantsForm" styleClass="link">
+                                <i class="fa fa-refresh" style="color: white"/>Reset
+                            </h:commandLink>
                         </div>
                     </h:form>
                 </div>
@@ -71,8 +65,12 @@
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
 
-                        <h:commandLink value="Add Dependant" action="/pages/userpages/addDependantUser.xhtml" styleClass="link"/>
-                        <p:commandLink value="Delete All Dependants" styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this"/>
+                        <h:commandLink action="/pages/userpages/addDependantUser.xhtml" styleClass="link">
+                            <i class="fa fa-plus" style="color: white"/> Add Dependant
+                        </h:commandLink>
+                        <p:commandLink styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
+                            <i class="fa fa-trash" style="color: red"/> Delete All Dependants
+                        </p:commandLink>
 
                     </h:form>
                 </div>
@@ -80,6 +78,9 @@
                 <div class="dependants-table">
                     <h:form id="dependantsForm">
                         <p:dataTable id="dependants-table" value="#{userView.dependants}" var="dependant" paginator="true" rows="5" styleClass="data-table">
+                            <p:column headerText="No">
+                                <h:outputText value="#{userView.dependants.indexOf(dependant) + 1}"/>
+                            </p:column>
                             <p:column headerText="First Name">
                                 <h:outputText value="#{dependant.firstname}"/>
                             </p:column>
@@ -102,11 +103,11 @@
 
 
 
-                            <p:column headerText="Action">
-                                <h:commandButton value="Edit" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependantUser(dependant.id)}" styleClass="action-link"/>
+                            <p:column headerText="Actions">
+                                <p:commandButton icon="fa fa-edit" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependantUser(dependant.id)}" styleClass="action-link"/>
 
-
-                                <p:commandLink value="Delete" styleClass="action-link" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
+                                <p:commandLink styleClass="action-link" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
+                                    <i class="fa fa-trash" style="color: red; margin-left: 15px"/>
                                     <f:setPropertyActionListener target="#{deleteDependantOfUser.dependant_id}" value="#{dependant.id}" />
                                 </p:commandLink>
                             </p:column>

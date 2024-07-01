@@ -46,17 +46,7 @@ public class DeleteUserView implements Serializable {
         }
     }
 
-    public String selectUser(User selectedUser) {
-        this.user = selectedUser;
-//        this.username = selectedUser.getUsername();
-        return "getUser?faces-redirect=true"; // Navigate to getUser.xhtml
-    }
 
-    public void selectUserNewUI(User selectedUser) {
-        this.user = selectedUser;
-//        this.username = selectedUser.getUsername();
-//        return "getUser?faces-redirect=true"; // Navigate to getUser.xhtml
-    }
 
 
 

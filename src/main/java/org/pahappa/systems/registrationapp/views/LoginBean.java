@@ -156,8 +156,8 @@ public class LoginBean implements Serializable {
         }
 
         System.out.println("Login failed for user: " + username);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed", "Invalid username or password"));
-        return "/login.xhtml?faces-redirect=true"; // Redirect to login page if failed
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed, Invalid username or password", "Invalid username or password"));
+        return "/login.xhtml"; // Redirect to login page if failed
     }
 
 

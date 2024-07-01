@@ -173,7 +173,7 @@ public class RegisterUserView implements Serializable {
             boolean isRegistered = userService.registerUser(user);
             if (isRegistered) {
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Successfully registered! Now login into your account"));
                 user = new User(); // Reset form
                 return "/login.xhtml"; // Navigate to the login page
             } else {
