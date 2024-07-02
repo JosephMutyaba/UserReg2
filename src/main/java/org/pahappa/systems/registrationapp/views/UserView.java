@@ -93,11 +93,12 @@ public class UserView implements Serializable {
         this.maleUserCount = (int) maleCount;
         this.femaleUserCount = (int) femaleCount;
 
-        if (femaleCount > 0) {
-            this.maleFemaleRatio = String.format("%.1f:1", (double) maleCount / femaleCount);
-        } else {
-            this.maleFemaleRatio = "N/A";
-        }
+//        if (femaleCount > 0) {
+//            this.maleFemaleRatio = String.format("%.1f:1", (double) maleCount / femaleCount);
+//        } else {
+//            this.maleFemaleRatio = "N/A";
+//        }
+        this.maleFemaleRatio=calculateRatio(maleUserCount, femaleUserCount);
     }
 
     public void loadUserData() {
@@ -278,10 +279,6 @@ public class UserView implements Serializable {
         users = userService.displayAllUsers();
     }
 
-
-
-
-
     ////////// DEPENDANT UNDER USER ROLE:USER
     private String selectedGender; // Add getter and setter
 
@@ -292,16 +289,6 @@ public class UserView implements Serializable {
     public void setSelectedGender(String selectedGender) {
         this.selectedGender = selectedGender;
     }
-
-//    public void filterDependants() {
-//        if (selectedGender == null || selectedGender.isEmpty()) {
-//            dependants = dependantService.getAllDependantsByUserId(user.getId());
-//        } else if(selectedGender != null || !selectedGender.isEmpty()) {
-//            dependants = dependantService.findDependantsByGenderAndUserId(user.getId(),selectedGender);
-//        }else {
-//            dependants = dependantService.getAllDependantsByUserId(user.getId());
-//        }
-//    }
 
     ////SEARCH FOR DEPENDANTS
     /////////////////////
@@ -332,26 +319,6 @@ public class UserView implements Serializable {
     public void setSearchDependantLastName(String searchDependantLastName) {
         this.searchDependantLastName = searchDependantLastName;
     }
-
-//    public List<Dependant> searchDependants_nofilter() {
-//        dependants=dependantService.getAllDependantsByUserId(user.getId());
-//        return dependants.stream()
-//                .filter(dependant -> (searchDependantUsername == null || searchDependantUsername.isEmpty() || dependant.getUsername().contains(searchDependantUsername)) &&
-//                        (searchDependantFirstName == null || searchDependantFirstName.isEmpty() || dependant.getFirstname().contains(searchDependantFirstName)) &&
-//                        (searchDependantLastName == null || searchDependantLastName.isEmpty() || user.getLastname().contains(searchDependantLastName)))
-//                .collect(Collectors.toList());
-//    }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public List<Dependant> getDependants() {
@@ -389,6 +356,46 @@ public class UserView implements Serializable {
         searchDependantLastName = null;
         selectedGender = null;
         dependants = dependantService.getAllDependantsByUserId(user.getId());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /////////////// RATIO   ////////
+    public String calculateRatio(int males, int females) {
+        // Handle case where females count is zero
+        if (females == 0) {
+            if (males == 0) {
+                return "0:0"; // Both males and females are zero
+            } else {
+                return "Infinity"; // Males are non-zero, females are zero
+            }
+        }
+
+        // Calculate the ratio of males to females
+        int gcd = gcd(males, females);
+        int simplifiedMales = males / gcd;
+        int simplifiedFemales = females / gcd;
+
+        return simplifiedMales + ":" + simplifiedFemales;
+    }
+
+    // Method to find greatest common divisor (gcd) using Euclid's algorithm
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 
 }

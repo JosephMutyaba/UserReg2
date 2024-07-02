@@ -148,11 +148,12 @@ public class UserDashboardStats implements Serializable {
         this.maleUserCount = (int) maleCount;
         this.femaleUserCount = (int) femaleCount;
 
-        if (femaleCount > 0) {
-            this.maleFemaleRatio = String.format("%.1f:1", (double) maleCount / femaleCount);
-        } else {
-            this.maleFemaleRatio = "N/A";
-        }
+//        if (femaleCount > 0) {
+//            this.maleFemaleRatio = String.format("%.1f:1", (double) maleCount / femaleCount);
+//        } else {
+//            this.maleFemaleRatio = "N/A";
+//        }
+        this.maleFemaleRatio=calculateRatio(maleUserCount, femaleUserCount);
     }
 
     private void createPieModel() {
@@ -214,4 +215,36 @@ public class UserDashboardStats implements Serializable {
     private Date toDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
+
+
+    ///////////////////////   RATIOS    ///////////////////////
+    public String calculateRatio(int males, int females) {
+        // Handle case where females count is zero
+        if (females == 0) {
+            if (males == 0) {
+                return "0:0"; // Both males and females are zero
+            } else {
+                return "Infinity"; // Males are non-zero, females are zero
+            }
+        }
+
+        // Calculate the ratio of males to females
+        int gcd = gcd(males, females);
+        int simplifiedMales = males / gcd;
+        int simplifiedFemales = females / gcd;
+
+        return simplifiedMales + ":" + simplifiedFemales;
+    }
+
+    // Method to find greatest common divisor (gcd) using Euclid's algorithm
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
 }
