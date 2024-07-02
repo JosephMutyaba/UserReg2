@@ -1,5 +1,6 @@
 package org.pahappa.systems.registrationapp.views;
 
+import org.pahappa.systems.registrationapp.exception.DatabaseException;
 import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.models.User;
 import org.pahappa.systems.registrationapp.services.DependantService;
@@ -41,6 +42,7 @@ public class UserView implements Serializable {
 
     @PostConstruct
     public void init() {
+
         users = userService.displayAllUsers();
         dependants = dependantService.getAllDependantsByUserId(user.getId());
 
@@ -112,17 +114,6 @@ public class UserView implements Serializable {
             }
         }
     }
-
-//    public List<Dependant> getDependants() {
-//        if ((searchDependantUsername == null || searchDependantUsername.isEmpty()) &&
-//                (searchDependantFirstName == null || searchDependantFirstName.isEmpty()) &&
-//                (searchDependantLastName == null || searchDependantLastName.isEmpty())) {
-//            return dependantService.getAllDependantsByUserId(user.getId());
-//        } else {
-//
-//            return searchDependants_nofilter();
-//        }
-//    }
 
 
     public String getSearchLastName() {

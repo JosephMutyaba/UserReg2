@@ -6,38 +6,7 @@
     <title>Dashboard</title>
 
     <h:outputStylesheet name="css/newui/dashboard.css"/>
-    <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>User Card</title>
-        <style>
-            /* Card styling */
-            .card {
-                border-radius: 15px;
-                background: linear-gradient(to bottom, #ADD8E6 50%, #FFFFFF 50%);
-                padding: 20px;
-                width: 250px;
-                height: 150px;
-                box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-                text-align: center;
-                margin: auto;
-            }
-            .icon {
-                color: #0000FF;
-                font-size: 24px;
-            }
-            .number {
-                font-size: 36px;
-                color: #000000;
-            }
-            .text {
-                font-size: 18px;
-                color: #000000;
-            }
-        </style>
-    </h:head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 
 
 </h:head>
@@ -51,27 +20,49 @@
                 <div class="dashboard">
                     <h2 class="dashboard-header">Dashboard</h2>
                     <div class="cards">
+
+
                         <div class="card">
-                            <i class="icon">♂</i> <!-- Male symbol -->
-                            <div class="text">Male Users</div>
-                            <div class="number">27</div>
+                            <div class="icon-wrapper">
+                                <i class="fa fa-user"/>
+                            </div>
+                            <div class="content">
+                                <h4>Users</h4>
+                                <p>#{userView.users.size()}</p>
+                            </div>
                         </div>
+
                         <div class="card">
-                            <h:outputText value="Users: "/>
-                            <h:outputText value="#{userView.users.size()}"/>
+                            <div class="icon-wrapper">
+                                <i class="fa fa-heart"/>
+                            </div>
+                            <div class="content">
+                                <h4>Dependants</h4>
+                                <p>#{getAllDependants.dependants.size()}</p>
+                            </div>
                         </div>
+
                         <div class="card">
-                            <h:outputText value="Dependants: "/>
-                            <h:outputText value="#{getAllDependants.dependants.size()}"/>
+                            <div class="icon-wrapper">
+                                <i class="fa fa-link"/>
+                            </div>
+                            <div class="content">
+                                <h4>Users W/D</h4>
+                                <p>#{userView.usersWithDependants()}</p>
+                            </div>
                         </div>
+
                         <div class="card">
-                            <h:outputText value="Users W/D: "/><br/>
-                            <h:outputText value="#{userView.usersWithDependants()}"/>
+                            <div class="icon-wrapper">
+                                <i class="fa fa-unlink"/>
+                            </div>
+                            <div class="content">
+                                <h4>Users N/D</h4>
+                                <p>#{userView.usersWithoutDependants()}</p>
+                            </div>
                         </div>
-                        <div class="card">
-                            <h:outputText value="Users N/D: "/><br/>
-                            <h:outputText value="#{userView.usersWithoutDependants()}"/>
-                        </div>
+
+
                     </div>
                     <div class="charts">
                         <div class="chart">

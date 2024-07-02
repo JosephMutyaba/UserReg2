@@ -1,11 +1,14 @@
 package org.pahappa.systems.registrationapp.views.newui;
 
+import org.pahappa.systems.registrationapp.exception.DatabaseException;
 import org.pahappa.systems.registrationapp.models.Dependant;
 import org.pahappa.systems.registrationapp.services.DependantService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +51,19 @@ public class GetAllDependants implements Serializable {
 
 
     public void filterDependants() {
-        if ((selectedUserId == null || selectedUserId == 0) && (selectedGender == null || selectedGender.isEmpty())) {
-            dependants = dependantService.getAllDependants();
-        } else if (selectedUserId != null && selectedUserId != 0 && (selectedGender == null || selectedGender.isEmpty())) {
-            dependants = dependantService.findDependantsByUser(selectedUserId);
-        } else if ((selectedUserId == null || selectedUserId == 0) && selectedGender != null && !selectedGender.isEmpty()) {
-            dependants = dependantService.findDependantsByGender(selectedGender);
-        } else if (selectedUserId != null && selectedUserId != 0 && selectedGender != null && !selectedGender.isEmpty()) {
-            dependants = dependantService.findDependantsByUserAndGender(selectedUserId, selectedGender);
+        try {
+
+            if ((selectedUserId == null || selectedUserId == 0) && (selectedGender == null || selectedGender.isEmpty())) {
+                dependants = dependantService.getAllDependants();
+            } else if (selectedUserId != null && selectedUserId != 0 && (selectedGender == null || selectedGender.isEmpty())) {
+                dependants = dependantService.findDependantsByUser(selectedUserId);
+            } else if ((selectedUserId == null || selectedUserId == 0) && selectedGender != null && !selectedGender.isEmpty()) {
+                dependants = dependantService.findDependantsByGender(selectedGender);
+            } else if (selectedUserId != null && selectedUserId != 0 && selectedGender != null && !selectedGender.isEmpty()) {
+                dependants = dependantService.findDependantsByUserAndGender(selectedUserId, selectedGender);
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
         }
     }
 

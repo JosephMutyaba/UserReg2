@@ -26,13 +26,7 @@ body {
     justify-content: space-between;
 }
 
-.card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+
 
 .charts {
     display: flex;
@@ -46,5 +40,57 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    width: 200px;
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e0f7fa;
+}
+
+.icon-wrapper i {
+    color: #00bcd4;
+    font-size: 30px;
+}
+
+.content {
+    text-align: center;
+}
+
+.content h4 {
+    margin: 0;
+    color: #607d8b;
+}
+
+.content p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
 }
 

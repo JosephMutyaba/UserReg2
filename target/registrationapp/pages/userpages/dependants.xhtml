@@ -20,16 +20,33 @@
                 <h2 class="dependants-header">Dependants</h2>
                 <div class="summary-cards">
                     <div class="card">
-                        <h:outputText value="Female Dependants" /><br/>
-                        <h:outputText value="#{userDashboardStats.femaleUserCount}" />
+                        <div class="icon-wrapper">
+                            <i class="fa fa-mars"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male Dependants</h4>
+                            <p>#{userDashboardStats.maleUserCount}</p>
+                        </div>
                     </div>
+
                     <div class="card">
-                        <h:outputText value="Male Dependants" /><br/>
-                        <h:outputText value="#{userDashboardStats.maleUserCount}" />
+                        <div class="icon-wrapper">
+                            <i class="fa fa-venus"/>
+                        </div>
+                        <div class="content">
+                            <h4>Female Dependants</h4>
+                            <p>#{userDashboardStats.femaleUserCount}</p>
+                        </div>
                     </div>
+
                     <div class="card">
-                        <h:outputText value="Dependency ratio" /><br/>
-                        <h:outputText value="#{userDashboardStats.maleFemaleRatio}" />
+                        <div class="icon-wrapper">
+                            <i class="fa fa-retweet"/>
+                        </div>
+                        <div class="content">
+                            <h4>Dependency ratio</h4>
+                            <p>#{userDashboardStats.maleFemaleRatio}</p>
+                        </div>
                     </div>
                 </div>
 

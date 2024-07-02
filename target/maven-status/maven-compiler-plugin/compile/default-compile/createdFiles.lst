@@ -29,5 +29,4 @@ org\pahappa\systems\registrationapp\filters\AuthorizationFilter.class
 org\pahappa\systems\registrationapp\views\newui\UserDashBoardCharts.class
 org\pahappa\systems\registrationapp\views\LoginBean.class
 org\pahappa\systems\registrationapp\views\UserView.class
-org\pahappa\systems\registrationapp\converters\UserConverter.class
-org\pahappa\systems\registrationapp\views\newui\AdminView.class
+org\pahappa\systems\registrationapp\exception\DatabaseException.class

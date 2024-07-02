@@ -10,6 +10,7 @@ C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\sy
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\UpdateDependant.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\models\User.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\util\AdminInitializer.java
+C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\exception\DatabaseException.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\exception\InvalidDateFormatException.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\DeleteUserView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\UserDashBoardCharts.java
@@ -23,7 +24,6 @@ C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\sy
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\WeeklyActivityView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\config\SessionConfiguration.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\dao\UserDAO.java
-C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\AdminView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\ChartView.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\org\pahappa\systems\registrationapp\views\newui\GetAllDependants.java
 C:\Users\Joseph Maximillian\Desktop\latest\UserReg2\src\main\java\contextlistener\AppContextListener.java

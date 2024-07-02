@@ -19,16 +19,33 @@
                 <h2 class="users-header">Users</h2>
                 <div class="summary-cards">
                     <div class="card">
-                        <h:outputText value="Male Users:"/>
-                        <h:outputText value="#{userView.maleUserCount}"/>
+                        <div class="icon-wrapper">
+                            <i class="fa fa-mars"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male Users</h4>
+                            <p>#{userView.maleUserCount}</p>
+                        </div>
                     </div>
+
                     <div class="card">
-                        <h:outputText value="Female Users:"/>
-                        <h:outputText value="#{userView.femaleUserCount}"/>
+                        <div class="icon-wrapper">
+                            <i class="fa fa-venus"/>
+                        </div>
+                        <div class="content">
+                            <h4>Female Users</h4>
+                            <p>#{userView.femaleUserCount}</p>
+                        </div>
                     </div>
+
                     <div class="card">
-                        <h:outputText value="Male to Female Ratio:"/>
-                        <h:outputText value="#{userView.maleFemaleRatio}"/>
+                        <div class="icon-wrapper">
+                            <i class="fa fa-retweet"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male to Female Ratio</h4>
+                            <p>#{userView.maleFemaleRatio}</p>
+                        </div>
                     </div>
                 </div>
 
