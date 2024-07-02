@@ -56,6 +56,9 @@ public class DependantService {
             throw new InvalidNameException("Username cannot be null and should contain [@'a-z]['a-z0-9] and at least 4 characters.");
         }
 
+        if (dependantDAO.getDependantByUsername(username)!=null) {
+            throw new UsernameAlreadyExistsException("Username " + username + " already exists. Try a different one.");
+        }
     }
 
     public void validateName(String name, String fieldName) throws InvalidNameException {
@@ -74,7 +77,7 @@ public class DependantService {
         dependantDAO.deleteDependantById(id);
     }
 
-    public boolean updateDependant(Dependant dependant) {
+    public boolean updateDependant(Dependant dependant) throws UsernameAlreadyExistsException, InvalidNameException {
         return dependantDAO.updateDependant(dependant);
     }
 

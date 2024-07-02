@@ -397,4 +397,23 @@ public class DependantDAO {
             }
         }
     }
+
+    public Dependant getDependantByUsername(String dependantUserName){
+        Session session=null;
+        try {
+            session=sessionFactory.openSession();
+            return (Dependant) session.createQuery("from Dependant where username=:user_name")
+                    .setParameter("user_name",dependantUserName)
+                    .uniqueResult();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+    }
 }

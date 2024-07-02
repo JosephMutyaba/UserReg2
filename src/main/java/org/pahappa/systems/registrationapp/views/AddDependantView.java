@@ -211,11 +211,11 @@ public class AddDependantView implements Serializable {
             return "/pages/dependants.xhtml";
 
 
-        } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
+        } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return "/pages/dependants.xhtml";
+            return null;
         }
     }
 

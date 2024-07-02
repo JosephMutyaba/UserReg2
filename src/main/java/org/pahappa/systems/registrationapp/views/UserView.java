@@ -360,15 +360,6 @@ public class UserView implements Serializable {
 
 
 
-
-
-
-
-
-
-
-
-
     /////////////// RATIO   ////////
     public String calculateRatio(int males, int females) {
         // Handle case where females count is zero
