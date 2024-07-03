@@ -82,9 +82,9 @@
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
 
-                        <h:commandLink action="/pages/userpages/addDependantUser.xhtml" styleClass="link">
+                        <p:commandLink oncomplete="PF('addNewDependantDialog').show()" styleClass="link">
                             <i class="fa fa-plus" style="color: white"/> Add Dependant
-                        </h:commandLink>
+                        </p:commandLink>
                         <p:commandLink styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
                             <i class="fa fa-trash" style="color: red"/> Delete All Dependants
                         </p:commandLink>
@@ -155,6 +155,51 @@
                                 <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
                                 <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
                             </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+
+
+
+                    <!-- Dialog definition -->
+                    <p:dialog header="New Dependant" widgetVar="addNewDependantDialog" modal="true" id="dialog" appendTo="@(body)">
+                        <h:form id="dialogForm" styleClass="form">
+                            <h:outputLabel for="username" value="Username:" styleClass="label"/>
+                            <h:inputText id="username" value="#{addDependantView.username}" required="true" styleClass="input"/>
+                            <h:message for="username" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                            <h:inputText id="firstname" value="#{addDependantView.firstname}" required="true" styleClass="input"/>
+                            <h:message for="firstname" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                            <h:inputText id="lastname" value="#{addDependantView.lastname}" required="true" styleClass="input"/>
+                            <h:message for="lastname" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                            <p:calendar id="dob" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
+                                        navigator="true" maxdate="#{addDependantView.today}" yearRange="c-100:c"
+                                        pattern="yyyy-MM-dd" styleClass="input"/>
+                            <h:message for="dob" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+                            <h:selectOneMenu id="gender" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                <f:selectItem itemLabel="Female" itemValue="Female"/>
+                            </h:selectOneMenu>
+                            <br/>
+
+                            <p:commandButton value="Add Dependant" actionListener="#{addDependantView.addDependantUser(userView.user)}"
+                                             oncomplete="if (!args.validationFailed) { PF('addNewDependantDialog').hide(); updateDependantTable(); }"
+                                             update="globalMessages" styleClass="button"/>
+                            <p:commandButton value="Cancel" onclick="PF('addNewDependantDialog').hide(); return false;" immediate="true" />
+
+                            <br/>
+                            <p:messages id="globalMessages" globalOnly="true" autoUpdate="true" showDetail="true" styleClass="messages"/>
                         </h:form>
                     </p:dialog>
 
