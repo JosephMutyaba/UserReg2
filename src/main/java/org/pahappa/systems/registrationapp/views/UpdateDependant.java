@@ -197,7 +197,7 @@ public class UpdateDependant implements Serializable {
             dependantService.updateDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant Updated successfully"));
 
-            return "/pages/userpages/dependants";
+            return null;
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
@@ -276,20 +276,20 @@ public class UpdateDependant implements Serializable {
 
     }
 
-    public String selectDependantUser(Long dependant_id) {
+    public void selectDependantUser(Long dependant_id) {
         System.out.println("Commenced SLUSR");
         this.dependant = dependantService.getDependantById(dependant_id);
         this.id = dependant.getId();
-        this.firstname=dependant.getFirstname();
-        this.lastname=dependant.getLastname();
-        this.gender=dependant.getGender();
-        this.dateOfBirth=dependant.getDateOfBirth();
-        this.username=dependant.getUsername();
+        this.firstname = dependant.getFirstname();
+        this.lastname = dependant.getLastname();
+        this.gender = dependant.getGender();
+        this.dateOfBirth = dependant.getDateOfBirth();
+        this.username = dependant.getUsername();
         this.user = dependant.getUser();
 
         System.out.println("Ended SLUSR");
 
-        return "/pages/userpages/updateDependantUser";
+//        return "/pages/userpages/updateDependantUser";
 
     }
 
