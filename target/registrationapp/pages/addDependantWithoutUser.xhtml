@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>New Dependant</title>
+    <h:outputStylesheet name="css/register.css"/>
+    <style>
+        .error {
+            color: red;
+            display: block;
+        }
+        .input, .selectMenu {
+            margin-bottom: 10px;
+        }
+        .messages {
+            color: red;
+        }
+
+
+    </style>
+</h:head>
+<h:body>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="add-dependant-management">
+                <h2 class="header">New Dependant</h2>
+
+                <h:form id="registerForm" styleClass="form">
+                    <h:outputLabel for="username" value="Username:" styleClass="label"/>
+                    <h:inputText id="username" value="#{addDependantView.username}" required="true" styleClass="input">
+                        <f:validateLength minimum="4" maximum="20"/>
+                    </h:inputText>
+                    <h:message for="username" styleClass="error"/>
+                    <br/>
+
+
+                    <h:outputLabel for="userSelect" value="User" styleClass="label"/>
+                    <h:selectOneMenu id="userSelect" value="#{addDependantView.user_username}" required="true">
+                        <f:selectItem itemLabel="Select a user" itemValue=""/>
+                        <f:selectItems value="#{userView.users}" var="user" itemValue="#{user.username}" itemLabel="#{user.username}"/>
+                    </h:selectOneMenu>
+                    <h:message for="userSelect" styleClass="error"/>
+                    <br/>
+
+
+                    <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                    <h:inputText id="firstname" value="#{addDependantView.firstname}" required="true" styleClass="input">
+                        <f:validateLength minimum="2" maximum="30"/>
+                    </h:inputText>
+                    <h:message for="firstname" styleClass="error"/>
+                    <br/>
+
+                    <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                    <h:inputText id="lastname" value="#{addDependantView.lastname}" required="true" styleClass="input">
+                        <f:validateLength minimum="2" maximum="30"/>
+                    </h:inputText>
+                    <h:message for="lastname" styleClass="error"/>
+                    <br/>
+
+                    <h:outputLabel for="dob" value="Date of Birth:" styleClass="label"/>
+                    <p:calendar id="dob" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
+                                navigator="true" maxdate="#{addDependantView.today}" yearRange="c-100:c"
+                                pattern="yyyy-MM-dd" styleClass="input"/>
+                    <h:message for="dob" styleClass="error"/>
+                    <br/>
+
+                    <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+                    <h:selectOneMenu id="gender" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                        <f:selectItem itemLabel="Male" itemValue="Male"/>
+                        <f:selectItem itemLabel="Female" itemValue="Female"/>
+                    </h:selectOneMenu>
+                    <h:message for="gender" styleClass="error"/>
+                    <br/>
+
+                    <h:commandButton value="Add dependant" action="#{addDependantView.addDependantAdmin}" styleClass="button"/>
+                    <br/>
+                    <h:messages globalOnly="true" styleClass="messages"/>
+                </h:form>
+
+            </div>
+        </div>
+    </div>
+
+</h:body>
+</html>

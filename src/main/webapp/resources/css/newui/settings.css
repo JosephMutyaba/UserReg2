@@ -1,0 +1,95 @@
+
+/* Settings styles... */
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #f4f4f4;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+
+
+/*.container {*/
+/*    display: flex;*/
+/*    overflow: hidden; !* Prevent child elements from overflowing *!*/
+/*}*/
+
+/*.main-content {*/
+/*    width: 80%;*/
+/*    padding-left: 20px;*/
+/*    padding-right: 20px;*/
+/*}*/
+
+/*.sidebar{*/
+/*    width: 20%;*/
+/*}*/
+
+
+/* Dependants styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Make sure the body takes the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex: 1; /* Ensure the container takes up remaining space */
+    overflow: hidden; /* Prevent child elements from overflowing */
+}
+
+.sidebar {
+    width: 20%;
+}
+
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto; /* Enable scrolling for main-content */
+}
+
+
+
+
+.settings-header .dependants-header .users-header .dashboard-header{
+    padding-bottom: 25px;
+    padding-top: 25px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.settings-panel {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-panel .save-button {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.settings-panel .save-button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    display: block;
+    margin-top: 5px;
+    font-size: 14px; /* Adjust font size as needed */
+}
+

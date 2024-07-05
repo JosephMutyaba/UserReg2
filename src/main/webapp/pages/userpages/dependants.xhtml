@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Display All Users</title>
+    <h:outputStylesheet name="css/newui/dependants.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="dependants-management">
+                <h2 class="dependants-header">Dependants</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-mars"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male Dependants</h4>
+                            <p>#{userDashboardStats.maleUserCount}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-venus"/>
+                        </div>
+                        <div class="content">
+                            <h4>Female Dependants</h4>
+                            <p>#{userDashboardStats.femaleUserCount}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-retweet"/>
+                        </div>
+                        <div class="content">
+                            <h4>Dependency ratio</h4>
+                            <p>#{userDashboardStats.maleFemaleRatio}</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div>
+                    <h:form id="searchDependantsForm" styleClass="search-form">
+                        <div class="search-bar">
+                            <h:selectOneMenu value="#{userView.selectedGender}">
+                                <f:selectItem itemLabel="Select Gender" itemValue="" />
+                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                <f:selectItem itemLabel="Female" itemValue="Female" />
+                            </h:selectOneMenu>
+
+                            <p:inputText placeholder="username" id="searchUsername" value="#{userView.searchDependantUsername}" />
+
+                            <p:inputText placeholder="firstname" id="searchFirstName" value="#{userView.searchDependantFirstName}" />
+
+                            <p:inputText placeholder="lastname" id="searchLastName" value="#{userView.searchDependantLastName}" />
+
+                            <h:commandLink action="#{userView.searchingDependants}" update="dependantsForm" styleClass="link">
+                                <i class="fa fa-search" style="color:white;"/>
+                            </h:commandLink>
+                            <h:commandLink action="#{userView.resetDependants}" update="dependantsForm" styleClass="link">
+                                <i class="fa fa-refresh" style="color: white"/>Reset
+                            </h:commandLink>
+                        </div>
+                    </h:form>
+                </div>
+
+
+                <div>
+                    <h:form id="displayForm" styleClass="top-section">
+
+                        <h:commandLink action="/pages/userpages/addDependantUser.xhtml" styleClass="link">
+                            <i class="fa fa-plus" style="color: white"/> Add Dependant
+                        </h:commandLink>
+                        <p:commandLink styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
+                            <i class="fa fa-trash" style="color: red"/> Delete All Dependants
+                        </p:commandLink>
+
+                    </h:form>
+                </div>
+
+                <div class="dependants-table">
+                    <h:form id="dependantsForm">
+                        <p:dataTable id="dependants-table" value="#{userView.dependants}" var="dependant" paginator="true" rows="5" styleClass="data-table">
+                            <p:column headerText="No">
+                                <h:outputText value="#{userView.dependants.indexOf(dependant) + 1}"/>
+                            </p:column>
+                            <p:column headerText="First Name">
+                                <h:outputText value="#{dependant.firstname}"/>
+                            </p:column>
+                            <p:column headerText="Last Name">
+                                <h:outputText value="#{dependant.lastname}"/>
+                            </p:column>
+
+                            <p:column headerText="Date of Birth">
+                                <h:outputText value="#{dependant.dateOfBirth}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Gender">
+                                <h:outputText value="#{dependant.gender}"/>
+                            </p:column>
+                            <p:column headerText="User">
+                                <h:outputText value="#{dependant.user}"/>
+                            </p:column>
+
+
+
+                            <p:column headerText="Actions">
+                                <p:commandButton icon="fa fa-edit" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependantUser(dependant.id)}" styleClass="action-link"/>
+
+                                <p:commandLink styleClass="action-link" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
+                                    <i class="fa fa-trash" style="color: red; margin-left: 15px"/>
+                                    <f:setPropertyActionListener target="#{deleteDependantOfUser.dependant_id}" value="#{dependant.id}" />
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+
+                    </h:form>
+
+                    <!-- Delete Confirmation Dialog -->
+                    <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+                        <h:form>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Are you sure you want to delete?" />
+                                <br/>
+                                <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependant}" oncomplete="PF('deleteDialog').hide(); updateDependantTable();" />
+                                <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Delete All dependants Confirmation Dialog -->
+                    <p:dialog header="Confirm Deletion" widgetVar="deleteAllDependantsDialog" modal="true" width="300">
+                        <h:form>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Delete All Dependants?" />
+                                <br/>
+                                <p:commandButton value="Yes" action="#{deleteAllDependantsOfUser.deleteAllDependants}" oncomplete="PF('deleteAllDependantsDialog').hide(); updateDependantTable();" />
+                                <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide(); return false;" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Remote Command to update the user table -->
+                    <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</h:body>
+</html>

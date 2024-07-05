@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Update User</title>
+    <h:outputStylesheet name="css/updateUser.css"/>
+    <style>
+        .error {
+            color: red;
+            display: block;
+        }
+        .input, .selectMenu {
+            margin-bottom: 10px;
+        }
+        .messages {
+            color: red;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h:form id="backHomeForm" styleClass="form">
+        <h:commandLink value="Back home" action="/pages/userpages/getUserSpecific" styleClass="link"/>
+    </h:form>
+    <h1 class="header">Update User Details</h1>
+
+    <h:form id="updateForm" styleClass="form">
+        <h:panelGrid columns="2" styleClass="panelGrid">
+            <h:outputLabel for="username" value="Username" styleClass="label"/>
+            <h:inputText id="username" value="#{updateUser.username}" required="true" styleClass="input">
+                <f:validateLength minimum="4" maximum="20"/>
+            </h:inputText>
+            <h:message for="username" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+            <h:inputText id="firstname" value="#{updateUser.firstname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="firstname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+            <h:inputText id="lastname" value="#{updateUser.lastname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="lastname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="dob" value="Date of Birth:" styleClass="label"/>
+            <p:calendar id="dob" value="#{updateUser.dateOfBirth}" required="true" showButtonPanel="true"
+                        navigator="true" maxdate="#{updateUser.today}" yearRange="c-100:c"
+                        pattern="yyyy-MM-dd" styleClass="input"/>
+            <h:message for="dob" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="email" value="Email" styleClass="label"/>
+            <h:inputText id="email" value="#{updateUser.email}" required="true" styleClass="input">
+                <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
+            </h:inputText>
+            <h:message for="email" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="password" value="Password" styleClass="label"/>
+            <h:inputSecret id="password" value="#{updateUser.password}" styleClass="input">
+                <f:validateLength minimum="8" maximum="30"/>
+            </h:inputSecret>
+            <h:message for="password" styleClass="error"/>
+            <br/>
+
+            <h:commandButton value="Update" action="#{updateUser.updateUserUser()}" styleClass="button"/>
+            <br/>
+            <h:messages globalOnly="true" styleClass="messages"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>

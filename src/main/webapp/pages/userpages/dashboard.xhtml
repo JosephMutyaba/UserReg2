@@ -1,0 +1,76 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Dashboard</title>
+
+    <h:outputStylesheet name="css/newui/dashboard.css"/>
+
+</h:head>
+<h:body>
+
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="dashboard">
+                <f:event type="preRenderView" listener="#{userView.loadUserData}"/>
+                <f:event type="preRenderView" listener="#{userDashboardStats.loadUserData}"/>
+
+                <h2 class="dashboard-header">Dashboard</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-link"/>
+                        </div>
+                        <div class="content">
+                            <h4>Dependants</h4>
+                            <p>#{userDashboardStats.dependants.size()}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-mars"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male Dependants</h4>
+                            <p>#{userDashboardStats.maleUserCount}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-venus"/>
+                        </div>
+                        <div class="content">
+                            <h4>Female Dependants</h4>
+                            <p>#{userDashboardStats.femaleUserCount}</p>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="charts">
+                    <div class="chart">
+                        <h3>Weekly Activity</h3>
+                        <p:chart type="bar" model="#{userDashBoardCharts.barModel}" style="width:400px;height:300px"/>
+                    </div>
+                    <div class="chart">
+                        <h3>Gender Statistics</h3>
+                        <p:chart type="pie" model="#{userDashBoardCharts.pieModel}" style="width:400px;height:300px"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+
+</html>

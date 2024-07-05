@@ -1,5 +1,6 @@
 package org.pahappa.systems.registrationapp.services;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.systems.registrationapp.dao.UserDAO;
 import org.pahappa.systems.registrationapp.exception.InvalidDateFormatException;
 import org.pahappa.systems.registrationapp.exception.InvalidNameException;
@@ -19,6 +20,10 @@ public class UserService {
 
     public boolean registerUser(User person) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(person, "register");
+        person.setPassword(BCrypt.hashpw(person.getPassword(), BCrypt.gensalt()));
+
+//        admin.setPassword(BCrypt.hashpw(ADMIN_PASSWORD, BCrypt.gensalt()));
+
         return usrDAO.registerUser(person);
     }
 
@@ -32,6 +37,8 @@ public class UserService {
 
     public boolean updateUserOfUsername(User user) throws InvalidNameException, InvalidDateFormatException, UsernameAlreadyExistsException {
         validateUser(user,"update");
+//        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
         return usrDAO.updateUserOfUsername(user);
     }
 
@@ -53,7 +60,6 @@ public class UserService {
     private boolean checkIfDateOfBirthIsFuture(Date dateOfBirth) {
         LocalDate birthDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate currentDate = LocalDate.now();
-
         return birthDate.isAfter(currentDate);
     }
 
@@ -108,4 +114,8 @@ public class UserService {
         }
     }
 
+
+    public List<User> getUsersRegisteredOnADay(Date registrationDate) {
+        return usrDAO.getUsersRegisteredOnADay(registrationDate);
+    }
 }

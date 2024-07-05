@@ -1,0 +1,89 @@
+/* Styles for Registration Page */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    color: #333;
+}
+
+.form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.input {
+    width: calc(100% - 12px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.messages {
+    color: #d8000c;
+    background-color: #ffd2d2;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #d8000c;
+    border-radius: 3px;
+}
+
+.container {
+    text-align: center; /* Center-align the content */
+    margin-top: 50px; /* Adjust margin as needed */
+}
+.link {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make text bold */
+}
+
+.link:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: #0056b3; /* Hover color */
+}
+
+
+.error {
+    color: red;
+    display: block;
+}
+.input, .selectMenu {
+    margin-bottom: 10px;
+}
+.messages {
+    color: red;
+}

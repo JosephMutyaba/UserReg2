@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* Users styles... */
+
+.user-management {
+    padding: 20px;
+}
+
+.summary-cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-cards .card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly ;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.dataTable {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dataTable th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+.container {
+    display: flex;
+}
+
+.main-content {
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sidebar{
+    width: 20%;
+}
+
+
+
+
+

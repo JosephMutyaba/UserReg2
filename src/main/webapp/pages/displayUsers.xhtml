@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Display All Users</title>
+    <h:outputStylesheet name="css/displayUsers.css"/>
+    <h:outputScript name="js/setCookie.js"/>
+</h:head>
+<h:body>
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="user-management">
+                <h2 class="users-header">Users</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-mars"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male Users</h4>
+                            <p>#{userView.maleUserCount}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-venus"/>
+                        </div>
+                        <div class="content">
+                            <h4>Female Users</h4>
+                            <p>#{userView.femaleUserCount}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon-wrapper">
+                            <i class="fa fa-retweet"/>
+                        </div>
+                        <div class="content">
+                            <h4>Male to Female Ratio</h4>
+                            <p>#{userView.maleFemaleRatio}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- Search Form -->
+                    <h:form id="search-form">
+                        <div class="search-bar" style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <h:outputLabel for="searchUsername" value="Username"/>
+                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" styleClass="input-field"/>
+
+                            <h:outputLabel for="searchFirstName" value="First Name"/>
+                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" styleClass="input-field"/>
+
+                            <h:outputLabel for="searchLastName" value="Last Name"/>
+                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" styleClass="input-field" />
+
+                            <p:commandButton styleClass="link" value="Search" action="#{userView.search}" update="userForma" />
+                            <p:commandButton styleClass="link" value="Reset" action="#{userView.reset}" update="userForma" />
+
+                        </div>
+                    </h:form>
+                </div>
+
+                <div>
+                    <h:form id="displayForm" styleClass="top-section">
+                        <h:commandLink action="/pages/register.xhtml" styleClass="link">
+                            <i class="fa fa-plus"/> New User
+                        </h:commandLink>
+                        <h:commandLink action="/pages/deleteAllUsers.xhtml" styleClass="link">
+                            <i class="fa fa-trash" style="color: red"/> Delete All Users
+                        </h:commandLink>
+                    </h:form>
+                </div>
+                <div>
+                    <h:form id="userForma">
+                        <p:dataTable value="#{userView.users}" var="user" paginator="true" rows="3" styleClass="dataTable">
+
+                            <p:column headerText="Number">
+                                #{userView.users.indexOf(user) + 1}
+                            </p:column>
+
+                            <p:column headerText="Username">
+                                <h:commandLink action="#{userView.selectUser(user)}" onclick="setUserCookie('#{user.username}');" value="#{user.username}" styleClass="link">
+                                    <f:param name="username" value="#{user.username}" />
+                                </h:commandLink>
+                            </p:column>
+
+                            <p:column headerText="First Name">
+                                #{user.firstname}
+                            </p:column>
+
+                            <p:column headerText="Gender">
+                                #{user.gender}
+                            </p:column>
+
+                            <p:column headerText="Last Name">
+                                #{user.lastname}
+                            </p:column>
+
+
+                            <p:column headerText="Date of Birth">
+                                <h:outputText value="#{user.dateOfBirth}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
+                            </p:column>
+
+
+                            <p:column headerText="Delete">
+                                <p:commandLink oncomplete="PF('deleteDialog').show()" process="@this">
+                                    <i class="fa fa-trash" style="color: red"/>
+                                    <f:setPropertyActionListener target="#{deleteUserView.user}" value="#{user}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Edit">
+                                <h:commandLink action="#{updateUser.selectUser(user)}" >
+                                    <i class="fa fa-edit"/>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <!-- Delete Confirmation Dialog -->
+                    <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+                        <h:form id="deleteForm">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Are you sure you want to delete?" />
+                                <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
+                                <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+                    <!-- Remote Command to update the user table -->
+                    <p:remoteCommand name="updateUsers" update="userForma" />
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

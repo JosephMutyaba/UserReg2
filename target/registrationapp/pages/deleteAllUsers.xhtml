@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Delete All Users</title>
+    <h:outputStylesheet name="css/deleteAllUsers.css"/>
+</h:head>
+<h:body>
+
+    <div class="container">
+        <div class="sidebar">
+            <ui:include src="sidebar.xhtml"/>
+        </div>
+        <div class="main-content">
+            <div class="delete-all-users-management">
+                <h2 class="header">Delete All Users</h2>
+                <h:form class="form">
+                    <p>Are you sure you want to delete all users?</p>
+                    <br/>
+                    <h:commandLink value="Cancel" action="displayUsers.xhtml" styleClass="link" />
+                    <h:commandButton value="Delete All Users" action="#{userView.deleteAllUsers}" styleClass="button" />
+                    <br />
+                    <h:messages globalOnly="true" styleClass="messages" />
+                </h:form>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

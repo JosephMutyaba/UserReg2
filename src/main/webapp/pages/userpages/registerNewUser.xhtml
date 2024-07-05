@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Register User</title>
+    <h:outputStylesheet name="css/registerNewUser.css"/>
+
+</h:head>
+<h:body>
+    <div class="container">
+        <h1 class="header">Register</h1>
+        <h:form id="registerForm" styleClass="form">
+            <h:outputLabel for="username" value="Username:" styleClass="label"/>
+            <h:inputText id="username" value="#{registerUserView.username}" required="true" styleClass="input">
+                <f:validateLength minimum="4" maximum="20"/>
+            </h:inputText>
+            <h:message for="username" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+            <h:inputText id="firstname" value="#{registerUserView.firstname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="firstname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+            <h:inputText id="lastname" value="#{registerUserView.lastname}" required="true" styleClass="input">
+                <f:validateLength minimum="2" maximum="30"/>
+            </h:inputText>
+            <h:message for="lastname" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="email" value="Email:" styleClass="label"/>
+            <h:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input">
+                <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
+            </h:inputText>
+            <h:message for="email" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+            <h:selectOneMenu id="gender" value="#{registerUserView.gender}" required="true" styleClass="selectMenu">
+                <f:selectItem itemLabel="Select Gender" itemDisabled="true"/>
+                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                <f:selectItem itemLabel="Female" itemValue="Female"/>
+            </h:selectOneMenu>
+            <h:message for="gender" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="dob" value="Date of Birth:" styleClass="label"/>
+            <p:calendar id="dob" value="#{registerUserView.dateOfBirth}" required="true" showButtonPanel="true"
+                        navigator="true" maxdate="#{registerUserView.today}" yearRange="c-100:c"
+                        pattern="yyyy-MM-dd" styleClass="input"/>
+            <h:message for="dob" styleClass="error"/>
+            <br/>
+
+            <h:outputLabel for="password" value="Password:" styleClass="label"/>
+            <h:inputSecret id="password" value="#{registerUserView.password}" required="true" styleClass="input">
+                <f:validateLength minimum="8" maximum="30"/>
+            </h:inputSecret>
+            <h:message for="password" styleClass="error"/>
+            <br/>
+
+            <h:commandButton value="Register" action="#{registerUserView.registerNewUser}" styleClass="button"/>
+            <br/>
+            <h:messages globalOnly="true" styleClass="messages"/>
+        </h:form>
+        <p>Already have an account? <h:link styleClass="link" value="Login" outcome="/login.xhtml"/></p>
+    </div>
+</h:body>
+</html>

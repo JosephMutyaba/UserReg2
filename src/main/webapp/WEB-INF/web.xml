@@ -1,0 +1,52 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>My CRUD App</display-name>
+
+    <!-- JSF Servlet -->
+    <servlet>
+        <servlet-name>FacesServlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>contextlistener.AppContextListener</listener-class>
+    </listener>
+
+    <servlet-mapping>
+        <servlet-name>FacesServlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>1</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.pahappa.systems.registrationapp.config.ApplicationStartupListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>org.pahappa.systems.registrationapp.filters.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/pages/*</url-pattern>
+    </filter-mapping>
+</web-app>
