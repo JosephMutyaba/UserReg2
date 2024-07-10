@@ -52,7 +52,6 @@
 
 
 
-
                 <div>
                     <h:form id="searchDependantsForm" styleClass="search-form">
                         <div class="search-bar">
@@ -60,23 +59,27 @@
                                 <f:selectItem itemLabel="Select Gender" itemValue="" />
                                 <f:selectItem itemLabel="Male" itemValue="Male" />
                                 <f:selectItem itemLabel="Female" itemValue="Female" />
+                                <p:ajax event="change" update="dependantsForm" listener="#{userView.searchingDependants}" />
                             </h:selectOneMenu>
 
-                            <p:inputText placeholder="username" id="searchUsername" value="#{userView.searchDependantUsername}" />
+                            <p:inputText placeholder="username" id="searchUsername" value="#{userView.searchDependantUsername}">
+                                <p:ajax event="keyup" update="dependantsForm" listener="#{userView.searchingDependants}" />
+                            </p:inputText>
 
-                            <p:inputText placeholder="firstname" id="searchFirstName" value="#{userView.searchDependantFirstName}" />
+                            <p:inputText placeholder="firstname" id="searchFirstName" value="#{userView.searchDependantFirstName}">
+                                <p:ajax event="keyup" update="dependantsForm" listener="#{userView.searchingDependants}" />
+                            </p:inputText>
 
-                            <p:inputText placeholder="lastname" id="searchLastName" value="#{userView.searchDependantLastName}" />
+                            <p:inputText placeholder="lastname" id="searchLastName" value="#{userView.searchDependantLastName}">
+                                <p:ajax event="keyup" update="dependantsForm" listener="#{userView.searchingDependants}" />
+                            </p:inputText>
 
-                            <h:commandLink action="#{userView.searchingDependants}" update="dependantsForm" styleClass="link">
-                                <i class="fa fa-search" style="color:white;"/>
-                            </h:commandLink>
-                            <h:commandLink action="#{userView.resetDependants}" update="dependantsForm" styleClass="link">
-                                <i class="fa fa-refresh" style="color: white"/>Reset
-                            </h:commandLink>
                         </div>
                     </h:form>
                 </div>
+
+
+
 
 
                 <div>
@@ -85,8 +88,8 @@
                         <p:commandLink oncomplete="PF('addNewDependantDialog').show()" styleClass="link">
                             <i class="fa fa-plus" style="color: white"/> Add Dependant
                         </p:commandLink>
-                        <p:commandLink styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
-                            <i class="fa fa-trash" style="color: red"/> Delete All Dependants
+                        <p:commandLink styleClass="link_del" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
+                            <i class="fa fa-trash" style="color: white"/> Delete All Dependants
                         </p:commandLink>
 
                     </h:form>
@@ -202,13 +205,6 @@
 
                         </h:form>
                     </p:dialog>
-
-
-
-
-
-
-
 
 
 
