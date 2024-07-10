@@ -151,10 +151,9 @@ public class AddDependantView implements Serializable {
 
 
     public String addDependantUser(User passedInUser) {
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             System.out.println("addDependant called"); // Debug statement
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//            Date dob = sdf.parse(dateOfBirth);
 
             Dependant dependant = new Dependant();
             dependant.setUsername(username);
@@ -179,9 +178,16 @@ public class AddDependantView implements Serializable {
 
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+            context.validationFailed(); // Mark validation as failed
 
-            return "/pages/userpages/addDependantUser";
+            return null;
+        }finally {
+            this.username=null;
+            this.firstname=null;
+            this.lastname=null;
+            this.dateOfBirth=null;
+            this.gender=null;
         }
     }
     public String addDependantAdmin() {

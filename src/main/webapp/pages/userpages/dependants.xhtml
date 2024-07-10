@@ -82,9 +82,9 @@
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
 
-                        <h:commandLink action="/pages/userpages/addDependantUser.xhtml" styleClass="link">
+                        <p:commandLink oncomplete="PF('addNewDependantDialog').show()" styleClass="link">
                             <i class="fa fa-plus" style="color: white"/> Add Dependant
-                        </h:commandLink>
+                        </p:commandLink>
                         <p:commandLink styleClass="link" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
                             <i class="fa fa-trash" style="color: red"/> Delete All Dependants
                         </p:commandLink>
@@ -121,7 +121,9 @@
 
 
                             <p:column headerText="Actions">
-                                <p:commandButton icon="fa fa-edit" onclick="setUserCookie('#{userView.user.username}');" action="#{updateDependant.selectDependantUser(dependant.id)}" styleClass="action-link"/>
+                                <p:commandLink actionListener="#{updateDependant.selectDependantUser(dependant.id)}" update="updateForm" oncomplete="PF('updateDependantDialog').show()" styleClass="action-link" process="@this">
+                                    <i class="fa fa-edit" style="color:blue"/>
+                                </p:commandLink>
 
                                 <p:commandLink styleClass="action-link" action="#{deleteDependantOfUser.selectedId(dependant.id)}" oncomplete="PF('deleteDialog').show()" process="@this">
                                     <i class="fa fa-trash" style="color: red; margin-left: 15px"/>
@@ -158,6 +160,80 @@
                         </h:form>
                     </p:dialog>
 
+
+
+
+                    <!-- Dialog definition -->
+                    <p:dialog header="New Dependant" resizable="false" width="400px" widgetVar="addNewDependantDialog" modal="true" id="dialog" appendTo="@(body)">
+                        <h:form id="dialogForm" styleClass="form">
+                            <h:outputLabel for="e_username" value="Username:" styleClass="label"/>
+                            <h:inputText id="e_username" value="#{addDependantView.username}" required="true" styleClass="input"/>
+                            <h:message for="e_username" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="e_firstname" value="First Name:" styleClass="label"/>
+                            <h:inputText id="e_firstname" value="#{addDependantView.firstname}" required="true" styleClass="input"/>
+                            <h:message for="e_firstname" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="e_lastname" value="Last Name:" styleClass="label"/>
+                            <h:inputText id="e_lastname" value="#{addDependantView.lastname}" required="true" styleClass="input"/>
+                            <h:message for="e_lastname" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="e_dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                            <p:calendar id="e_dob" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
+                                        navigator="true" maxdate="#{addDependantView.today}" yearRange="c-100:c"
+                                        pattern="yyyy-MM-dd" styleClass="input"/>
+                            <h:message for="e_dob" styleClass="error"/>
+                            <br/>
+
+                            <h:outputLabel for="e_gender" value="Gender:" styleClass="label"/>
+                            <h:selectOneMenu id="e_gender" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                <f:selectItem itemLabel="Female" itemValue="Female"/>
+                            </h:selectOneMenu>
+                            <br/>
+
+                            <p:commandButton value="Add Dependant" actionListener="#{addDependantView.addDependantUser(userView.user)}"
+                                             oncomplete="if (!args.validationFailed) { PF('addNewDependantDialog').hide(); updateDependantTable(); }"
+                                             update="globalMessages" styleClass="button"/>
+                            <p:commandButton value="Cancel" onclick="PF('addNewDependantDialog').hide(); return false;" immediate="true" />
+
+                            <br/>
+                            <p:messages id="globalMessages" globalOnly="true" autoUpdate="true" showDetail="true" styleClass="messages"/>
+                        </h:form>
+                    </p:dialog>
+
+
+                    <!-- Update Dependant Dialog -->
+                    <p:dialog header="Update Dependant" widgetVar="updateDependantDialog" modal="true" width="400px">
+                        <h:form id="updateForm">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:"/>
+                                <p:inputText id="username" value="#{updateDependant.username}" required="true"/>
+
+                                <h:outputLabel for="firstname" value="First Name:"/>
+                                <p:inputText id="firstname" value="#{updateDependant.firstname}" required="true"/>
+
+                                <h:outputLabel for="lastname" value="Last Name:"/>
+                                <p:inputText id="lastname" value="#{updateDependant.lastname}" required="true"/>
+
+                                <h:outputLabel for="dateOfBirth" value="Date of Birth:"/>
+                                <p:calendar id="dateOfBirth" value="#{updateDependant.dateOfBirth}" pattern="yyyy-MM-dd" required="true" navigator="true" yearRange="c-100:c"/>
+
+                                <h:outputLabel for="gender" value="Gender:"/>
+                                <h:selectOneMenu id="gender" value="#{updateDependant.gender}" required="true">
+                                    <f:selectItem itemLabel="Select Gender" itemValue="" />
+                                    <f:selectItem itemLabel="Male" itemValue="Male" />
+                                    <f:selectItem itemLabel="Female" itemValue="Female" />
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            <f:facet name="footer">
+                                <p:commandButton value="Update" action="#{updateDependant.updateADependantUser}" update="dependantsForm" oncomplete="PF('updateDependantDialog').hide()"/>
+                            </f:facet>
+                        </h:form>
+                    </p:dialog>
                     <!-- Remote Command to update the user table -->
                     <p:remoteCommand name="updateDependantTable" update="dependantsForm" />
 
