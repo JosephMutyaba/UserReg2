@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionListener;
 import javax.inject.Inject;
 import javax.inject.Qualifier;
 import javax.servlet.http.Cookie;
@@ -252,5 +253,13 @@ public class AddDependantView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error selecting user", null));
             return null; // Handle error case appropriately
         }
+    }
+
+    public void clearData() {
+        this.username=null;
+        this.firstname=null;
+        this.lastname=null;
+        this.dateOfBirth=null;
+        this.gender=null;
     }
 }
