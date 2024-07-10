@@ -20,7 +20,7 @@
                 <h:form id="updateForm" styleClass="form">
                     <h:panelGrid columns="1" styleClass="panelGrid">
                         <h:outputLabel for="username" value="Username" styleClass="label"/>
-                        <h:inputText id="username" value="#{updateUser.username}" styleClass="input" required="true">
+                        <h:inputText id="username" value="#{updateUser.username}" styleClass="input" readonly="true">
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputText>
                         <h:message for="username" styleClass="error"/>

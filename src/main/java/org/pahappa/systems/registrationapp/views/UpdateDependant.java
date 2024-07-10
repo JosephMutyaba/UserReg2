@@ -115,7 +115,7 @@ public class UpdateDependant implements Serializable {
             dependant.setUser(user); // Set the user retrieved from the cookie
 
             // Perform validations
-            dependantService.validateUsername(dependant.getUsername());
+//            dependantService.validateUsername(dependant.getUsername());
             dependantService.validateName(dependant.getFirstname(), "First name");
             dependantService.validateName(dependant.getLastname(), "Last name");
             dependantService.validateDateOfBirth(dependant.getDateOfBirth());
@@ -151,7 +151,7 @@ public class UpdateDependant implements Serializable {
             dependant.setUser(user); // Set the user retrieved from the cookie
 
             // Perform validations
-            dependantService.validateUsername(dependant.getUsername());
+//            dependantService.validateUsername(dependant.getUsername());
             dependantService.validateName(dependant.getFirstname(), "First name");
             dependantService.validateName(dependant.getLastname(), "Last name");
             dependantService.validateDateOfBirth(dependant.getDateOfBirth());
@@ -187,7 +187,7 @@ public class UpdateDependant implements Serializable {
             dependant.setUser(user); // Set the user retrieved from the cookie
 
             // Perform validations
-            dependantService.validateUsername(dependant.getUsername());
+//            dependantService.validateUsername(dependant.getUsername());
             dependantService.validateName(dependant.getFirstname(), "First name");
             dependantService.validateName(dependant.getLastname(), "Last name");
             dependantService.validateDateOfBirth(dependant.getDateOfBirth());
@@ -223,7 +223,7 @@ public class UpdateDependant implements Serializable {
             dependant.setUser(user); // Set the user retrieved from the cookie
 
             // Perform validations
-            dependantService.validateUsername(dependant.getUsername());
+//            dependantService.validateUsername(dependant.getUsername());
             dependantService.validateName(dependant.getFirstname(), "First name");
             dependantService.validateName(dependant.getLastname(), "Last name");
             dependantService.validateDateOfBirth(dependant.getDateOfBirth());

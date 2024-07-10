@@ -25,7 +25,7 @@
                         <h:inputText id="id" value="#{updateDependant.id}" readonly="true" styleClass="input"/>
 
                         <h:outputLabel for="username" value="Username:" styleClass="label"/>
-                        <h:inputText id="username" value="#{updateDependant.username}" required="true" styleClass="input">
+                        <h:inputText id="username" value="#{updateDependant.username}" readonly="true" styleClass="input">
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputText>
                         <h:message for="username" styleClass="error"/>
