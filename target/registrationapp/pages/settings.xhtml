@@ -20,35 +20,46 @@
             </h2>
             <h:form>
                 <h:panelGroup layout="block" styleClass="settings-panel">
-                    <h:panelGrid cellpadding="5">
-                        <h:outputLabel for="firstName" value="First Name:"/>
-                        <h:inputText id="firstName" value="#{loginBean.firstname}" required="true"/>
-                        <h:message for="firstName" styleClass="error"/>
+                    <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+                        <div>
+                            <h:panelGrid cellpadding="5">
+                                <h:outputLabel for="firstName" value="First Name:"/>
+                                <p:inputText id="firstName" value="#{loginBean.firstname}" required="true"/>
+                                <h:message for="firstName" styleClass="error"/>
 
-                        <h:outputLabel for="lastName" value="Last Name:"/>
-                        <h:inputText id="lastName" value="#{loginBean.lastname}" required="true"/>
-                        <h:message for="lastName" styleClass="error"/>
+                                <h:outputLabel for="lastName" value="Last Name:"/>
+                                <p:inputText id="lastName" value="#{loginBean.lastname}" required="true"/>
+                                <h:message for="lastName" styleClass="error"/>
 
-                        <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
-                        <p:calendar id="dob" value="#{loginBean.dateOfBirth}" required="true" showButtonPanel="true"
-                                    navigator="true" maxdate="#{loginBean.today}" yearRange="c-100:c"
-                                    pattern="yyyy-MM-dd" styleClass="input"/>
-                        <h:message for="dob" styleClass="error"/>
+                                <h:outputLabel for="dob" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                                <p:calendar id="dob" value="#{loginBean.dateOfBirth}" required="true" showButtonPanel="true"
+                                            navigator="true" maxdate="#{loginBean.today}" yearRange="c-100:c"
+                                            pattern="yyyy-MM-dd" styleClass="input"/>
+                                <h:message for="dob" styleClass="error"/>
 
-                        <h:outputLabel for="userName" value="User Name:"/>
-                        <h:inputText id="userName" value="#{loginBean.username}" readonly="true"/>
-                        <h:message for="userName" styleClass="error"/>
 
-                        <h:outputLabel for="password" value="Password:"/>
-                        <h:inputSecret id="password" value="#{loginBean.password}"/>
-                        <h:message for="password" styleClass="error"/>
+                            </h:panelGrid>
+                        </div>
+                        <div>
+                            <h:panelGrid cellpadding="5">
 
-                        <h:outputLabel for="email" value="Email Address:"/>
-                        <h:inputText id="email" value="#{loginBean.email}" required="true">
-                            <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
-                        </h:inputText>
-                        <h:message for="email" styleClass="error"/>
-                    </h:panelGrid>
+                                <h:outputLabel for="userName" value="User Name:"/>
+                                <p:inputText id="userName" value="#{loginBean.username}" readonly="true"/>
+                                <h:message for="userName" styleClass="error"/>
+
+                                <h:outputLabel for="password" value="Password:"/>
+                                <p:password id="password" value="#{loginBean.password}"/>
+                                <h:message for="password" styleClass="error"/>
+
+                                <h:outputLabel for="email" value="Email Address:"/>
+                                <p:inputText id="email" value="#{loginBean.email}" required="true">
+                                    <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
+                                </p:inputText>
+                                <h:message for="email" styleClass="error"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+
                     <h:commandButton value="Save" action="#{loginBean.updateUser()}" styleClass="save-button"/>
                 </h:panelGroup>
             </h:form>

@@ -213,15 +213,15 @@ public class UserView implements Serializable {
         }
     }
 
-    public String deleteAllUsers() {
+    public void deleteAllUsers() {
         boolean allUsersDeleted = userService.deleteAllUsers();
         if (allUsersDeleted) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("All users have been successfully deleted!"));
             users = userService.displayAllUsers();
-            return "/pages/displayUsers"; // Navigate to the index page
+//            return "/pages/displayUsers"; // Navigate to the index page
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Deletion unsuccessful, please try again!"));
-            return null;
+//            return null;
         }
     }
 

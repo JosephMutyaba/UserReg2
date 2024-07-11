@@ -53,30 +53,28 @@
 
                 <h:form id="seachDependantsForm" class="search-form">
                     <div class="search-bar">
-                        <h:selectOneMenu value="#{getAllDependants.selectedUserId}">
+                        <p:selectOneMenu value="#{getAllDependants.selectedUserId}">
                             <f:selectItem itemLabel="Select User" itemValue="0" />
                             <f:selectItems value="#{userView.users}" var="user" itemLabel="#{user.username}" itemValue="#{user.id}" />
-                        </h:selectOneMenu>
+                            <p:ajax event="change" update="dependantsForm" listener="#{getAllDependants.filterDependants}"/>
+                        </p:selectOneMenu>
 
-                        <h:selectOneMenu value="#{getAllDependants.selectedGender}">
+                        <p:selectOneMenu value="#{getAllDependants.selectedGender}">
                             <f:selectItem itemLabel="Select Gender" itemValue="" />
                             <f:selectItem itemLabel="Male" itemValue="Male" />
                             <f:selectItem itemLabel="Female" itemValue="Female" />
-                        </h:selectOneMenu>
-
-                        <p:commandButton value="Apply Filter" action="#{getAllDependants.filterDependants}" update="dependantsForm" />
-
+                            <p:ajax event="change" update="dependantsForm" listener="#{getAllDependants.filterDependants}"/>
+                        </p:selectOneMenu>
                     </div>
                 </h:form>
 
+
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
-                        <h:commandLink action="/pages/addDependantWithoutUser.xhtml" styleClass="link">
-                            <i class="fa fa-plus"/> Add Dependant
-                        </h:commandLink>
-                        <h:commandLink action="/pages/deleteAllDependants.xhtml" styleClass="link">
-                            <i class="fa fa-trash" style="color: red" />Delete all dependants
-                        </h:commandLink>
+                        <p:commandButton icon="pi pi-plus" value="Add Dependant" onclick="PF('addDependantDialog').show()" styleClass="link"/>
+
+                        <p:commandButton icon="pi pi-trash" value="Delete all dependants" style="background-color: red !important; color: white !important; border-color: red !important; margin-left: 5px !important;" onclick="PF('deleteAllDependantsDialog').show()" styleClass="link_del"/>
+
                     </h:form>
                 </div>
 
@@ -107,13 +105,9 @@
                             </p:column>
 
                             <p:column headerText="Action">
-                                <h:commandLink action="#{updateDependant.selectDependantAdmin(dependant.id)}" class="action-link">
-                                    <i class="fa fa-edit"/>
-                                </h:commandLink>
+                                <p:commandButton icon="pi pi-pencil" action="#{updateDependant.selectDependantAdmin(dependant.id)}" styleClass="action-link" onclick="PF('updateDependantDialog').show()" update="updateDependantForm"/>
 
-                                <h:commandLink action="#{deleteDependantOfUser.selectedIdAdmin(dependant.id)}" class="action-link">
-                                    <i class="fa fa-trash" style="color: red"/>
-                                </h:commandLink>
+                                <p:commandButton icon="pi pi-trash" style="color: white !important; background-color: red !important;" action="#{deleteDependantOfUser.selectedIdAdmin(dependant.id)}" onclick="PF('deleteDialog').show()"/>
 
                             </p:column>
 
@@ -122,6 +116,123 @@
 
                     </h:form>
                 </div>
+
+
+                <!-- Delete Confirmation Dialog -->
+                <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
+                    <h:form id="deleteForm">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Are you sure you want to delete?" />
+                            <p:commandButton value="Yes" action="#{deleteDependantOfUser.deleteDependantAdmin}" oncomplete="PF('deleteDialog').hide(); updateDependants();" />
+                            <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+
+                <p:dialog header="Confirm Delete" widgetVar="deleteAllDependantsDialog" modal="true" resizable="false" width="300">
+                    <h:form class="form"  id="deleteAllUsersForm">
+                        <p>Delete all users?</p>
+                        <br/>
+                        <p:commandButton value="Cancel" onclick="PF('deleteAllDependantsDialog').hide();" type="button" styleClass="button" />
+                        <p:commandButton icon="pi pi-trash" value="Delete?" style="background-color: red !important; color: white !important; border-color: red !important;" action="#{deleteAllDependantsOfUser.deleteAllDependantsFromDB()}" styleClass="button" oncomplete="if (!args.validationFailed) PF('deleteAllDependantsDialog').hide(); updateDependants();" />
+                    </h:form>
+                </p:dialog>
+
+
+                <p:dialog header="New Dependant" widgetVar="addDependantDialog" modal="true" resizable="false" width="500" height="400">
+                    <h:form id="registerForm" styleClass="form">
+                        <h:panelGrid columns="3" styleClass="borderless-grid">
+                            <h:outputLabel for="username" value="Username:" styleClass="label"/>
+                            <p:inputText id="username" value="#{addDependantView.username}" required="true" styleClass="input">
+                                <f:validateLength minimum="4" maximum="20"/>
+                            </p:inputText>
+                            <h:message for="username" styleClass="error"/>
+
+                            <h:outputLabel for="userSelect" value="User" styleClass="label"/>
+                            <p:selectOneMenu id="userSelect" value="#{addDependantView.user_username}" required="true">
+                                <f:selectItem itemLabel="Select a user" itemValue=""/>
+                                <f:selectItems value="#{userView.users}" var="user" itemValue="#{user.username}" itemLabel="#{user.username}"/>
+                            </p:selectOneMenu>
+                            <h:message for="userSelect" styleClass="error"/>
+
+                            <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                            <p:inputText id="firstname" value="#{addDependantView.firstname}" required="true" styleClass="input">
+                                <f:validateLength minimum="2" maximum="30"/>
+                            </p:inputText>
+                            <h:message for="firstname" styleClass="error"/>
+
+                            <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                            <p:inputText id="lastname" value="#{addDependantView.lastname}" required="true" styleClass="input">
+                                <f:validateLength minimum="2" maximum="30"/>
+                            </p:inputText>
+                            <h:message for="lastname" styleClass="error"/>
+
+                            <h:outputLabel for="dob" value="Date of Birth:" styleClass="label"/>
+                            <p:calendar id="dob" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
+                                        navigator="true" maxdate="#{addDependantView.today}" yearRange="c-100:c"
+                                        pattern="yyyy-MM-dd" styleClass="input"/>
+                            <h:message for="dob" styleClass="error"/>
+
+                            <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+                            <p:selectOneMenu id="gender" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                <f:selectItem itemLabel="Female" itemValue="Female"/>
+                            </p:selectOneMenu>
+                            <h:message for="gender" styleClass="error"/>
+
+                            <p:commandButton icon="pi pi-plus" value="Add dependant" action="#{addDependantView.addDependantAdmin}" styleClass="button" update="registerForm globalMessages" oncomplete="if (!args.validationFailed) PF('addDependantDialog').hide(); updateDependants()" />
+                            <h:messages globalOnly="true" styleClass="messages" id="globalMessages"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+
+                <!--                    Update User dialog-->
+                <p:dialog header="Update Dependant" widgetVar="updateDependantDialog" modal="true" resizable="false" width="500" height="400">
+                    <h:form id="updateDependantForm" styleClass="form">
+                        <h:panelGrid columns="3" styleClass="borderless-grid">
+                            <h:outputLabel for="user_name" value="Username:" styleClass="label"/>
+                            <p:inputText id="user_name" value="#{updateDependant.username}" readonly="true" styleClass="input">
+                                <f:validateLength minimum="4" maximum="20"/>
+                            </p:inputText>
+                            <h:message for="user_name" styleClass="error"/>
+
+                            <h:outputLabel for="first_name" value="First Name:" styleClass="label"/>
+                            <p:inputText id="first_name" value="#{updateDependant.firstname}" required="true" styleClass="input">
+                                <f:validateLength minimum="2" maximum="30"/>
+                            </p:inputText>
+                            <h:message for="first_name" styleClass="error"/>
+
+                            <h:outputLabel for="last_name" value="Last Name:" styleClass="label"/>
+                            <p:inputText id="last_name" value="#{updateDependant.lastname}" required="true" styleClass="input">
+                                <f:validateLength minimum="2" maximum="30"/>
+                            </p:inputText>
+                            <h:message for="last_name" styleClass="error"/>
+
+                            <h:outputLabel for="do_b" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                            <p:calendar id="do_b" value="#{updateDependant.dateOfBirth}" required="true" showButtonPanel="true"
+                                        navigator="true" maxdate="#{updateDependant.today}" yearRange="c-100:c"
+                                        pattern="yyyy-MM-dd" styleClass="input"/>
+                            <h:message for="do_b" styleClass="error"/>
+
+                            <h:outputLabel for="ge_nder" value="Gender:" styleClass="label"/>
+                            <p:selectOneMenu id="ge_nder" value="#{updateDependant.gender}" required="true" styleClass="selectMenu">
+                                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                <f:selectItem itemLabel="Female" itemValue="Female"/>
+                            </p:selectOneMenu>
+                            <h:message for="ge_nder" styleClass="error"/>
+
+                            <p:commandButton value="Update" action="#{updateDependant.updateADependantAdmin}" styleClass="button" update="updateDependantForm global_Messages" oncomplete="if (!args.validationFailed) PF('updateDependantDialog').hide(); updateDependants()" />
+                            <h:messages globalOnly="true" styleClass="messages" id="global_Messages"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+
+
+                <!-- Remote Command to update the user table -->
+                <p:remoteCommand name="updateDependants" update="dependantsForm" />
             </div>
 
         </div>

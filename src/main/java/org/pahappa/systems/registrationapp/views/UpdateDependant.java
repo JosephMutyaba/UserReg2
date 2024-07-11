@@ -134,7 +134,7 @@ public class UpdateDependant implements Serializable {
         }
     }
 
-    public String updateADependantAdmin() {
+    public void updateADependantAdmin() {
         try {
 
             System.out.println("update dependant called"); // Debug statement
@@ -161,12 +161,12 @@ public class UpdateDependant implements Serializable {
             dependantService.updateDependant(dependant);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant Updated successfully"));
 
-            return "/pages/dependants";
+//            return "/pages/dependants";
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return null;
+//            return null;
         }
     }
 
@@ -259,7 +259,7 @@ public class UpdateDependant implements Serializable {
 
     }
 
-    public String selectDependantAdmin(Long dependant_id) {
+    public void selectDependantAdmin(Long dependant_id) {
         System.out.println("Commenced SLUSR");
         this.dependant = dependantService.getDependantById(dependant_id);
         this.id = dependant.getId();
@@ -272,7 +272,7 @@ public class UpdateDependant implements Serializable {
 
         System.out.println("Ended SLUSR");
 
-        return "/pages/updateDependantadmin";
+//        return "/pages/updateDependantadmin";
 
     }
 

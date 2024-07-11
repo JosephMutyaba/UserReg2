@@ -54,30 +54,87 @@
                     <h:form id="search-form">
                         <div class="search-bar" style="display: flex; flex-direction: row; justify-content: space-between;">
                             <h:outputLabel for="searchUsername" value="Username"/>
-                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" styleClass="input-field"/>
+                            <h:inputText id="searchUsername" value="#{userView.searchUsername}" styleClass="input-field">
+                                <p:ajax event="keyup" update="userForma" listener="#{userView.search}"/>
+                            </h:inputText>
 
                             <h:outputLabel for="searchFirstName" value="First Name"/>
-                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" styleClass="input-field"/>
+                            <h:inputText id="searchFirstName" value="#{userView.searchFirstName}" styleClass="input-field">
+                                <p:ajax event="keyup" update="userForma" listener="#{userView.search}"/>
+                            </h:inputText>
 
                             <h:outputLabel for="searchLastName" value="Last Name"/>
-                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" styleClass="input-field" />
-
-                            <p:commandButton styleClass="link" value="Search" action="#{userView.search}" update="userForma" />
-                            <p:commandButton styleClass="link" value="Reset" action="#{userView.reset}" update="userForma" />
-
+                            <h:inputText id="searchLastName" value="#{userView.searchLastName}" styleClass="input-field">
+                                <p:ajax event="keyup" update="userForma" listener="#{userView.search}"/>
+                            </h:inputText>
                         </div>
                     </h:form>
                 </div>
 
+
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
-                        <h:commandLink action="/pages/register.xhtml" styleClass="link">
-                            <i class="fa fa-plus"/> New User
-                        </h:commandLink>
-                        <h:commandLink action="/pages/deleteAllUsers.xhtml" styleClass="link">
-                            <i class="fa fa-trash" style="color: red"/> Delete All Users
-                        </h:commandLink>
+                        <p:commandButton value="New user" onclick="PF('registerDialog').show()" icon="pi pi-plus" update="registerForm">
+                        </p:commandButton>
+
+                        <p:commandButton icon="pi pi-trash" style="background-color: red !important; color: white !important; border-color: red !important; margin-left:5px !important;" value="Delete All Users" onclick="PF('deleteAllUsersDialog').show()" update="deleteAllUsersForm"  styleClass="link">
+                        </p:commandButton>
                     </h:form>
+
+<!--                    register user dialog-->
+                    <p:dialog header="Register User" widgetVar="registerDialog" modal="true" resizable="false" width="500" height="400px">
+                        <h:form id="registerForm" styleClass="form">
+                            <p:panelGrid columns="3" styleClass="borderless-grid">
+                                <h:outputLabel for="username" value="Username:" styleClass="label"/>
+                                <p:inputText id="username" value="#{registerUserView.username}" required="true" styleClass="input">
+                                    <f:validateLength minimum="4" maximum="20"/>
+                                </p:inputText>
+                                <h:message for="username" styleClass="error"/>
+
+                                <h:outputLabel for="firstname" value="First Name:" styleClass="label"/>
+                                <p:inputText id="firstname" value="#{registerUserView.firstname}" required="true" styleClass="input">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="firstname" styleClass="error"/>
+
+                                <h:outputLabel for="lastname" value="Last Name:" styleClass="label"/>
+                                <p:inputText id="lastname" value="#{registerUserView.lastname}" required="true" styleClass="input">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="lastname" styleClass="error"/>
+
+                                <h:outputLabel for="email" value="Email:" styleClass="label"/>
+                                <p:inputText id="email" value="#{registerUserView.email}" required="true" styleClass="input">
+                                    <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
+                                </p:inputText>
+                                <h:message for="email" styleClass="error"/>
+
+                                <h:outputLabel for="gender" value="Gender:" styleClass="label"/>
+                                <p:selectOneMenu id="gender" value="#{registerUserView.gender}" required="true" styleClass="selectMenu">
+                                    <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                    <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                </p:selectOneMenu>
+                                <h:message for="gender" styleClass="error"/>
+
+                                <h:outputLabel for="dob" value="Date of Birth:" styleClass="label"/>
+                                <p:calendar id="dob" value="#{registerUserView.dateOfBirth}" required="true" showButtonPanel="true"
+                                            navigator="true" maxdate="#{registerUserView.today}" yearRange="c-100:c"
+                                            pattern="yyyy-MM-dd" styleClass="input"/>
+                                <h:message for="dob" styleClass="error"/>
+
+                                <h:outputLabel for="password" value="Password:" styleClass="label"/>
+                                <p:password id="password" value="#{registerUserView.password}" required="true" styleClass="input">
+                                    <f:validateLength minimum="8" maximum="30"/>
+                                </p:password>
+                                <h:message for="password" styleClass="error"/>
+
+                                <p:commandButton value="Register" action="#{registerUserView.registerUser}" styleClass="button" update="registerForm globalMessages userForma" oncomplete="if (!args.validationFailed) PF('registerDialog').hide();" />
+                                <h:messages globalOnly="true" styleClass="messages" id="globalMessages"/>
+                            </p:panelGrid>
+
+                        </h:form>
+                    </p:dialog>
+
                 </div>
                 <div>
                     <h:form id="userForma">
@@ -121,12 +178,76 @@
                             </p:column>
 
                             <p:column headerText="Edit">
-                                <h:commandLink action="#{updateUser.selectUser(user)}" >
-                                    <i class="fa fa-edit"/>
-                                </h:commandLink>
+                                <p:commandButton icon="pi pi-pencil" action="#{updateUser.selectUser(user)}" onclick="PF('updateDialog').show()" update="updateForm" />
                             </p:column>
                         </p:dataTable>
                     </h:form>
+
+
+<!--                    Update User dialog-->
+                    <p:dialog header="Update User" widgetVar="updateDialog" modal="true" resizable="false" width="500" height="400px">
+                        <h:form id="updateForm" styleClass="form">
+                            <p:panelGrid columns="3" styleClass="borderless-grid">
+                                <h:outputLabel for="user_name" value="Username" styleClass="label"/>
+                                <p:inputText id="user_name" value="#{updateUser.username}" styleClass="input" readonly="true">
+                                    <f:validateLength minimum="4" maximum="20"/>
+                                </p:inputText>
+                                <h:message for="user_name" styleClass="error"/>
+
+                                <h:outputLabel for="first_name" value="First Name:" styleClass="label"/>
+                                <p:inputText id="first_name" value="#{updateUser.firstname}" styleClass="input" required="true">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="first_name" styleClass="error"/>
+
+                                <h:outputLabel for="last_name" value="Last Name:" styleClass="label"/>
+                                <p:inputText id="last_name" value="#{updateUser.lastname}" styleClass="input" required="true">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="last_name" styleClass="error"/>
+
+                                <h:outputLabel for="gender_" value="Gender:" styleClass="label"/>
+                                <p:selectOneMenu id="gender_" value="#{updateUser.gender}" required="true" styleClass="selectMenu">
+                                    <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                    <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                </p:selectOneMenu>
+                                <h:message for="gender_" styleClass="error"/>
+
+                                <h:outputLabel for="do_b" value="Date of Birth (yyyy-MM-dd):" styleClass="label"/>
+                                <p:calendar id="do_b" value="#{updateUser.dateOfBirth}" required="true" showButtonPanel="true"
+                                            navigator="true" maxdate="#{updateUser.today}" yearRange="c-100:c"
+                                            pattern="yyyy-MM-dd" styleClass="input"/>
+                                <h:message for="do_b" styleClass="error"/>
+
+                                <h:outputLabel for="role" value="User role:" styleClass="label" rendered="#{loginBean.admin}"/>
+                                <p:selectOneMenu id="role" value="#{updateUser.role}" styleClass="input" rendered="#{loginBean.admin}">
+                                    <f:selectItem itemLabel="USER" itemValue="USER"/>
+                                    <f:selectItem itemLabel="ADMIN" itemValue="ADMIN"/>
+                                </p:selectOneMenu>
+                                <h:message for="role" styleClass="error"/>
+
+
+
+                                <h:outputLabel for="deleted" value="Deleted" styleClass="label" rendered="#{loginBean.admin}"/>
+                                <p:selectBooleanCheckbox label="Deleted" id="deleted" value="#{updateUser.deleted}" rendered="#{loginBean.admin}"/>
+                                <h:message for="deleted" styleClass="error"/>
+
+                                <h:outputLabel for="emai_l" value="Email" styleClass="label"/>
+                                <p:inputText id="emai_l" value="#{updateUser.email}" styleClass="input" required="true">
+                                    <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$"/>
+                                </p:inputText>
+                                <h:message for="emai_l" styleClass="error"/>
+
+                                <h:outputLabel for="passwor_d" value="Password" styleClass="label"/>
+                                <p:password id="passwor_d" value="#{updateUser.password}" styleClass="input"/>
+                                <h:message for="passwor_d" styleClass="error"/>
+                            </p:panelGrid>
+
+                            <p:commandButton value="Update" action="#{updateUser.updateUser}" styleClass="button" update="updateForm global_Messages userForma" oncomplete="if (!args.validationFailed) PF('updateDialog').hide();" />
+                            <h:messages globalOnly="true" styleClass="messages" id="global_Messages"/>
+                        </h:form>
+                    </p:dialog>
+
 
                     <!-- Delete Confirmation Dialog -->
                     <p:dialog header="Confirm Deletion" widgetVar="deleteDialog" modal="true" width="300">
@@ -136,6 +257,16 @@
                                 <p:commandButton value="Yes" action="#{deleteUserView.deleteUser}" oncomplete="PF('deleteDialog').hide(); updateUsers();" />
                                 <p:commandButton value="Cancel" onclick="PF('deleteDialog').hide(); return false;" />
                             </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+
+
+                    <p:dialog header="Confirm Delete" widgetVar="deleteAllUsersDialog" modal="true" resizable="false" width="300">
+                        <h:form class="form"  id="deleteAllUsersForm">
+                            <p>Delete all users?</p>
+                            <br/>
+                            <p:commandButton value="Cancel" onclick="PF('deleteAllUsersDialog').hide();" type="button" styleClass="button" />
+                            <p:commandButton value="Delete All Users" action="#{userView.deleteAllUsers}" styleClass="button" oncomplete="if (!args.validationFailed) PF('deleteAllUsersDialog').hide(); updateUsers();" />
                         </h:form>
                     </p:dialog>
 

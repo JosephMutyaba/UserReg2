@@ -156,3 +156,14 @@ form {
 
 
 
+.borderless-grid table {
+    border: none !important;
+}
+.borderless-grid td, .borderless-grid th {
+    border: none !important;
+    padding: 5px; /* Adjust padding as needed */
+}
+
+
+
+

@@ -191,7 +191,7 @@ public class AddDependantView implements Serializable {
             this.gender=null;
         }
     }
-    public String addDependantAdmin() {
+    public void addDependantAdmin() {
         try {
             Dependant dependant = new Dependant();
             dependant.setUsername(username);
@@ -215,14 +215,14 @@ public class AddDependantView implements Serializable {
 
 //            System.out.println("Dependant added successfully: " + user.getUsername()); // Debug statement
 
-            return "/pages/dependants.xhtml";
+//            return "/pages/dependants.xhtml";
 
 
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage()); // Debug statement
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 
-            return null;
+//            return null;
         }
     }
 

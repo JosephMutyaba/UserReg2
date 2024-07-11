@@ -168,7 +168,7 @@ public class UpdateUser implements Serializable {
         }
     }
 
-    public String updateUser() {
+    public void updateUser() {
         try {
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //            Date dob = sdf.parse(dateOfBirth);
@@ -196,15 +196,15 @@ public class UpdateUser implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "User details have been successfully updated!", null));
                 clearForm();
 
-                return "/pages/displayUsers.xhtml?faces-redirect=true";
+//                return "/pages/displayUsers.xhtml?faces-redirect=true";
 
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Something went wrong, please try again!", null));
-                return null;
+//                return null;
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-            return null;
+//            return null;
         }
     }
 
@@ -291,7 +291,7 @@ public class UpdateUser implements Serializable {
         }
     }
 
-    public String selectUser(User selectedUser) {
+    public void selectUser(User selectedUser) {
         this.user = selectedUser;
 
         this.id = selectedUser.getId();
@@ -306,7 +306,7 @@ public class UpdateUser implements Serializable {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         this.dateOfBirth = selectedUser.getDateOfBirth();
 
-        return "updateUser"; // Should match the outcome in faces-config.xml
+//        return "updateUser"; // Should match the outcome in faces-config.xml
     }
 
     public void selectUserNewUI(User selectedUser) {
