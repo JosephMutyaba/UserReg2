@@ -85,7 +85,7 @@
                 <div>
                     <h:form id="displayForm" styleClass="top-section">
 
-                        <p:commandLink oncomplete="PF('addNewDependantDialog').show()" styleClass="link">
+                        <p:commandLink oncomplete="PF('addDependantDialog').show()" styleClass="link">
                             <i class="fa fa-plus" style="color: white"/> Add Dependant
                         </p:commandLink>
                         <p:commandLink styleClass="link_del" action="#{deleteAllDependantsOfUser.selectUserId(userView.user.id)}" oncomplete="PF('deleteAllDependantsDialog').show()" process="@this">
@@ -168,43 +168,50 @@
 
 <!--                     Add New definition -->
 
-                    <p:dialog header="New Dependant" resizable="false" width="500px" widgetVar="addNewDependantDialog" modal="true" id="dialog" appendTo="@(body)" style="height: 400px; overflow: auto;">
-                        <h:form id="dialogForm" styleClass="form">
-                            <p:panelGrid columns="2" styleClass="borderless-grid" >
-                                <p:outputLabel for="e_username" value="Username:" />
-                                <p:inputText id="e_username" value="#{addDependantView.username}" required="true" styleClass="input"/>
+                    <p:dialog header="New Dependant" widgetVar="addDependantDialog" modal="true" resizable="false" width="500" height="400">
+                        <h:form id="registerForm" styleClass="form">
+                            <h:panelGrid columns="3" styleClass="borderless-grid">
 
-                                <p:outputLabel for="e_firstname" value="First Name:" styleClass="label"/>
-                                <p:inputText id="e_firstname" value="#{addDependantView.firstname}" required="true" styleClass="input"/>
+                                <h:outputLabel for="usern_ame" value="Username:" styleClass="label"/>
+                                <p:inputText id="usern_ame" value="#{addDependantView.username}" required="true" styleClass="input">
+                                    <f:validateLength minimum="4" maximum="20"/>
+                                </p:inputText>
+                                <h:message for="usern_ame" styleClass="error"/>
 
-                                <p:outputLabel for="e_lastname" value="Last Name:" styleClass="label"/>
-                                <p:inputText id="e_lastname" value="#{addDependantView.lastname}" required="true" styleClass="input"/>
+                                <h:outputLabel for="firs_tname" value="First Name:" styleClass="label"/>
+                                <p:inputText id="firs_tname" value="#{addDependantView.firstname}" required="true" styleClass="input">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="firs_tname" styleClass="error"/>
 
+                                <h:outputLabel for="last_name" value="Last Name:" styleClass="label"/>
+                                <p:inputText id="last_name" value="#{addDependantView.lastname}" required="true" styleClass="input">
+                                    <f:validateLength minimum="2" maximum="30"/>
+                                </p:inputText>
+                                <h:message for="last_name" styleClass="error"/>
 
-                                <p:outputLabel for="e_dob" value="Date of Birth:" styleClass="label"/>
-                                <p:calendar id="e_dob" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
+                                <h:outputLabel for="do_b" value="Date of Birth:" styleClass="label"/>
+                                <p:calendar id="do_b" value="#{addDependantView.dateOfBirth}" required="true" showButtonPanel="true"
                                             navigator="true" maxdate="#{addDependantView.today}" yearRange="c-100:c"
                                             pattern="yyyy-MM-dd" styleClass="input"/>
+                                <h:message for="do_b" styleClass="error"/>
 
-
-                                <p:outputLabel for="e_gender" value="Gender:" styleClass="label"/>
-                                <p:selectOneMenu id="e_gender" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                                <h:outputLabel for="gen_der" value="Gender:" styleClass="label"/>
+                                <p:selectOneMenu id="gen_der" value="#{addDependantView.gender}" required="true" styleClass="selectMenu">
+                                    <f:selectItem itemLabel="Select Gender" itemValue=""/>
                                     <f:selectItem itemLabel="Male" itemValue="Male"/>
                                     <f:selectItem itemLabel="Female" itemValue="Female"/>
                                 </p:selectOneMenu>
+                                <h:message for="gen_der" styleClass="error"/>
 
+                            </h:panelGrid>
+                            <p:commandButton icon="pi pi-plus" value="Add dependant" action="#{addDependantView.addDependantUser(userView.user)}" styleClass="button" update="registerForm globalMessages" oncomplete="if (!args.validationFailed) PF('addDependantDialog').hide(); updateDependantTable()" />
 
-                                <p:commandButton value="Add Dependant" actionListener="#{addDependantView.addDependantUser(userView.user)}"
-                                                 oncomplete="if (!args.validationFailed) { PF('addNewDependantDialog').hide(); updateDependantTable(); }"
-                                                 update="globalMessages" styleClass="button"/>
-                                <p:commandButton value="Cancel" actionListener="#{addDependantView.clearData}" onclick="PF('addNewDependantDialog').hide(); return false;" immediate="true" />
-
-
-                                <p:messages id="globalMessages" globalOnly="true" autoUpdate="true" showDetail="true" styleClass="messages"/>
-                            </p:panelGrid>
-
+                            <h:messages globalOnly="true" styleClass="messages" id="globalMessages"/>
                         </h:form>
                     </p:dialog>
+
+
 
 
 

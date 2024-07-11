@@ -151,7 +151,7 @@ public class AddDependantView implements Serializable {
     }
 
 
-    public String addDependantUser(User passedInUser) {
+    public void addDependantUser(User passedInUser) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             System.out.println("addDependant called"); // Debug statement
@@ -174,7 +174,7 @@ public class AddDependantView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dependant added successfully"));
 
 
-            return "/pages/userpages/dependants";
+//            return "/pages/userpages/dependants";
 
 
         } catch (InvalidNameException | InvalidDateFormatException | UsernameAlreadyExistsException e) {
@@ -182,7 +182,7 @@ public class AddDependantView implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
             context.validationFailed(); // Mark validation as failed
 
-            return null;
+//            return null;
         }finally {
             this.username=null;
             this.firstname=null;
